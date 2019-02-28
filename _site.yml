@@ -2,8 +2,12 @@ name: "olivierrue.github.io"
 title: "Migale Blog"
 description: |
   We publish articles relative to data analyses
+base_url: https://inra-migale.github.io/
 output_dir: "."
 navbar:
+  logo:
+    image: images/migale.png
+    href: http://migale.jouy.inra.fr/
   right:
     - text: "Home"
       href: index.html
