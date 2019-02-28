@@ -1,0 +1,22 @@
+---
+title: "Publications"
+bibliography: publications.bib
+output:
+  radix::radix_article:
+    self_contained: false
+    toc_depth: 8
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+```{r central}
+file.name <- "publications.bib"
+bib <- suppressMessages(RefManageR::ReadBib(file.name))
+RefManageR::BibOptions(sorting = "none", bib.style="authoryear")
+sort(bib, sorting = "ynt", decreasing=TRUE)
+RefManageR::BibOptions(restore.defaults = TRUE)
+```

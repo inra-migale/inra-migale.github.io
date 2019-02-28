@@ -6,7 +6,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-  <meta name="generator" content="distill" />
+  <meta name="generator" content="radix" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -19,29 +19,27 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>Migale Blog: About this blog</title>
+  <title>Migale Blog: Publications</title>
   
-  <meta property="description" itemprop="description" content="Some additional details about the blog"/>
   
   
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Migale Blog: About this blog"/>
+  <meta property="og:title" content="Migale Blog: Publications"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Some additional details about the blog"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Migale Blog"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Migale Blog: About this blog"/>
-  <meta property="twitter:description" content="Some additional details about the blog"/>
+  <meta property="twitter:title" content="Migale Blog: Publications"/>
   
   <!--/radix_placeholder_meta_tags-->
+  
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["About this blog"]},{"type":"character","attributes":{},"value":["Some additional details about the blog"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography","output"]}},"value":[{"type":"character","attributes":{},"value":["Publications"]},{"type":"character","attributes":{},"value":["publications.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"integer","attributes":{},"value":[8]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -75,7 +73,7 @@
       });
   
       // responsive menu
-      $('.distill-site-header').each(function(i, val) {
+      $('.radix-site-header').each(function(i, val) {
         var topnav = $(this);
         var toggle = topnav.find('.nav-toggle');
         toggle.on('click', function() {
@@ -102,85 +100,85 @@
   
   /* Theme (user-documented overrideables for nav appearance) */
   
-  .distill-site-nav {
+  .radix-site-nav {
     color: rgba(255, 255, 255, 0.8);
     background-color: #455a64;
     font-size: 15px;
     font-weight: 300;
   }
   
-  .distill-site-nav a {
+  .radix-site-nav a {
     color: inherit;
     text-decoration: none;
   }
   
-  .distill-site-nav a:hover {
+  .radix-site-nav a:hover {
     color: white;
   }
   
   @media print {
-    .distill-site-nav {
+    .radix-site-nav {
       display: none;
     }
   }
   
-  .distill-site-header {
+  .radix-site-header {
   
   }
   
-  .distill-site-footer {
+  .radix-site-footer {
   
   }
   
   
   /* Site Header */
   
-  .distill-site-header {
+  .radix-site-header {
     width: 100%;
     box-sizing: border-box;
     z-index: 3;
   }
   
-  .distill-site-header .nav-left {
+  .radix-site-header .nav-left {
     display: inline-block;
     margin-left: 8px;
   }
   
   @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
+    .radix-site-header .nav-left {
       margin-left: 0;
     }
   }
   
   
-  .distill-site-header .nav-right {
+  .radix-site-header .nav-right {
     float: right;
     margin-right: 8px;
   }
   
-  .distill-site-header a,
-  .distill-site-header .title {
+  .radix-site-header a,
+  .radix-site-header .title {
     display: inline-block;
     text-align: center;
     padding: 14px 10px 14px 10px;
   }
   
-  .distill-site-header .title {
+  .radix-site-header .title {
     font-size: 18px;
   }
   
-  .distill-site-header .logo {
+  .radix-site-header .logo {
     padding: 0;
   }
   
-  .distill-site-header .logo img {
+  .radix-site-header .logo img {
     display: none;
     max-height: 20px;
     width: auto;
     margin-bottom: -4px;
   }
   
-  .distill-site-header .nav-image img {
+  .radix-site-header .nav-image img {
     max-height: 18px;
     width: auto;
     display: inline-block;
@@ -190,22 +188,22 @@
   
   
   @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
+    .radix-site-header .logo img {
       display: inline-block;
     }
-    .distill-site-header .nav-left {
+    .radix-site-header .nav-left {
       margin-left: 20px;
     }
-    .distill-site-header .nav-right {
+    .radix-site-header .nav-right {
       margin-right: 20px;
     }
-    .distill-site-header .title {
+    .radix-site-header .title {
       padding-left: 12px;
     }
   }
   
   
-  .distill-site-header .nav-toggle {
+  .radix-site-header .nav-toggle {
     display: none;
   }
   
@@ -287,18 +285,18 @@
   }
   
   @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
+    .radix-site-header a, .radix-site-header .nav-dropdown  {display: none;}
+    .radix-site-header a.nav-toggle {
       float: right;
       display: block;
     }
-    .distill-site-header .title {
+    .radix-site-header .title {
       margin-left: 0;
     }
-    .distill-site-header .nav-right {
+    .radix-site-header .nav-right {
       margin-right: 0;
     }
-    .distill-site-header {
+    .radix-site-header {
       overflow: hidden;
     }
     .nav-right .nav-dropdown-content {
@@ -308,24 +306,24 @@
   
   
   @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative;}
-    .distill-site-header.responsive a.nav-toggle {
+    .radix-site-header.responsive {position: relative;}
+    .radix-site-header.responsive a.nav-toggle {
       position: absolute;
       right: 0;
       top: 0;
     }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
+    .radix-site-header.responsive a,
+    .radix-site-header.responsive .nav-dropdown {
       display: block;
       text-align: left;
     }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
+    .radix-site-header.responsive .nav-left,
+    .radix-site-header.responsive .nav-right {
       width: 100%;
     }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    .radix-site-header.responsive .nav-dropdown {float: none;}
+    .radix-site-header.responsive .nav-dropdown-content {position: relative;}
+    .radix-site-header.responsive .nav-dropdown .nav-dropbtn {
       display: block;
       width: 100%;
       text-align: left;
@@ -334,7 +332,7 @@
   
   /* Site Footer */
   
-  .distill-site-footer {
+  .radix-site-footer {
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
@@ -1217,7 +1215,7 @@
   
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
-      $('.distill-site-header a[href]').each(function(i,val) {
+      $('.radix-site-header a[href]').each(function(i,val) {
         $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
@@ -1272,13 +1270,13 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About this blog","description":"Some additional details about the blog","authors":[]}
+{"title":"Publications","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
 <header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
+<nav class="radix-site-nav radix-site-header">
 <div class="nav-left">
 <a class="logo" href="http://migale.jouy.inra.fr/">
 <img src="images/migale.png"/>
@@ -1298,13 +1296,54 @@
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>About this blog</h1>
-<p>Some additional details about the blog</p>
+<h1>Publications</h1>
+
 </div>
 
 
 <div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Delforno, T. P, T. Z. Macedo, C. Midoux, et al. (2019).
+&quot;Comparative metatranscriptomic analysis of anaerobic
+digesters treating anionic surfactant contaminated
+wastewater&quot;. In: _Science of the Total Environment_ 2019.649,
+pp. 482-494. DOI: 10.1016/j.scitotenv.2018.08.328. &lt;URL:
+https://hal.archives-ouvertes.fr/hal-01888286&gt;.
 
+Poirier, S, O. Rué, R. Peguilhan, et al. (2018). &quot;Deciphering
+intra-species bacterial diversity of meat and seafood spoilage
+microbiota using gyrB amplicon sequencing: A comparative
+analysis with 16S rDNA V3-V4 amplicon sequencing&quot;. In: _PloS
+one_ 13.9, p. e0204629.
+
+Poirier, S, O. Rué, G. Coeuret, et al. (2018). &quot;Detection of
+an amplification bias associated to Leuconostocaceae family
+with a universal primer routinely used for monitoring
+microbial community structures within food products&quot;. In: _BMC
+Research Notes_ 11.1, p. 802. ISSN: 1756-0500. DOI:
+10.1186/s13104-018-3908-2. &lt;URL:
+https://doi.org/10.1186/s13104-018-3908-2&gt;.
+
+Plomion, C, J. Aury, J. Amselem, et al. (2018). &quot;Oak genome
+reveals facets of long lifespan&quot;. In: _Nature plants_ 4.7, p.
+440.
+
+Amselem, J., N. Francillonne, C. Michotey, et al. (2018). &quot;An
+integrated information system dedicated to oak genomics and
+genetics&quot;. In: _PAG XXVI Plant and Animal Genome Conference_.
+San Diego, United States, p. 27 slides. &lt;URL:
+https://hal.archives-ouvertes.fr/hal-01839185&gt;.
+
+Rué, O., V. Loux and S. Schbath (2017). &quot;New-omics data
+analysis activity on Migale platform for MEM community&quot;. In:
+_Journées d&#39;Animation MEM 2017_. , p. np.
+
+Dugat, T, M. Rossignol, O. Rué, et al. (2016). &quot;Draft
+Anaplasma phagocytophilum genome sequences from five cows, two
+horses, and one roe deer collected in Europe&quot;. In: _Genome
+Announc._ 4.6, pp. e00950-16.</code></pre>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -1317,6 +1356,99 @@
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom"></div>
+<script id="distill-bibliography" type="text/bibtex">
+@article{plomion2018oak,
+  title={Oak genome reveals facets of long lifespan},
+  author={Plomion, Christophe and Aury, Jean-Marc and Amselem, Joelle and Leroy, Thibault and Murat, Florent and Duplessis, S{\'e}bastien and Faye, S{\'e}bastien and Francillonne, Nicolas and Labadie, Karine and Le Provost, Gr{\'e}goire and others},
+  journal={Nature plants},
+  volume={4},
+  number={7},
+  pages={440},
+  year={2018},
+  publisher={Nature Publishing Group}
+}
+
+@article{dugat2016draft,
+  title={Draft Anaplasma phagocytophilum genome sequences from five cows, two horses, and one roe deer collected in Europe},
+  author={Dugat, Thibaud and Rossignol, Marie-No{\"e}lle and Ru{\'e}, Olivier and Loux, Valentin and Marthey, Sylvain and Moroldo, Marco and Silaghi, Cornelia and H{\"o}per, Dirk and Fr{\"o}hlich, Julia and Pfeffer, Martin and others},
+  journal={Genome Announc.},
+  volume={4},
+  number={6},
+  pages={e00950--16},
+  year={2016},
+  publisher={Am Soc Microbiol}
+}
+
+@article{poirier2018deciphering,
+  title={Deciphering intra-species bacterial diversity of meat and seafood spoilage microbiota using gyrB amplicon sequencing: A comparative analysis with 16S rDNA V3-V4 amplicon sequencing},
+  author={Poirier, Simon and Ru{\'e}, Olivier and Peguilhan, Rapha{\"e}lle and Coeuret, Gwendoline and Zagorec, Monique and Champomier-Verg{\`e}s, Marie-Christine and Loux, Valentin and Chaillou, St{\'e}phane},
+  journal={PloS one},
+  volume={13},
+  number={9},
+  pages={e0204629},
+  year={2018},
+  publisher={Public Library of Science}
+}
+
+@inproceedings{rue2017new,
+  title={New-omics data analysis activity on Migale platform for MEM community},
+  author={Ru{\'e}, Olivier and Loux, Valentin and Schbath, Sophie},
+  booktitle={Journ{\'e}es d'Animation MEM 2017},
+  pages={np},
+  year={2017}
+}
+
+@inproceedings{amselem:hal-01839185,
+  TITLE = {{An integrated information system dedicated to oak genomics and genetics}},
+  AUTHOR = {Amselem, Jo{\"e}lle and Francillonne, Nicolas and Michotey, C{\'e}lia and Letellier, Thomas and Aury, Jean-Marc and Da Silva, Corinne and Duplessis, S{\'e}bastien and EHRENMANN, Fran{\c c}ois and Faye, S{\'e}bastien and Gaspin, Christine and Klopp, Christophe and Labadie, Karine and Lesur, Isabelle and Leroy, Thibault and Murat, Florent and Ru{\'e}, Olivier and Bodenes, Catherine and Lepl{\'e}, Jean-Charles and Le Provost, Gr{\'e}goire and Faivre Rampant, Patricia and Kremer, Antoine and Martin, Francis and Quesneville, Hadi and Salse, J{\'e}r{\^o}me and Plomion, Christophe},
+  URL = {https://hal.archives-ouvertes.fr/hal-01839185},
+  BOOKTITLE = {{PAG XXVI Plant and Animal Genome Conference}},
+  ADDRESS = {San Diego, United States},
+  PAGES = {27 slides},
+  YEAR = {2018},
+  MONTH = Jan,
+  KEYWORDS = {Genomics ; Genetics ; Information system ; Oak},
+  HAL_ID = {hal-01839185},
+  HAL_VERSION = {v1},
+}
+
+@article{delforno:hal-01888286,
+  TITLE = {{Comparative metatranscriptomic analysis of anaerobic digesters treating anionic surfactant contaminated wastewater}},
+  AUTHOR = {Delforno, Tiago P. and Macedo, Thais Z. and Midoux, Cedric and Lacerda, Gileno V. and Ru{\'e}, Olivier and Mariadassou, Mahendra and LOUX, Valentin and Varesche, Maria B.A. and Bouchez, Th{\'e}odore and Bize, Ariane and Oliveira, Val{\'e}ria M.},
+  URL = {https://hal.archives-ouvertes.fr/hal-01888286},
+  JOURNAL = {{Science of the Total Environment}},
+  PUBLISHER = {{Elsevier}},
+  VOLUME = {2019},
+  NUMBER = {649},
+  PAGES = {482-494},
+  YEAR = {2019},
+  DOI = {10.1016/j.scitotenv.2018.08.328},
+  KEYWORDS = {metatranscriptomics ; Linear alkylbenzene sulphonate ; Upflow anaerobic sludge blanket ; Laundry wastewater ; Anaerobic pathway},
+  HAL_ID = {hal-01888286},
+  HAL_VERSION = {v1},
+}
+
+@Article{Poirier2018,
+author="Poirier, Simon
+and Ru{\'e}, Olivier
+and Coeuret, Gwendoline
+and Champomier-Verg{\`e}s, Marie-Christine
+and Loux, Valentin
+and Chaillou, St{\'e}phane",
+title="Detection of an amplification bias associated to Leuconostocaceae family with a universal primer routinely used for monitoring microbial community structures within food products",
+journal="BMC Research Notes",
+year="2018",
+month="Nov",
+day="08",
+volume="11",
+number="1",
+pages="802",
+abstract="Sequencing of 16S rDNA V3--V4 region is widely applied for food community profiling. However, two different universal forward primers (named here MUYZER-primer1 and KLINDWORTH-primer2) targeting an identical conservative sequence upstream of the V3 region of 16S rRNA gene, and only distinguished by a single mismatch are both used. This study was carried out to compare whether the accuracy of food microbiota analysis would depend on the choice of one of these two primers.",
+issn="1756-0500",
+doi="10.1186/s13104-018-3908-2",
+url="https://doi.org/10.1186/s13104-018-3908-2"
+}
+</script>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->
