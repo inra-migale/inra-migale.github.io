@@ -1,5 +1,5 @@
 ---
-title: "My Blog"
+title: "Articles relative to data analyses"
 site: distill::distill_website
 listing: posts
 ---
