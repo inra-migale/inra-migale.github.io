@@ -4,6 +4,9 @@ description: |
   My Blog
 output_dir: "."
 navbar:
+  logo:
+    image: images/migale.png
+    href: http://migale.jouy.inra.fr/
   right:
     - text: "Home"
       href: index.html
