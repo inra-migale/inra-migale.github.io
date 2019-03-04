@@ -2,10 +2,14 @@
 title: "Utiliser SGE depuis R"
 description: |
   Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R. 
-author: Mahendra Mariadassou
+author:
+  - name: Mahendra Mariadassou 
+    url: http://mahendra-mariadassou.github.io/
+    affiliation: INRA - Migale
+    affiliation_url: http://migale.jouy.inra.fr/
 date: 03-04-2019
 draft: false
-preview: Retour_vers_le_futur_-_Logo.png
+preview: images/Retour_vers_le_futur_-_Logo.png
 categories:
   - R 
   - SGE
@@ -194,7 +198,7 @@ rstudio
 ```{r future.batchtools}
 library(future.batchtools) ## implémentation de backend de type SGE, SLURM, TORQUE pour future
 plan(batchtools_sge, 
-     workers = 20,                         ## nombre maximum d'esclaves, non limité par défaut
+     workers = 10,                         ## nombre maximum d'esclaves, non limité par défaut
      template = "~/.batchtools.sge.tmpl",  ## template sge, inutile si nommé .batchtools.sge.tmpl et localisé
                                            ## dans HOME, car trouvé automatiquement par batchtools_sge
      resources = list(queue = "short.q")   ## paramètre modifié à la volée dans le template, ici nom de la queue à utiliser
@@ -204,7 +208,7 @@ Dans la partie `resources` (qui doit être une liste nommée) et à condition d'
 
 Le reste est strictement identique à ce qu'on ferait en local, à la différence près que la surcouche SGE induit un coût non négligeable et qu'il vaut donc mieux la réserver à des gros calculs. 
 
-```{r future_sge, warning=FALSE, eval = FALSE}
+```{r future_sge, warning=FALSE, eval = TRUE}
 tictoc::tic()
 x <- listenv()
 for (i in 1:10) { x[[i]] %<-% i }

@@ -1,9 +1,14 @@
 [
   {
     "path": "posts/2019-03-04-future-batchtools/",
-    "title": "future-batchtools",
-    "description": "Utiliser batchtools pour faire communiquer R et SGE. \nMahendra Mariadassou",
-    "author": [],
+    "title": "Utiliser SGE depuis R",
+    "description": "Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R.",
+    "author": [
+      {
+        "name": "Mahendra Mariadassou",
+        "url": "http://mahendra-mariadassou.github.io/"
+      }
+    ],
     "date": "2019-03-04",
     "categories": [
       "R",
@@ -11,8 +16,8 @@
       "Tutorials",
       "French"
     ],
-    "preview": "posts/2019-03-04-future-batchtools/Retour_vers_le_futur_-_Logo.png",
-    "last_modified": "2019-03-04T16:56:16+01:00",
+    "preview": "posts/2019-03-04-future-batchtools/images/Retour_vers_le_futur_-_Logo.png",
+    "last_modified": "2019-03-04T17:12:08+01:00",
     "preview_width": 2560,
     "preview_height": 1097
   },

@@ -19,22 +19,23 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-<title>Migale Blog: future-batchtools</title>
+<title>Migale Blog: Utiliser SGE depuis R</title>
 
-<meta property="description" itemprop="description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;Mahendra Mariadassou"/>
+<meta property="description" itemprop="description" content="Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R."/>
 
 <link rel="canonical" href="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"/>
 
 <!--  https://schema.org/Article -->
 <meta property="article:published" itemprop="datePublished" content="2019-03-04"/>
 <meta property="article:created" itemprop="dateCreated" content="2019-03-04"/>
+<meta name="article:author" content="Mahendra Mariadassou"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Migale Blog: future-batchtools"/>
+<meta property="og:title" content="Migale Blog: Utiliser SGE depuis R"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;Mahendra Mariadassou"/>
+<meta property="og:description" content="Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R."/>
 <meta property="og:url" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"/>
-<meta property="og:image" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/Retour_vers_le_futur_-_Logo.png"/>
+<meta property="og:image" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/images/Retour_vers_le_futur_-_Logo.png"/>
 <meta property="og:image:width" content="2560"/>
 <meta property="og:image:height" content="1097"/>
 <meta property="og:locale" content="en_US"/>
@@ -42,23 +43,30 @@
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary_large_image"/>
-<meta property="twitter:title" content="Migale Blog: future-batchtools"/>
-<meta property="twitter:description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;Mahendra Mariadassou"/>
+<meta property="twitter:title" content="Migale Blog: Utiliser SGE depuis R"/>
+<meta property="twitter:description" content="Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R."/>
 <meta property="twitter:url" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"/>
-<meta property="twitter:image" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/Retour_vers_le_futur_-_Logo.png"/>
+<meta property="twitter:image" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/images/Retour_vers_le_futur_-_Logo.png"/>
 <meta property="twitter:image:width" content="2560"/>
 <meta property="twitter:image:height" content="1097"/>
 
+<!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+<meta name="citation_title" content="Migale Blog: Utiliser SGE depuis R"/>
+<meta name="citation_fulltext_html_url" content="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"/>
+<meta name="citation_online_date" content="2019/03/04"/>
+<meta name="citation_publication_date" content="2019/03/04"/>
+<meta name="citation_author" content="Mahendra Mariadassou"/>
+<meta name="citation_author_institution" content="INRA - Migale"/>
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","draft","preview","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["future-batchtools"]},{"type":"character","attributes":{},"value":["Utiliser batchtools pour faire communiquer R et SGE. \nMahendra Mariadassou"]},{"type":"character","attributes":{},"value":["03-04-2019"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["Retour_vers_le_futur_-_Logo.png"]},{"type":"character","attributes":{},"value":["R","SGE","Tutorials","French"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","draft","preview","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Utiliser SGE depuis R"]},{"type":"character","attributes":{},"value":["Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Mahendra Mariadassou"]},{"type":"character","attributes":{},"value":["http://mahendra-mariadassou.github.io/"]},{"type":"character","attributes":{},"value":["INRA - Migale"]},{"type":"character","attributes":{},"value":["http://migale.jouy.inra.fr/"]}]}]},{"type":"character","attributes":{},"value":["03-04-2019"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["images/Retour_vers_le_futur_-_Logo.png"]},{"type":"character","attributes":{},"value":["R","SGE","Tutorials","French"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-04-future-batchtools/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["future-batchtools_files/bowser-1.9.3/bowser.min.js","future-batchtools_files/distill-2.2.21/template.v2.js","future-batchtools_files/jquery-1.11.3/jquery.min.js","future-batchtools_files/webcomponents-2.0.0/webcomponents.js","Retour_vers_le_futur_-_Logo.png"]}
+  {"type":"character","attributes":{},"value":["future-batchtools_files/bowser-1.9.3/bowser.min.js","future-batchtools_files/distill-2.2.21/template.v2.js","future-batchtools_files/jquery-1.11.3/jquery.min.js","future-batchtools_files/webcomponents-2.0.0/webcomponents.js","images/Retour_vers_le_futur_-_Logo.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 
@@ -1288,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"future-batchtools","description":"Utiliser batchtools pour faire communiquer R et SGE. \nMahendra Mariadassou","authors":[],"publishedDate":"2019-03-04T00:00:00.000+01:00"}
+{"title":"Utiliser SGE depuis R","description":"Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R.","authors":[{"author":"Mahendra Mariadassou","authorURL":"http://mahendra-mariadassou.github.io/","affiliation":"INRA - Migale","affiliationURL":"http://migale.jouy.inra.fr/"}],"publishedDate":"2019-03-04T00:00:00.000+01:00","citationText":"Mariadassou, 2019"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1314,10 +1322,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>future-batchtools</h1>
-<p>Utiliser batchtools pour faire communiquer R et SGE. Mahendra Mariadassou</p>
+<h1>Utiliser SGE depuis R</h1>
+<p>Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R.</p>
 </div>
 
+<div class="d-byline">
+  Mahendra Mariadassou <a href="http://mahendra-mariadassou.github.io/" class="uri">http://mahendra-mariadassou.github.io/</a> (INRA - Migale)<a href="http://migale.jouy.inra.fr/" class="uri">http://migale.jouy.inra.fr/</a>
+  
+<br/>03-04-2019
+</div>
 
 <div class="d-article">
 <p>Ce document explique comment configurer son compte migale pour envoyer des calculs sur le cluster via SGE directement depuis R en passant batchtools et future et en ne modifiant que très peu son code R.</p>
@@ -1346,7 +1359,7 @@ v</code></pre>
 </div>
 <p>L’expression qui permet de résoudre <code>v</code> est executée immédiatement (d’où l’apparation du message dans la console), même si la valeur de <code>v</code> n’est requise que plus tard.</p>
 <h3 id="assignation-via-un-future">Assignation via un future</h3>
-Si on passe par une assignation via <code>%&lt;-%</code>:
+<p>Si on passe par une assignation via <code>%&lt;-%</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 library(future)
@@ -1377,9 +1390,9 @@ y %&lt;-% {Sys.sleep(1); 2L}
 z &lt;- x + y
 tictoc::toc()</code></pre>
 <pre><code>
-2.026 sec elapsed</code></pre>
+2.021 sec elapsed</code></pre>
 </div>
-ou au contraire parallèle
+<p>ou au contraire parallèle:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 plan(multiprocess)
@@ -1389,7 +1402,7 @@ y %&lt;-% {Sys.sleep(1); 2L}
 z &lt;- x + y
 tictoc::toc()</code></pre>
 <pre><code>
-1.05 sec elapsed</code></pre>
+1.039 sec elapsed</code></pre>
 </div>
 <h3 id="verifier-letat-de-resolution-dune-future">Vérifier l’état de résolution d’une future</h3>
 <p>La fonction <code>futureOf</code> permet d’extraire une future explicite d’une future implicite et de tester son état de résolution avec <code>resolved</code> sans accéder à la valeur de la future (et donc sans bloquer la console en attendant que la future soit résolue).</p>
@@ -1427,7 +1440,7 @@ a</code></pre>
 <pre><code>
 Future &#39;a&#39; ...done</code></pre>
 <pre><code>
-[1] 92579</code></pre>
+[1] 104373</code></pre>
 </div>
 <h3 id="points-dattention">Points d’attention</h3>
 <p>Les futures implicites ne se combinent pas très bien avec des boucles numériques…</p>
@@ -1440,7 +1453,7 @@ for (i in 1:10) {
 <pre><code>
 Error: Subsetting can not be done on a &#39;logical&#39;; only to an environment: &#39;x[i]&#39;</code></pre>
 </div>
-Il faut utiliser à la place des liste-environnements, issues du package <code>listenv</code> qui se manipulent comme des listes:
+<p>Il faut utiliser à la place des liste-environnements, issues du package <code>listenv</code> qui se manipulent comme des listes:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 library(listenv)
@@ -1491,26 +1504,26 @@ Rscript -e &#39;batchtools::doJobCollection(&quot;&lt;%= uri %&gt;&quot;)&#39;
 exit 0</code></pre>
 </div>
 <p>On peut par exemple modifier les paramètres du script (avec la syntaxe usuel de <code>qsub</code>) pour recevoir des mails lorsqu’un job est lancé ou se termine. Les valeurs <code>resources$attributs</code> sont spéciales et correspondent qui pourront être paramétrés depuis <code>R</code> lors de la mise en place du paradigme de calcul.</p>
-il faut ensuite se connecter sur migale et lancer une session R (via rstudio ou en ligne de commande)
+<p>il faut ensuite se connecter sur migale et lancer une session R (via rstudio ou en ligne de commande)</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="bash"><code>
 ssh migale.jouty.inra.fr
 rstudio</code></pre>
 </div>
 <h3 id="utilisation">Utilisation</h3>
-À partir de là, il ne reste plus qu’à définir le paradigme de calcul et le reste fonctionnera comme présenté plus haut.
+<p>À partir de là, il ne reste plus qu’à définir le paradigme de calcul et le reste fonctionnera comme présenté plus haut.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 library(future.batchtools) ## implémentation de backend de type SGE, SLURM, TORQUE pour future
 plan(batchtools_sge, 
-     workers = 20,                         ## nombre maximum d&#39;esclaves, non limité par défaut
+     workers = 10,                         ## nombre maximum d&#39;esclaves, non limité par défaut
      template = &quot;~/.batchtools.sge.tmpl&quot;,  ## template sge, inutile si nommé .batchtools.sge.tmpl et localisé
                                            ## dans HOME, car trouvé automatiquement par batchtools_sge
      resources = list(queue = &quot;short.q&quot;)   ## paramètre modifié à la volée dans le template, ici nom de la queue à utiliser
      )</code></pre>
 </div>
 <p>Dans la partie <code>resources</code> (qui doit être une liste nommée) et à condition d’avoir le template sge correspondant, on pourrait préciser d’autres options (par exemple <code>vmem = &quot;5gb&quot;</code>).</p>
-Le reste est strictement identique à ce qu’on ferait en local, à la différence près que la surcouche SGE induit un coût non négligeable et qu’il vaut donc mieux la réserver à des gros calculs.
+<p>Le reste est strictement identique à ce qu’on ferait en local, à la différence près que la surcouche SGE induit un coût non négligeable et qu’il vaut donc mieux la réserver à des gros calculs.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 tictoc::tic()
@@ -1523,7 +1536,7 @@ x</code></pre>
 <pre class="r"><code>
 tictoc::toc()</code></pre>
 <pre><code>
-148.584 sec elapsed</code></pre>
+44.128 sec elapsed</code></pre>
 </div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -1536,7 +1549,18 @@ tictoc::toc()</code></pre>
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+  <h3 id="citation">Citation</h3>
+  <p>For attribution, please cite this work as</p>
+  <pre class="citation-appendix short">Mariadassou (2019, March 4). Migale Blog: Utiliser SGE depuis R. Retrieved from https://inra-migale.github.io/posts/2019-03-04-future-batchtools/</pre>
+  <p>BibTeX citation</p>
+  <pre class="citation-appendix long">@misc{mariadassou2019utiliser,
+  author = {Mariadassou, Mahendra},
+  title = {Migale Blog: Utiliser SGE depuis R},
+  url = {https://inra-migale.github.io/posts/2019-03-04-future-batchtools/},
+  year = {2019}
+}</pre>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->
