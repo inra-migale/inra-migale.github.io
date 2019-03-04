@@ -7,7 +7,16 @@
     <description>We publish articles relative to data analyses
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>jeu., 28 févr. 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>dim., 03 mars 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>future-batchtools</title>
+      <link>https://inra-migale.github.io/posts/2019-03-04-future-batchtools</link>
+      <description>Utiliser batchtools pour faire communiquer R et SGE. 
+Mahendra Mariadassou</description>
+      <guid>https://inra-migale.github.io/posts/2019-03-04-future-batchtools</guid>
+      <pubDate>dim., 03 mars 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/Retour_vers_le_futur_-_Logo.png" medium="image" type="image/png" width="2560" height="1097"/>
+    </item>
     <item>
       <title>Welcome to INRA-Migale Blog</title>
       <dc:creator>Équipe Migale</dc:creator>

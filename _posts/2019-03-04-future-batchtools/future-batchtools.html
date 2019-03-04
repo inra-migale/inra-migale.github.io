@@ -21,7 +21,7 @@
   <!--radix_placeholder_meta_tags-->
   <title>future-batchtools</title>
   
-  <meta property="description" itemprop="description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;xMahendra Mariadassou"/>
+  <meta property="description" itemprop="description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;Mahendra Mariadassou"/>
   
   
   <!--  https://schema.org/Article -->
@@ -31,24 +31,24 @@
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="future-batchtools"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;xMahendra Mariadassou"/>
+  <meta property="og:description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;Mahendra Mariadassou"/>
   <meta property="og:locale" content="en_US"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="future-batchtools"/>
-  <meta property="twitter:description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;xMahendra Mariadassou"/>
+  <meta property="twitter:description" content="Utiliser batchtools pour faire communiquer R et SGE. &#10;Mahendra Mariadassou"/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output","draft","preview","categories"]}},"value":[{"type":"character","attributes":{},"value":["future-batchtools"]},{"type":"character","attributes":{},"value":["Utiliser batchtools pour faire communiquer R et SGE. \nxMahendra Mariadassou\n"]},{"type":"character","attributes":{},"value":["03-04-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["Retour_vers_le_futur_-_Logo.png"]},{"type":"character","attributes":{},"value":["R","SGE","Tutorials","French"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","draft","preview","categories","output"]}},"value":[{"type":"character","attributes":{},"value":["future-batchtools"]},{"type":"character","attributes":{},"value":["Utiliser batchtools pour faire communiquer R et SGE. \nMahendra Mariadassou\n"]},{"type":"character","attributes":{},"value":["03-04-2019"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["Retour_vers_le_futur_-_Logo.png"]},{"type":"character","attributes":{},"value":["R","SGE","Tutorials","French"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["Retour_vers_le_futur_-_Logo.png"]}
+  {"type":"character","attributes":{},"value":["future-batchtools_files/bowser-1.9.3/bowser.min.js","future-batchtools_files/distill-2.2.21/template.v2.js","future-batchtools_files/jquery-1.11.3/jquery.min.js","future-batchtools_files/webcomponents-2.0.0/webcomponents.js","Retour_vers_le_futur_-_Logo.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -941,7 +941,7 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"future-batchtools","description":"Utiliser batchtools pour faire communiquer R et SGE. \nxMahendra Mariadassou","authors":[],"publishedDate":"2019-03-04T00:00:00.000+01:00"}
+{"title":"future-batchtools","description":"Utiliser batchtools pour faire communiquer R et SGE. \nMahendra Mariadassou","authors":[],"publishedDate":"2019-03-04T00:00:00.000+01:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -952,7 +952,7 @@
 
 <div class="d-title">
 <h1>future-batchtools</h1>
-<p>Utiliser batchtools pour faire communiquer R et SGE. xMahendra Mariadassou</p>
+<p>Utiliser batchtools pour faire communiquer R et SGE. Mahendra Mariadassou</p>
 </div>
 
 
@@ -1014,7 +1014,7 @@ y %&lt;-% {Sys.sleep(1); 2L}
 z &lt;- x + y
 tictoc::toc()</code></pre>
 <pre><code>
-2.032 sec elapsed</code></pre>
+2.026 sec elapsed</code></pre>
 </div>
 ou au contraire parallèle
 <div class="layout-chunk" data-layout="l-body">
@@ -1026,7 +1026,7 @@ y %&lt;-% {Sys.sleep(1); 2L}
 z &lt;- x + y
 tictoc::toc()</code></pre>
 <pre><code>
-1.062 sec elapsed</code></pre>
+1.05 sec elapsed</code></pre>
 </div>
 <h3 id="verifier-letat-de-resolution-dune-future">Vérifier l’état de résolution d’une future</h3>
 <p>La fonction <code>futureOf</code> permet d’extraire une future explicite d’une future implicite et de tester son état de résolution avec <code>resolved</code> sans accéder à la valeur de la future (et donc sans bloquer la console en attendant que la future soit résolue).</p>
@@ -1064,7 +1064,7 @@ a</code></pre>
 <pre><code>
 Future &#39;a&#39; ...done</code></pre>
 <pre><code>
-[1] 82909</code></pre>
+[1] 92579</code></pre>
 </div>
 <h3 id="points-dattention">Points d’attention</h3>
 <p>Les futures implicites ne se combinent pas très bien avec des boucles numériques…</p>
@@ -1140,7 +1140,7 @@ rstudio</code></pre>
 <pre class="r"><code>
 library(future.batchtools) ## implémentation de backend de type SGE, SLURM, TORQUE pour future
 plan(batchtools_sge, 
-     workers = 10,                         ## nombre maximum d&#39;esclaves, non limité par défaut
+     workers = 20,                         ## nombre maximum d&#39;esclaves, non limité par défaut
      template = &quot;~/.batchtools.sge.tmpl&quot;,  ## template sge, inutile si nommé .batchtools.sge.tmpl et localisé
                                            ## dans HOME, car trouvé automatiquement par batchtools_sge
      resources = list(queue = &quot;short.q&quot;)   ## paramètre modifié à la volée dans le template, ici nom de la queue à utiliser
@@ -1160,7 +1160,7 @@ x</code></pre>
 <pre class="r"><code>
 tictoc::toc()</code></pre>
 <pre><code>
-165.107 sec elapsed</code></pre>
+148.584 sec elapsed</code></pre>
 </div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

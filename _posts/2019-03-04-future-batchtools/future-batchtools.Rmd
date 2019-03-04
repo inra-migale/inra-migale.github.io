@@ -4,9 +4,6 @@ description: |
   Utiliser batchtools pour faire communiquer R et SGE. 
   Mahendra Mariadassou
 date: 03-04-2019
-output:
-  distill::distill_article:
-    self_contained: false
 draft: false
 preview: Retour_vers_le_futur_-_Logo.png
 categories:
@@ -14,6 +11,9 @@ categories:
   - SGE
   - Tutorials
   - French
+output:
+  distill::distill_article:
+    self_contained: false
 ---
 
 
@@ -190,7 +190,7 @@ rstudio
 ```{r future.batchtools}
 library(future.batchtools) ## implémentation de backend de type SGE, SLURM, TORQUE pour future
 plan(batchtools_sge, 
-     workers = 10,                         ## nombre maximum d'esclaves, non limité par défaut
+     workers = 20,                         ## nombre maximum d'esclaves, non limité par défaut
      template = "~/.batchtools.sge.tmpl",  ## template sge, inutile si nommé .batchtools.sge.tmpl et localisé
                                            ## dans HOME, car trouvé automatiquement par batchtools_sge
      resources = list(queue = "short.q")   ## paramètre modifié à la volée dans le template, ici nom de la queue à utiliser
