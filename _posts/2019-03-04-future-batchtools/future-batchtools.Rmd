@@ -1,8 +1,8 @@
 ---
-title: "future-batchtools"
+title: "Utiliser SGE depuis R"
 description: |
-  Utiliser batchtools pour faire communiquer R et SGE. 
-  Mahendra Mariadassou
+  Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R. 
+author: Mahendra Mariadassou
 date: 03-04-2019
 draft: false
 preview: Retour_vers_le_futur_-_Logo.png
@@ -15,7 +15,6 @@ output:
   distill::distill_article:
     self_contained: false
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -50,6 +49,7 @@ L'expression qui permet de résoudre `v` est executée immédiatement (d'où l'a
 ### Assignation via un future
 
 Si on passe par une assignation via `%<-%`:
+
 ```{r future}
 library(future)
 v %<-% {
@@ -79,7 +79,8 @@ z <- x + y
 tictoc::toc()
 ```
 
-ou au contraire parallèle
+ou au contraire parallèle:
+
 ```{r multiprocess}
 plan(multiprocess)
 tictoc::tic()
@@ -125,6 +126,7 @@ for (i in 1:10) {
 ```
 
 Il faut utiliser à la place des liste-environnements, issues du package `listenv` qui se manipulent comme des listes:
+
 ```{r future_list_env}
 library(listenv)
 x <- listenv()
@@ -179,6 +181,7 @@ exit 0
 On peut par exemple modifier les paramètres du script (avec la syntaxe usuel de `qsub`) pour recevoir des mails lorsqu'un job est lancé ou se termine. Les valeurs `resources$attributs` sont spéciales et correspondent qui pourront être paramétrés depuis `R` lors de la mise en place du paradigme de calcul. 
 
 il faut ensuite se connecter sur migale et lancer une session R (via rstudio ou en ligne de commande)
+
 ```{bash, eval = FALSE}
 ssh migale.jouty.inra.fr
 rstudio
@@ -187,6 +190,7 @@ rstudio
 ### Utilisation 
 
 À partir de là, il ne reste plus qu'à définir le paradigme de calcul et le reste fonctionnera comme présenté plus haut. 
+
 ```{r future.batchtools}
 library(future.batchtools) ## implémentation de backend de type SGE, SLURM, TORQUE pour future
 plan(batchtools_sge, 
@@ -199,7 +203,8 @@ plan(batchtools_sge,
 Dans la partie `resources` (qui doit être une liste nommée) et à condition d'avoir le template sge correspondant, on pourrait préciser d'autres options (par exemple `vmem = "5gb"`). 
 
 Le reste est strictement identique à ce qu'on ferait en local, à la différence près que la surcouche SGE induit un coût non négligeable et qu'il vaut donc mieux la réserver à des gros calculs. 
-```{r future_sge, warning=FALSE}
+
+```{r future_sge, warning=FALSE, eval = FALSE}
 tictoc::tic()
 x <- listenv()
 for (i in 1:10) { x[[i]] %<-% i }
