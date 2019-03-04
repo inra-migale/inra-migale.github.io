@@ -7,15 +7,15 @@
     <description>We publish articles relative to data analyses
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>jeu., 28 févr. 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>mer., 27 févr. 2019 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Welcome to My Blog</title>
-      <dc:creator>Nora Jones</dc:creator>
+      <title>Welcome to INRA-Migale Blog</title>
+      <dc:creator>Équipe Migale</dc:creator>
       <link>https://inra-migale.github.io/posts/welcome</link>
-      <description>Welcome to our new blog, My Blog. We hope you enjoy 
+      <description>Welcome to the INRA-Migale blog. We hope you enjoy 
 reading what we have to say!</description>
       <guid>https://inra-migale.github.io/posts/welcome</guid>
-      <pubDate>jeu., 28 févr. 2019 00:00:00 +0000</pubDate>
+      <pubDate>mer., 27 févr. 2019 00:00:00 +0000</pubDate>
     </item>
   </channel>
 </rss>

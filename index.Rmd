@@ -2,4 +2,9 @@
 title: "Articles relative to data analyses"
 site: distill::distill_website
 listing: posts
+categories:
+  - Tutorials
+  - FAQs
+  - French
+  - English
 ---

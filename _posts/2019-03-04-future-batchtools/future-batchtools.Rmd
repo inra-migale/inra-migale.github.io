@@ -1,0 +1,208 @@
+---
+title: "future-batchtools"
+description: |
+  Utiliser batchtools pour faire communiquer R et SGE.
+Mahendra Mariadassou
+date: 03-04-2019
+output:
+  distill::distill_article:
+    self_contained: false
+draft: true
+preview: Retour_vers_le_futur_-_Logo.png
+categories:
+  - Tutorials
+  - French
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Ce document explique comment configurer son compte migale pour envoyer des calculs sur le cluster via SGE directement depuis R en passant  batchtools et future et en ne modifiant que très peu son code R.
+
+## Préambule sur `future`
+Le but du package [`future`](https://cran.r-project.org/web/packages/future/) est de fournir une interface simple et uniforme pour évaluer des expressions R de façon asynchrone en se servant des différents paradigmes de calculs disponible pour l’utilisateur.
+
+Le concept est assez simple:
+
+- on définit un *future* `a`, une abstraction d’une valeur, qui à un temps donné peut-être résolue ou non (la façon exacte d’évaluer l’expression dépend du paradigme de calcul utilisé).
+- si une expression fait appel à `a` alors qu’il n’est pas encore résolu, l’évaluation de l’expression est suspendue jusqu’à ce que `a` soit résolu.
+
+La définition d’un future est très proche de l’opération d’assignation standard et passe par l’opérateur `%<-%`.
+
+### Assignation standard
+
+Regardons ce qui se passe pour une assignation standard avec le bout de code suivant:
+
+```{r standard}
+v <- {
+  cat("Hello World!\n")
+  3.14
+}
+v
+```
+
+L'expression qui permet de résoudre `v` est executée immédiatement (d'où l'apparation du message dans la console), même si la valeur de `v` n'est requise que plus tard. 
+
+### Assignation via un future
+
+Si on passe par une assignation via `%<-%`:
+```{r future}
+library(future)
+v %<-% {
+  cat("Hello World!\n")
+  3.14
+}
+v
+```
+
+On constate que l'expression n'est évaluée qu'au moment où la valeur `v` est appelée. On peut retenir que `%<-%` crée un future implicte et est la contraction de 
+
+- `f <- future({ expr })` qui crée un future autour et de 
+- `v <- value(f)` qui renvoie la valeur du future (et se bloque tant que `f` n'est pas résolu)
+
+### Évaluation des futures
+
+Par défaut, `future` évalue les futures de façon séquentielle comme le ferait une session R normale. On peut néanmoins avoir recours à une évaluation asynchrone via la fonction `plan`. 
+
+On peut recourir à un plan séquentiel:
+
+```{r sequential}
+plan(sequential)
+tictoc::tic()
+x %<-% {Sys.sleep(1); 1L}
+y %<-% {Sys.sleep(1); 2L}
+z <- x + y
+tictoc::toc()
+```
+
+ou au contraire parallèle
+```{r multiprocess}
+plan(multiprocess)
+tictoc::tic()
+x %<-% {Sys.sleep(1); 1L}
+y %<-% {Sys.sleep(1); 2L}
+z <- x + y
+tictoc::toc()
+```
+
+### Vérifier l'état de résolution d'une future
+
+La fonction `futureOf` permet d'extraire une future explicite d'une future implicite et de tester son état de résolution avec `resolved` sans accéder à la valeur de la future (et donc sans bloquer la console en attendant que la future soit résolue). 
+
+```{r exemple-rigolo}
+a %<-% {
+     cat("Future 'a' ...")
+     Sys.sleep(2)
+     cat("done\n")
+     Sys.getpid()
+}
+cat("Waiting for 'a' to be resolved ...\n")
+f <- futureOf(a)
+count <- 1
+while (!resolved(f)) {
+     cat(count, "\n")
+     Sys.sleep(0.2)
+     count <- count + 1
+}
+cat("Waiting for 'a' to be resolved ... DONE\n")
+a
+```
+
+
+### Points d'attention
+
+Les futures implicites ne se combinent pas très bien avec des boucles numériques...
+
+```{r future_fail, error=TRUE}
+x <- rep(NA, 10)
+for (i in 1:10) {
+  x[i] %<-% i
+}
+```
+
+Il faut utiliser à la place des liste-environnements, issues du package `listenv` qui se manipulent comme des listes:
+```{r future_list_env}
+library(listenv)
+x <- listenv()
+for (i in 1:10) {
+  x[[i]] %<-% i
+}
+x <- unlist(x)
+x
+```
+
+## Combinaison avec SGE
+
+Les possibilités offertes par `future` sont d'autant plus intéressantes dans le cadre de migale qu'on peut les combiner avec le cluster SGE au prix de quelques efforts. 
+
+### Mise en place
+
+Il faut commencer par se créer un template sge, nommé `.batchtools.sge.tmpl` dans son dossier `HOME`, dont le contenu peut être le suivant:
+
+```{bash, eval=FALSE}
+#!/bin/bash
+
+## The name of the job, can be anything, simply used when displaying the list of running jobs
+#$ -N <%= job.name %>
+
+## Combining output/error messages into one file
+#$ -j y
+
+## Giving the name of the output log file
+#$ -o <%= log.file %>
+
+## One needs to tell the queue system to use the current directory as the working directory
+## Or else the script may fail as it will execute in your top level home directory /home/username
+#$ -cwd
+
+## Use environment variables
+#$ -V
+
+## Use correct queue
+#$ -q <%= resources$queue %>
+
+## Export value of DEBUGME environemnt var to slave
+export DEBUGME=<%= Sys.getenv("DEBUGME") %>
+
+<%= sprintf("export OMP_NUM_THREADS=%i", resources$omp.threads) -%>
+<%= sprintf("export OPENBLAS_NUM_THREADS=%i", resources$blas.threads) -%>
+<%= sprintf("export MKL_NUM_THREADS=%i", resources$blas.threads) -%>
+
+Rscript -e 'batchtools::doJobCollection("<%= uri %>")'
+exit 0
+```
+
+On peut par exemple modifier les paramètres du script (avec la syntaxe usuel de `qsub`) pour recevoir des mails lorsqu'un job est lancé ou se termine. Les valeurs `resources$attributs` sont spéciales et correspondent qui pourront être paramétrés depuis `R` lors de la mise en place du paradigme de calcul. 
+
+il faut ensuite se connecter sur migale et lancer une session R (via rstudio ou en ligne de commande)
+```{bash, eval = FALSE}
+ssh migale.jouty.inra.fr
+rstudio
+```
+
+### Utilisation 
+
+À partir de là, il ne reste plus qu'à définir le paradigme de calcul et le reste fonctionnera comme présenté plus haut. 
+```{r future.batchtools}
+library(future.batchtools) ## implémentation de backend de type SGE, SLURM, TORQUE pour future
+plan(batchtools_sge, 
+     workers = 10,                         ## nombre maximum d'esclaves, non limité par défaut
+     template = "~/.batchtools.sge.tmpl",  ## template sge, inutile si nommé .batchtools.sge.tmpl et localisé
+                                           ## dans HOME, car trouvé automatiquement par batchtools_sge
+     resources = list(queue = "short.q")   ## paramètre modifié à la volée dans le template, ici nom de la queue à utiliser
+     )
+```
+Dans la partie `resources` (qui doit être une liste nommée) et à condition d'avoir le template sge correspondant, on pourrait préciser d'autres options (par exemple `vmem = "5gb"`). 
+
+Le reste est strictement identique à ce qu'on ferait en local, à la différence près que la surcouche SGE induit un coût non négligeable et qu'il vaut donc mieux la réserver à des gros calculs. 
+```{r future_sge, warning=FALSE}
+tictoc::tic()
+x <- listenv()
+for (i in 1:10) { x[[i]] %<-% i }
+x <- unlist(as.list(x)) ## bloqué tant que tous les futures ne sont pas résolus
+x
+tictoc::toc()
+```
+

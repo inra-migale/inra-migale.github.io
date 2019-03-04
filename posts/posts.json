@@ -1,17 +1,17 @@
 [
   {
     "path": "posts/welcome/",
-    "title": "Welcome to My Blog",
-    "description": "Welcome to our new blog, My Blog. We hope you enjoy \nreading what we have to say!",
+    "title": "Welcome to INRA-Migale Blog",
+    "description": "Welcome to the INRA-Migale blog. We hope you enjoy \nreading what we have to say!",
     "author": [
       {
-        "name": "Nora Jones",
-        "url": "https://example.com/norajones"
+        "name": "Équipe Migale",
+        "url": "http://migale.jouy.inra.fr/"
       }
     ],
     "date": "2019-02-28",
     "categories": [],
     "preview": {},
-    "last_modified": "2019-02-28T10:49:14+01:00"
+    "last_modified": "2019-03-04T16:14:16+01:00"
   }
 ]
