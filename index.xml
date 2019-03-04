@@ -7,14 +7,14 @@
     <description>We publish articles relative to data analyses
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>dim., 03 mars 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>lun., 04 mars 2019 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Utiliser SGE depuis R</title>
       <dc:creator>Mahendra Mariadassou</dc:creator>
       <link>https://inra-migale.github.io/posts/2019-03-04-future-batchtools</link>
       <description>Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R.</description>
       <guid>https://inra-migale.github.io/posts/2019-03-04-future-batchtools</guid>
-      <pubDate>dim., 03 mars 2019 00:00:00 +0000</pubDate>
+      <pubDate>lun., 04 mars 2019 00:00:00 +0000</pubDate>
       <media:content url="https://inra-migale.github.io/posts/2019-03-04-future-batchtools/images/Retour_vers_le_futur_-_Logo.png" medium="image" type="image/png" width="2560" height="1097"/>
     </item>
     <item>
