@@ -1,8 +1,8 @@
 ---
 title: "future-batchtools"
 description: |
-  Utiliser batchtools pour faire communiquer R et SGE.
-Mahendra Mariadassou
+  Utiliser batchtools pour faire communiquer R et SGE. 
+  xMahendra Mariadassou
 date: 03-04-2019
 output:
   distill::distill_article:
@@ -10,6 +10,8 @@ output:
 draft: true
 preview: Retour_vers_le_futur_-_Logo.png
 categories:
+  - R 
+  - SGE
   - Tutorials
   - French
 ---
