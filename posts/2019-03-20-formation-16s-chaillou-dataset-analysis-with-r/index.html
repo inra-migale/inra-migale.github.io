@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+<title>Migale Blog: Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis</title>
+
+<meta property="description" itemprop="description" content="Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training &quot;Analyse de données métagénomiques 16S&quot; that took place on the 18-21 March 2019"/>
+
+<link rel="canonical" href="https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/"/>
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2019-03-20"/>
+<meta property="article:created" itemprop="dateCreated" content="2019-03-20"/>
+<meta name="article:author" content="Équipe Migale"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="Migale Blog: Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training &quot;Analyse de données métagénomiques 16S&quot; that took place on the 18-21 March 2019"/>
+<meta property="og:url" content="https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/"/>
+<meta property="og:image" content="https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition-1.png"/>
+<meta property="og:image:width" content="2016"/>
+<meta property="og:image:height" content="672"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="Migale Blog"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="Migale Blog: Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis"/>
+<meta property="twitter:description" content="Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training &quot;Analyse de données métagénomiques 16S&quot; that took place on the 18-21 March 2019"/>
+<meta property="twitter:url" content="https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/"/>
+<meta property="twitter:image" content="https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition-1.png"/>
+<meta property="twitter:image:width" content="2016"/>
+<meta property="twitter:image:height" content="672"/>
+
+<!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+<meta name="citation_title" content="Migale Blog: Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis"/>
+<meta name="citation_fulltext_html_url" content="https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/"/>
+<meta name="citation_online_date" content="2019/03/20"/>
+<meta name="citation_publication_date" content="2019/03/20"/>
+<meta name="citation_author" content="Équipe Migale"/>
+<meta name="citation_author_institution" content="INRA - MaIAGE"/>
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis"]},{"type":"character","attributes":{},"value":["Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training \"Analyse de données métagénomiques 16S\" that took place on the 18-21 March 2019"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Équipe Migale"]},{"type":"character","attributes":{},"value":["http://migale.jouy.inra.fr/"]},{"type":"character","attributes":{},"value":["INRA - MaIAGE"]},{"type":"character","attributes":{},"value":["http://maiage.jouy.inra.fr/"]}]}]},{"type":"character","attributes":{},"value":["03-20-2019"]},{"type":"character","attributes":{},"value":["R","Formation 16S","Tutorials","English"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["number_sections","theme","toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["united"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/"]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/"]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/bootstrap-theme.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/bootstrap-theme.css.map","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/bootstrap-theme.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/bootstrap.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/bootstrap.css.map","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/bootstrap.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/cerulean.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/cosmo.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/darkly.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/flatly.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/Lato.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/LatoBold.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/LatoItalic.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/NewsCycle.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/NewsCycleBold.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/OpenSans.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/OpenSansBold.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/OpenSansBoldItalic.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/OpenSansItalic.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/OpenSansLight.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/OpenSansLightItalic.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/Raleway.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/RalewayBold.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/Roboto.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/RobotoBold.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/RobotoLight.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/RobotoMedium.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/SourceSansPro.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/SourceSansProBold.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/SourceSansProItalic.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/SourceSansProLight.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/fonts/Ubuntu.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/journal.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/lumen.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/paper.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/readable.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/sandstone.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/simplex.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/spacelab.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/united.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/css/yeti.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.eot","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.svg","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.ttf","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.woff","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.woff2","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/js/bootstrap.js","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/js/bootstrap.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/js/npm.js","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/shim/html5shiv.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/bootstrap-3.3.5/shim/respond.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/bowser-1.9.3/bowser.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/crosstalk-1.0.0/css/crosstalk.css","formation-16s-chaillou-dataset-analysis-with-r_files/crosstalk-1.0.0/js/crosstalk.js","formation-16s-chaillou-dataset-analysis-with-r_files/crosstalk-1.0.0/js/crosstalk.js.map","formation-16s-chaillou-dataset-analysis-with-r_files/crosstalk-1.0.0/js/crosstalk.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/crosstalk-1.0.0/js/crosstalk.min.js.map","formation-16s-chaillou-dataset-analysis-with-r_files/datatables-binding-0.5/datatables.js","formation-16s-chaillou-dataset-analysis-with-r_files/datatables-css-0.0.0/datatables-crosstalk.css","formation-16s-chaillou-dataset-analysis-with-r_files/distill-2.2.21/template.v2.js","formation-16s-chaillou-dataset-analysis-with-r_files/dt-core-1.10.16/css/jquery.dataTables.extra.css","formation-16s-chaillou-dataset-analysis-with-r_files/dt-core-1.10.16/css/jquery.dataTables.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/dt-core-1.10.16/js/jquery.dataTables.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/alpha_diversity_score-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/hclust-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/heatmap2_plot-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/ordination-envtype-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition_2-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_heatmap_raw-1.png","formation-16s-chaillou-dataset-analysis-with-r_files/htmlwidgets-1.3/htmlwidgets.js","formation-16s-chaillou-dataset-analysis-with-r_files/jquery-1.12.4/jquery.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/jquery-1.12.4/LICENSE.txt","formation-16s-chaillou-dataset-analysis-with-r_files/nouislider-7.0.10/jquery.nouislider.min.css","formation-16s-chaillou-dataset-analysis-with-r_files/nouislider-7.0.10/jquery.nouislider.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/selectize-0.12.0/selectize.bootstrap3.css","formation-16s-chaillou-dataset-analysis-with-r_files/selectize-0.12.0/selectize.min.js","formation-16s-chaillou-dataset-analysis-with-r_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #455a64;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative;}
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+</style>
+
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for table of contents */
+
+.d-toc {
+  color: rgba(0,0,0,0.8);
+  font-size: 0.8em;
+  line-height: 1em;
+}
+
+.d-toc-header {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 1.3em;
+}
+
+.d-toc a {
+  border-bottom: none;
+}
+
+.d-toc ul {
+  padding-left: 0;
+}
+
+.d-toc li>ul {
+  padding-top: 0.8em;
+  padding-left: 16px;
+  margin-bottom: 0.6em;
+}
+
+.d-toc ul,
+.d-toc li {
+  list-style-type: none;
+}
+
+.d-toc li {
+  margin-bottom: 0.9em;
+}
+
+.d-toc-separator {
+  margin-top: 20px;
+  margin-bottom: 2em;
+}
+
+.d-article-with-toc {
+  border-top: none;
+  padding-top: 0;
+}
+
+
+
+/* Tweak code blocks (note that this CSS is repeated above in an injection
+   into the d-code shadow dom) */
+
+d-code {
+  overflow-x: auto !important;
+}
+
+pre.d-code code.d-code {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+pre.text-output {
+
+  font-size: 12px;
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+@media(min-width: 768px) {
+
+d-code {
+  overflow-x: visible !important;
+}
+
+pre.d-code code.d-code  {
+    padding-left: 18px;
+    font-size: 14px;
+}
+pre.text-output {
+  font-size: 14px;
+}
+}
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // create d-bibliography
+  var bibliography = $('<d-bibliography></d-bibliography>');
+  $('#distill-bibliography').wrap(bibliography);
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace citations with <d-cite>
+  $('.citation').each(function(i, val) {
+    appendix = true;
+    var cites = $(this).attr('data-cites').split(" ");
+    var dt_cite = $('<d-cite></d-cite>');
+    dt_cite.attr('key', cites.join());
+    $(this).replaceWith(dt_cite);
+  });
+  // remove refs
+  $('#refs').remove();
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-toc a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // replace code blocks with d-code
+  $('pre>code').each(function(i, val) {
+    var code = $(this);
+    var pre = code.parent();
+    var clz = "";
+    var language = pre.attr('class');
+    if (language) {
+      // map unknown languages to "clike" (without this they just dissapear)
+      if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                               "javascript", "js", "julia", "lua", "markdown",
+                               "markup", "mathml", "python", "svg", "xml"]) == -1)
+        language = "clike";
+      language = ' language="' + language + '"';
+      var dt_code = $('<d-code block' + language + clz + '></d-code>');
+      dt_code.text(code.text());
+      pre.replaceWith(dt_code);
+    } else {
+      code.addClass('text-output').unwrap().changeElementType('pre');
+    }
+  });
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('d-code, pre.text-output, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // table of contents
+    if (have_authors) // adjust border if we are in authors
+      $('.d-toc').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+    $('d-code').each(function(i, val) {
+      var style = document.createElement('style');
+      style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                        '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+      if (this.shadowRoot)
+        this.shadowRoot.appendChild(style);
+    });
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-toc-header').remove();
+  $('.d-toc').remove();
+  $('.d-toc-separator').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="../../site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+  <script src="../../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="../../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+  <script src="../../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+  <script src="../../site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+  <link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+  <script src="../../site_libs/datatables-binding-0.5/datatables.js"></script>
+  <link href="../../site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link href="../../site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+  <script src="../../site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+  <link href="../../site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+  <script src="../../site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+  <link href="../../site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+  <script src="../../site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+  <link href="../../site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+  <script src="../../site_libs/selectize-0.12.0/selectize.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis","description":"Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training \"Analyse de données métagénomiques 16S\" that took place on the 18-21 March 2019","authors":[{"author":"Équipe Migale","authorURL":"http://migale.jouy.inra.fr/","affiliation":"INRA - MaIAGE","affiliationURL":"http://maiage.jouy.inra.fr/"}],"publishedDate":"2019-03-20T00:00:00.000+01:00","citationText":"Migale, 2019"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="http://migale.jouy.inra.fr/">
+<img src="../../images/migale.png"/>
+</a>
+<a href="../../index.html" class="title">Migale Blog</a>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../about.html">About</a>
+<a href="../../publications.html">Publications</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis</h1>
+<p>Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training “Analyse de données métagénomiques 16S” that took place on the 18-21 March 2019</p>
+</div>
+
+<div class="d-byline">
+  Équipe Migale <a href="http://migale.jouy.inra.fr/" class="uri">http://migale.jouy.inra.fr/</a> (INRA - MaIAGE)<a href="http://maiage.jouy.inra.fr/" class="uri">http://maiage.jouy.inra.fr/</a>
+  
+<br/>03-20-2019
+</div>
+
+<div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#analysis">Analysis</a><ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#data-import">Data import</a><ul>
+<li><a href="#phylum-level">Phylum level</a></li>
+<li><a href="#within-firmicutes">Within firmicutes</a></li>
+</ul></li>
+<li><a href="#alpha-diversity">Alpha-diversity</a><ul>
+<li><a href="#graphics">Graphics</a></li>
+<li><a href="#anova">Anova</a></li>
+</ul></li>
+<li><a href="#beta-diversities">Beta diversities</a><ul>
+<li><a href="#hierarchical-clustering">Hierarchical clustering</a></li>
+<li><a href="#permanova">PERMANOVA</a></li>
+</ul></li>
+<li><a href="#heatmap">Heatmap</a></li>
+<li><a href="#differential-abundance-study">Differential abundance study</a></li>
+</ul></li>
+<li><a href="#a-few-conclusions">A few conclusions</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
+<h1 id="introduction">Introduction</h1>
+<p>This vignette is a re-analysis of the data set from <a href="http://dx.doi.org/10.1038/ismej.2014.202">Chaillou et al. (2015)</a>, as suggested in the <em>Homeworks</em> section of the slides. Note that this is only one of many analyses that could be done on the data.</p>
+<h1 id="analysis">Analysis</h1>
+<h2 id="setup">Setup</h2>
+<p>We first setup our environment by loading a few packages</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+library(tidyverse)  ## data manipulation
+library(phyloseq)   ## analysis of microbiome census data
+library(ape)        ## for tree manipulation
+library(vegan)      ## for community ecology analyses
+## You may also need to install gridExtra with 
+## install.packages(&quot;gridExtra&quot;)
+## and load it with 
+## library(gridExtra)
+## if you want to reproduce some of the side-by-side graphs shown below</code></pre>
+</div>
+<h2 id="data-import">Data import</h2>
+<p>We then load the data from the Chaillou et al. (2015) dataset. We assume that they are located in the <code>data/chaillou</code> folder. A quick look at the folder content shows we have access to a tree (in newick format, file extension <code>nwk</code>) and a biom file (extension <code>biom</code>). A glance at the biom file content shows that the taxonomy is <code>&quot;k__Bacteria&quot;, &quot;p__Tenericutes&quot;, &quot;c__Mollicutes&quot;, &quot;o__Mycoplasmatales&quot;, &quot;f__Mycoplasmataceae&quot;, &quot;g__Candidatus Lumbricincola&quot;, &quot;s__NA&quot;</code>. This is the so called greengenes format and the taxonomy should thus be parsed using the <code>parse_taxonomy_greengenes</code> function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+food &lt;- import_biom(&quot;data/chaillou/chaillou.biom&quot;, 
+                    parseFunction = parse_taxonomy_greengenes)</code></pre>
+</div>
+<p>We can then add the phylogenetic tree to the <code>food</code> object</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+phy_tree(food) &lt;- read_tree(&quot;data/chaillou/tree.nwk&quot;)
+food</code></pre>
+<pre><code>
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 508 taxa and 64 samples ]
+sample_data() Sample Data:       [ 64 samples by 3 sample variables ]
+tax_table()   Taxonomy Table:    [ 508 taxa by 7 taxonomic ranks ]
+phy_tree()    Phylogenetic Tree: [ 508 tips and 507 internal nodes ]</code></pre>
+</div>
+<p>The data consists of 64 samples of food: 8 replicates for each of 8 food types. We have access to the following descriptors</p>
+<ul>
+<li><strong>EnvType</strong>: Food of origin of the samples</li>
+<li><strong>FoodType</strong>: Either meat or seafood</li>
+<li><strong>Description</strong>: Replicate number</li>
+</ul>
+<p>We can navigate through the metadata</p>
+<div class="layout-chunk" data-layout="l-body">
+<div id="htmlwidget-3241988ce065fdfa626d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3241988ce065fdfa626d">{"x":{"filter":"none","data":[["DLT0.LOT08","DLT0.LOT05","DLT0.LOT03","DLT0.LOT07","DLT0.LOT06","DLT0.LOT01","DLT0.LOT04","DLT0.LOT10","MVT0.LOT05","MVT0.LOT01","MVT0.LOT06","MVT0.LOT07","MVT0.LOT03","MVT0.LOT09","MVT0.LOT08","MVT0.LOT10","BHT0.LOT01","BHT0.LOT07","BHT0.LOT06","BHT0.LOT03","BHT0.LOT10","BHT0.LOT05","BHT0.LOT04","BHT0.LOT08","VHT0.LOT02","VHT0.LOT10","VHT0.LOT03","VHT0.LOT01","VHT0.LOT08","VHT0.LOT06","VHT0.LOT07","VHT0.LOT04","SFT0.LOT08","SFT0.LOT07","SFT0.LOT06","SFT0.LOT03","SFT0.LOT02","SFT0.LOT05","SFT0.LOT04","SFT0.LOT01","FST0.LOT07","FST0.LOT08","FST0.LOT05","FST0.LOT06","FST0.LOT01","FST0.LOT03","FST0.LOT10","FST0.LOT02","FCT0.LOT06","FCT0.LOT10","FCT0.LOT05","FCT0.LOT03","FCT0.LOT08","FCT0.LOT02","FCT0.LOT07","FCT0.LOT01","CDT0.LOT10","CDT0.LOT08","CDT0.LOT05","CDT0.LOT04","CDT0.LOT06","CDT0.LOT09","CDT0.LOT07","CDT0.LOT02"],["DesLardons","DesLardons","DesLardons","DesLardons","DesLardons","DesLardons","DesLardons","DesLardons","MerguezVolaille","MerguezVolaille","MerguezVolaille","MerguezVolaille","MerguezVolaille","MerguezVolaille","MerguezVolaille","MerguezVolaille","BoeufHache","BoeufHache","BoeufHache","BoeufHache","BoeufHache","BoeufHache","BoeufHache","BoeufHache","VeauHache","VeauHache","VeauHache","VeauHache","VeauHache","VeauHache","VeauHache","VeauHache","SaumonFume","SaumonFume","SaumonFume","SaumonFume","SaumonFume","SaumonFume","SaumonFume","SaumonFume","FiletSaumon","FiletSaumon","FiletSaumon","FiletSaumon","FiletSaumon","FiletSaumon","FiletSaumon","FiletSaumon","FiletCabillaud","FiletCabillaud","FiletCabillaud","FiletCabillaud","FiletCabillaud","FiletCabillaud","FiletCabillaud","FiletCabillaud","Crevette","Crevette","Crevette","Crevette","Crevette","Crevette","Crevette","Crevette"],["Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Meat","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood","Seafood"],["LOT8","LOT5","LOT3","LOT7","LOT6","LOT1","LOT4","LOT10","LOT5","LOT1","LOT6","LOT7","LOT3","LOT9","LOT8","LOT10","LOT1","LOT7","LOT6","LOT3","LOT10","LOT5","LOT4","LOT8","LOT2","LOT10","LOT3","LOT1","LOT8","LOT6","LOT7","LOT4","LOT8","LOT7","LOT6","LOT3","LOT2","LOT5","LOT4","LOT1","LOT7","LOT8","LOT5","LOT6","LOT1","LOT3","LOT10","LOT2","LOT6","LOT10","LOT5","LOT3","LOT8","LOT2","LOT7","LOT1","LOT10","LOT8","LOT5","LOT4","LOT6","LOT9","LOT7","LOT2"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>EnvType<\/th>\n      <th>FoodType<\/th>\n      <th>Description<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>EnvType is coded in French and with categories in no meaningful order. We will translate them and order them to have food type corresponding to meat first and to seafood second.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+## We create a &quot;dictionary&quot; for translation and order the categories 
+## as we want 
+dictionary = c(&quot;BoeufHache&quot;      = &quot;Ground_Beef&quot;, 
+               &quot;VeauHache&quot;       = &quot;Ground_Veal&quot;, 
+               &quot;MerguezVolaille&quot; = &quot;Poultry_Sausage&quot;, 
+               &quot;DesLardons&quot;      = &quot;Bacon_Dice&quot;, 
+               &quot;SaumonFume&quot;      = &quot;Smoked_Salmon&quot;, 
+               &quot;FiletSaumon&quot;     = &quot;Salmon_Fillet&quot;, 
+               &quot;FiletCabillaud&quot;  = &quot;Cod_Fillet&quot;, 
+               &quot;Crevette&quot;        = &quot;Shrimp&quot;)
+env_type &lt;- sample_data(food)$EnvType
+sample_data(food)$EnvType &lt;- factor(dictionary[env_type], levels = dictionary)</code></pre>
+</div>
+<p>We can also build a custom color palette to remind ourselves which samples correspond to meat and which to seafood.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+my_palette &lt;- c(&#39;#67001f&#39;,&#39;#b2182b&#39;,&#39;#d6604d&#39;,&#39;#f4a582&#39;,
+                 &#39;#92c5de&#39;,&#39;#4393c3&#39;,&#39;#2166ac&#39;,&#39;#053061&#39;)
+names(my_palette) &lt;- dictionary</code></pre>
+</div>
+<p>Before moving on to elaborate statistics, we’ll look at the taxonomic composition of our samples ## Taxonomic Composition {.tabset}</p>
+<p>To use the <code>plot_composition</code> function, we first need to source it:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+download.file(url = &quot;https://raw.githubusercontent.com/mahendra-mariadassou/phyloseq-extended/master/R/graphical_methods.R&quot;, 
+              destfile = &quot;graphical_methods.R&quot;)
+source(&quot;graphical_methods.R&quot;)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>We then look at the community composition at the phylum level. In order to highlight the structure of the data, we split the samples according to their food of origin. We show several figures, corresponding to different taxonomic levels.</p>
+<h3 id="phylum-level">Phylum level</h3>
+<p>We can see right away that meat products are whereas Bacteroidetes and Proteobacteria are more abundant in seafood.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(food, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, fill = &quot;Phylum&quot;) + 
+  facet_grid(~EnvType, scales = &quot;free_x&quot;, space = &quot;free_x&quot;) + 
+  theme(axis.text.x = element_blank())</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition-1.png" width="1008" /></p>
+</div>
+We have access to the following taxonimic ranks:
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+rank_names(food)</code></pre>
+<pre><code>
+[1] &quot;Kingdom&quot; &quot;Phylum&quot;  &quot;Class&quot;   &quot;Order&quot;   &quot;Family&quot;  &quot;Genus&quot;  
+[7] &quot;Species&quot;</code></pre>
+</div>
+<h3 id="within-firmicutes">Within firmicutes</h3>
+<p>Given the importance of Firmicutes, we can zoom in within that phylum and investigate the composition at the genus level.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(food, &quot;Phylum&quot;, &quot;Firmicutes&quot;, &quot;Genus&quot;, fill = &quot;Genus&quot;, numberOfTaxa = 5) + 
+  facet_grid(~EnvType, scales = &quot;free_x&quot;, space = &quot;free_x&quot;) + 
+  theme(axis.text.x = element_blank())</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition_2-1.png" width="1008" /></p>
+</div>
+<p>We see that there is a high diversity of genera across the different types of food and that no single OTU dominates all communities.</p>
+<h2 id="alpha-diversity">Alpha-diversity</h2>
+The samples have very similar sampling depths
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+sample_sums(food) %&gt;% range()</code></pre>
+<pre><code>
+[1] 11718 11857</code></pre>
+</div>
+<p>there is thus no need for rarefaction.</p>
+<h3 id="graphics" class="tabset">Graphics</h3>
+<p>We compare the different types of food in terms of diversity.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_richness(food, x = &quot;EnvType&quot;, color = &quot;EnvType&quot;,
+              measures = c(&quot;Observed&quot;, &quot;Shannon&quot;, &quot;InvSimpson&quot;)) + 
+  geom_boxplot(aes(group = EnvType)) +    ## add one boxplot per type of food
+  scale_color_manual(values = my_palette) ## custom color palette</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/alpha_diversity_score-1.png" width="1008" /></p>
+</div>
+<p>Different foods have very different diversities with dice of bacon having the highest number (<span class="math inline">\(\sim\)</span> 250) of OTUs. However, most foods have low effective diversities.</p>
+<h3 id="anova" class="tabset">Anova</h3>
+<p>We can quantify the previous claims by performing an ANOVA of the diversity against the covariates of interest. For the sake of brevity, we focus here on both the observed and effective number of species (as measured by the InvSimpson measure). We first build a data.frame with both covariates and diversity indices.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+div_data &lt;- cbind(estimate_richness(food),  ## diversity indices
+                  sample_data(food)         ## covariates
+                  )</code></pre>
+</div>
+<p>Foods differ significantly in terms of number of observed OTUs…</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+model &lt;- aov(Observed ~ EnvType, data = div_data)
+anova(model)</code></pre>
+<pre><code>
+Analysis of Variance Table
+
+Response: Observed
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+EnvType    7  86922 12417.5  12.488 1.634e-09 ***
+Residuals 56  55686   994.4                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>… but no in terms of effective number of species</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+model &lt;- aov(InvSimpson ~ EnvType, data = div_data)
+anova(model)</code></pre>
+<pre><code>
+Analysis of Variance Table
+
+Response: InvSimpson
+          Df  Sum Sq Mean Sq F value Pr(&gt;F)
+EnvType    7  486.26  69.466  1.2785 0.2777
+Residuals 56 3042.72  54.334               </code></pre>
+</div>
+<h2 id="beta-diversities">Beta diversities</h2>
+<p>We have access to a phylogenetic tree so we can compute all 4 distances seen during the tutorial.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+dist.jac &lt;- distance(food, method = &quot;cc&quot;)
+dist.bc &lt;- distance(food, method = &quot;bray&quot;)
+dist.uf &lt;- distance(food, method = &quot;unifrac&quot;)
+dist.wuf &lt;- distance(food, method = &quot;wunifrac&quot;)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+p.jac &lt;- plot_ordination(food, 
+                         ordinate(food, method = &quot;MDS&quot;, distance = dist.jac), 
+                         color = &quot;EnvType&quot;) + 
+  ggtitle(&quot;Jaccard&quot;) + scale_color_manual(values = my_palette)
+p.bc &lt;- plot_ordination(food, 
+                         ordinate(food, method = &quot;MDS&quot;, distance = dist.bc), 
+                         color = &quot;EnvType&quot;) + 
+  ggtitle(&quot;Bary-Curtis&quot;) + scale_color_manual(values = my_palette)
+p.uf &lt;- plot_ordination(food, 
+                         ordinate(food, method = &quot;MDS&quot;, distance = dist.uf), 
+                         color = &quot;EnvType&quot;) + 
+  ggtitle(&quot;UniFrac&quot;) + scale_color_manual(values = my_palette)
+p.wuf &lt;- plot_ordination(food, 
+                         ordinate(food, method = &quot;MDS&quot;, distance = dist.wuf), 
+                         color = &quot;EnvType&quot;) + 
+  ggtitle(&quot;wUniFrac&quot;) + scale_color_manual(values = my_palette)
+gridExtra::grid.arrange(p.jac, p.bc, p.uf, p.wuf,
+                        ncol = 2)</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/ordination-envtype-1.png" width="1008" /></p>
+</div>
+<p>In this example, Jaccard and UniFrac distances provide a clear separation of meats and seafoods, unlike Bray-Curtis and wUniFrac. This means that food ecosystems share their abundant taxa but not the rare ones.</p>
+<p>UniFrac also gives a much better separation of poultry sausages and ground beef / veal than Jaccard. This means that although those foods have taxa in common, their specific taxa are located in different parts of the phylogenetic tree. Since UniFrac appears to the most relevant distance here, we’ll restrict downstream analyses to it.</p>
+<p>One can also note that dices of bacon are located between meats and seafoods. We’ll come back latter to that point latter.</p>
+<h3 id="hierarchical-clustering">Hierarchical clustering</h3>
+<p>The hierarchical clustering of uniFrac distances using the Ward linkage function (to produce spherical clusters) show a perfect separation according.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+par(mar = c(1, 0, 2, 0))
+plot_clust(food, dist = &quot;unifrac&quot;, method = &quot;ward.D2&quot;, color = &quot;EnvType&quot;, 
+           palette = my_palette, 
+           title = &quot;Clustering of samples (UniFrac + Ward)\nsamples colored by EnvType&quot;)</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/hclust-1.png" width="1008" /></p>
+</div>
+<h3 id="permanova">PERMANOVA</h3>
+<p>We use the Unifrac distance to assess the variability in terms of microbial repertoires between foods.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+metadata &lt;- sample_data(food) %&gt;% as(&quot;data.frame&quot;)
+model &lt;- adonis(dist.uf ~ EnvType, data = metadata, permutations = 999)
+model</code></pre>
+<pre><code>
+Call:
+adonis(formula = dist.uf ~ EnvType, data = metadata, permutations = 999) 
+
+Permutation: free
+Number of permutations: 999
+
+Terms added sequentially (first to last)
+
+          Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+EnvType    7    7.6565 1.09379  13.699 0.63132  0.001 ***
+Residuals 56    4.4713 0.07984         0.36868           
+Total     63   12.1278                 1.00000           
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>The results show that food origin explains a bit less than 2 thirds of the total variability observed between samples in terms of species repertoires. This is quite strong! Don’t expect such strong results in general.</p>
+<h2 id="heatmap">Heatmap</h2>
+<p>We investigate the content of our samples when looking at the raw count table and use a custom color scale to reproduce (kind of) the figures in the paper.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+p &lt;- plot_heatmap(food) + 
+  facet_grid(~EnvType, scales = &quot;free_x&quot;, space = &quot;free_x&quot;) + 
+  scale_fill_gradient2(low = &quot;#1a9850&quot;, mid = &quot;#ffffbf&quot;, high = &quot;#d73027&quot;,
+                       na.value = &quot;white&quot;, trans = log_trans(4),
+                       midpoint = log(100, base = 4))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot(p)</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_heatmap_raw-1.png" width="1008" /></p>
+</div>
+<p>It looks like: - there is some kind of block structure in the data (eg. OTUs that are abundant in seafoods but not meat products or vice-versa) - dices of bacon have a lot of OTU in common with seafoods. This is indeed the case and the result of “contamination”, sea salt is usually added to bacon to add flavor. But, in addition to flavor, the grains of salt also bring sea-specific bacterial taxa (at least their genetic material) with them.</p>
+<h2 id="differential-abundance-study">Differential abundance study</h2>
+<p>To highlight the structure, we’re going to perform a differential analysis (between meat products and seafoods) and look only at the differentially abundant taxa.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+cds &lt;- phyloseq_to_deseq2(food, ~ FoodType)
+dds &lt;- DESeq2::DESeq(cds)
+results &lt;- DESeq2::results(dds) %&gt;% as.data.frame()</code></pre>
+</div>
+We can explore the full result table
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+DT::datatable(results, filter = &quot;top&quot;) %&gt;% 
+  DT::formatRound(columns = names(results), digits = 4)</code></pre>
+<div id="htmlwidget-1776819c242153d55477" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1776819c242153d55477">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"3843.33339484477\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-5.69931884403118\" data-max=\"30\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.396486122354481\" data-max=\"2.92296096140433\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-5.50180130249039\" data-max=\"14.2197280854913\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"0.998662486404489\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"0.998662486404489\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["otu_00520","otu_00555","otu_00568","otu_00566","otu_00569","otu_00545","otu_00527","otu_00521","otu_00526","otu_01626","otu_01827","otu_01630","otu_01798","otu_01825","otu_01826","otu_01824","otu_01097","otu_01100","otu_01095","otu_01091","otu_01093","otu_01094","otu_01101","otu_01098","otu_01781","otu_00029","otu_00034","otu_00032","otu_01802","otu_01451","otu_01447","otu_01448","otu_01461","otu_01450","otu_01803","otu_01160","otu_01732","otu_00011","otu_00013","otu_00010","otu_00001","otu_00006","otu_00012","otu_00005","otu_00004","otu_01665","otu_01221","otu_01209","otu_01213","otu_01680","otu_01210","otu_01208","otu_01175","otu_01205","otu_01177","otu_01203","otu_01187","otu_01204","otu_01192","otu_01168","otu_01184","otu_01182","otu_01169","otu_01789","otu_01717","otu_01697","otu_01902","otu_01408","otu_01386","otu_01430","otu_01420","otu_01432","otu_01393","otu_01407","otu_01444","otu_01439","otu_01409","otu_00165","otu_01719","otu_01025","otu_01015","otu_01750","otu_01794","otu_00720","otu_00402","otu_00366","otu_00358","otu_00386","otu_01734","otu_01671","otu_00398","otu_00417","otu_00385","otu_00380","otu_00411","otu_00391","otu_00396","otu_00357","otu_00418","otu_00403","otu_00365","otu_00404","otu_00359","otu_00360","otu_01667","otu_00371","otu_00177","otu_00168","otu_00182","otu_01039","otu_01040","otu_01034","otu_01045","otu_01041","otu_01043","otu_01698","otu_01744","otu_01357","otu_01374","otu_01788","otu_01687","otu_01085","otu_01084","otu_01086","otu_01075","otu_01083","otu_01080","otu_01082","otu_01087","otu_01088","otu_01658","otu_01079","otu_01769","otu_01659","otu_01723","otu_01336","otu_01342","otu_01330","otu_01226","otu_01264","otu_01275","otu_01231","otu_01293","otu_01257","otu_01334","otu_01222","otu_00214","otu_00209","otu_01711","otu_01537","otu_01515","otu_01782","otu_01528","otu_00960","otu_01005","otu_00988","otu_00973","otu_00952","otu_00994","otu_00941","otu_00971","otu_00999","otu_00966","otu_00990","otu_00978","otu_01653","otu_00989","otu_00876","otu_00903","otu_00870","otu_00917","otu_00875","otu_00935","otu_00865","otu_00857","otu_00919","otu_00964","otu_01757","otu_00984","otu_00954","otu_00937","otu_00982","otu_00985","otu_00969","otu_01713","otu_00156","otu_00145","otu_00160","otu_01735","otu_01682","otu_01833","otu_01775","otu_01657","otu_01652","otu_00432","otu_00482","otu_00479","otu_00459","otu_01760","otu_00462","otu_00446","otu_00451","otu_00431","otu_00483","otu_00469","otu_00485","otu_00478","otu_00472","otu_00439","otu_00429","otu_00436","otu_00480","otu_00449","otu_01662","otu_01758","otu_01747","otu_01153","otu_01152","otu_01157","otu_01669","otu_01765","otu_01706","otu_01852","otu_00422","otu_01766","otu_01819","otu_01768","otu_01716","otu_01793","otu_01818","otu_01822","otu_01853","otu_00583","otu_00574","otu_00581","otu_00591","otu_00582","otu_00586","otu_00588","otu_00589","otu_00585","otu_00572","otu_00577","otu_01609","otu_01613","otu_01612","otu_01610","otu_01611","otu_00195","otu_00192","otu_00193","otu_00188","otu_01804","otu_00194","otu_00186","otu_00189","otu_00191","otu_00162","otu_00833","otu_01866","otu_00015","otu_01834","otu_00018","otu_01876","otu_01673","otu_01656","otu_01864","otu_00825","otu_00826","otu_00820","otu_00823","otu_00828","otu_00824","otu_00821","otu_01728","otu_01663","otu_01638","otu_01633","otu_01635","otu_01832","otu_00730","otu_00775","otu_00776","otu_00781","otu_00736","otu_00770","otu_00740","otu_00783","otu_00779","otu_00768","otu_00753","otu_00786","otu_00769","otu_00738","otu_00791","otu_00724","otu_00745","otu_00732","otu_00789","otu_00024","otu_01709","otu_00797","otu_00796","otu_00794","otu_00799","otu_00795","otu_01581","otu_01675","otu_01597","otu_01571","otu_01604","otu_01593","otu_01574","otu_01579","otu_01641","otu_01594","otu_01582","otu_01572","otu_01668","otu_01603","otu_01576","otu_01726","otu_01748","otu_00601","otu_00607","otu_00608","otu_00605","otu_00604","otu_00602","otu_00721","otu_00722","otu_01785","otu_01835","otu_01550","otu_01546","otu_01545","otu_01549","otu_01679","otu_01556","otu_01548","otu_01547","otu_01559","otu_00838","otu_00085","otu_00082","otu_00061","otu_01725","otu_01751","otu_01790","otu_01724","otu_00599","otu_01655","otu_00596","otu_00595","otu_00593","otu_01894","otu_01857","otu_01778","otu_01918","otu_01845","otu_00713","otu_01913","otu_00333","otu_00343","otu_01741","otu_00056","otu_01799","otu_01888","otu_01816","otu_00260","otu_00273","otu_01683","otu_01730","otu_01648","otu_01689","otu_00263","otu_01874","otu_01670","otu_01740","otu_01841","otu_01792","otu_01699","otu_01891","otu_01854","otu_00276","otu_00311","otu_00296","otu_01774","otu_01856","otu_01784","otu_01704","otu_01643","otu_01661","otu_01647","otu_01691","otu_01873","otu_01847","otu_00266","otu_01690","otu_00254","otu_01694","otu_00259","otu_00277","otu_01642","otu_01729","otu_01840","otu_01843","otu_01701","otu_01685","otu_01851","otu_01797","otu_00244","otu_00238","otu_00223","otu_00239","otu_00220","otu_00226","otu_01712","otu_00224","otu_00228","otu_00249","otu_00227","otu_00242","otu_00250","otu_00221","otu_00222","otu_00232","otu_00231","otu_01692","otu_00248","otu_00618","otu_00664","otu_00225","otu_00241","otu_00233","otu_00624","otu_01731","otu_00654","otu_01858","otu_00656","otu_01907","otu_00663","otu_01886","otu_00516","otu_00513","otu_00519","otu_00517","otu_01875","otu_01466","otu_01474","otu_01487","otu_01495","otu_01462","otu_01478","otu_00632","otu_00667","otu_00685","otu_00694","otu_00673","otu_00680","otu_00682","otu_00672","otu_01795","otu_00687","otu_00683","otu_01911","otu_00670","otu_01904","otu_00679","otu_01651","otu_00695","otu_00675","otu_00690","otu_00678","otu_00701","otu_00698","otu_01863","otu_00676","otu_00693","otu_01837","otu_00689","otu_00705","otu_00688","otu_01849","otu_01846","otu_01910","otu_01848","otu_00634","otu_00662","otu_01708","otu_00666","otu_01813","otu_01791","otu_01844","otu_01860","otu_01119","otu_01810","otu_00127","otu_00133","otu_01838","otu_01649","otu_01674","otu_01148","otu_01696","otu_01867","otu_01645","otu_01773","otu_01737"],[0.476697410560195,2.44590952525341,0.288734804393864,0.217391823818081,13.3332508859746,0.679528701898398,1.67390908926951,2.05806562615685,0.765912836299034,0.16545704801917,0.530873859539067,11.5163207777481,19.2352631666305,5.7613763808931,23.4764654273191,217.149191099716,3.17830254275519,5.24009483339695,0.130310973333457,1.22514762452003,1.47083451257609,0.940450491697419,1950.82411017192,290.018829880216,0,2.86419884585672,0.313191265262551,8.21242816035363,22.4847011356824,25.6156739093667,1.72993546020139,6.09020646925492,10.6312966742007,4.78936040715025,4.66324664444114,5.6977063221729,1.99536222862463,16.22380270411,3.16161906645024,5.56121167856956,7.60997125473556,4.24290424171515,69.7045935752653,12.758741281003,3.4013780890163,4.65179830984695,12.8081528979533,13.1572262400167,20.6452945838402,91.773596140566,71.8688068964745,11.0783537737271,2.19726297111414,4.63981429308514,0.116383281906529,4.65630648161512,10.7411982312493,5.50222287225783,17.4978827625003,10.0131553817763,0.549633794989775,8.8190890552064,1.78152987019408,1.30343724858834,3.62542847913782,29.5119124475599,57.9249910775788,46.9081669701713,12.5881201541526,18.507271035333,12.2683367499033,1.06324438935586,22.6626552746103,3.31329799081532,53.619728873091,54.499347385,4.32393144065513,0.791774706009261,2.64837952012212,1.05404491353766,9.49663322471743,7.26854900895104,21.1071985273081,23.9268756350875,8.83595230645529,70.7060768755626,46.6208450303511,19.0063561738613,8.08918183513489,3.6063308973181,6.56738181901815,18.2750906470211,9.08956198991346,6.11157458200481,3.6631023218555,2.73414910359356,2.51520884291344,11.6355345265165,2.12934395493,1.80366169969113,4.13994893239791,1.18243293122054,1.75756293224775,5.99423135651769,6.08103996172252,3.45474252240645,10.4935696869114,3.4069835871532,5.51006366346417,2.82236005229532,36.9698701513729,17.9522947501806,2.54743127887103,10.6638943887901,2.67174802286331,11.4504323579344,5.16079199675507,5.5680201827271,9.46595099003561,18.3146528513074,9.58318607168824,1.86208920764507,0.851394858529301,14.212695258984,12.6604495569989,6.96572366807951,7.90134768026613,11.8151883276906,18.4576944280809,9.18082747601136,33.8941551072726,49.9245883150785,64.3779178418396,10.0422447501689,8.64165613380801,1.06190509372499,3.88662556563461,7.26324359191598,248.026237136876,2.87254882479279,71.6077595426502,1.6234629781292,2.04956839134262,4.99477267245362,0.62219134135676,4.05261951331668,28.6999924268752,16.8404047603096,3.00881536165535,2.36303709004349,1.27843633703755,9.40236615666992,4.66281256856436,4.68687824908566,11.9263812636007,0.0802296454171354,1.44052891011682,0.998266640391608,7.94992059739865,99.6962196421338,2.67419289953638,16.4696378557407,26.4574274982564,21.9134643349423,46.4526285855127,11.9759231714221,27.8065331327972,3.20980839338467,8.43846488546595,60.798878160558,15.5951389058116,32.232360378029,0.761353058100213,7.46675204281769,26.1769521208557,18.5125964353704,2.98698587916441,5.08608009845204,6.02119041168426,4.01536031569725,15.7943730432195,1.10476081100758,0.8696844935801,6.48695670208909,9.33728711359533,18.6916975991484,31.6547467169356,4.03813394061191,3.43351940529065,2.96973442506248,2.5804755220233,14.9910512005627,3.03497595278858,18.6401398809571,7.39770428838753,2.43120894710739,1.00601685544043,0.934632884028689,3.6585342463088,1.45934306278257,0.703627333003531,0.786396006670673,12.6374787731316,2.63018976136662,6.70793262855875,2.13543930277557,0.878574611311654,3.02553687117605,10.0692433414827,3.15930385462859,3.74423978960257,3.82771505144096,0.203792953268937,15.777257204394,8.50909409495743,15.8067497389988,3.24297508240169,327.29993828474,3.90449113167027,1.58835456685534,5.65054755544667,16.0501646560828,5.60338815447213,3.84075260235788,4.56914278446491,1.87626701113442,265.817197321129,2.94224685242886,3.4845292883471,1.54041563380889,2.86947130391155,5.16106158083244,0.935809626429471,17.5726651059888,2.1775745946713,6.65883015861277,12.3464718373196,0.198417188520457,2.73484478740405,1.50659429836899,3.03007472147517,7.07173889342934,3.89880405972647,4.00259290017162,61.2819014360794,7.59253344024025,16.4415562441176,23.3395069978907,36.7139880914479,7.37833515991931,11.0277461909917,7.61171902278585,7.60107706353607,13.5153809845699,9.73616113351952,164.70325465775,217.446614203439,3843.33339484477,12.7062002188868,1.16309688979484,8.37618463473902,10.8820216811069,0.820074592468343,5.91324492009035,4.2021291987252,13.3317814570806,3.69478976626524,0.529003729380029,4.36942636200157,39.2869127258855,29.6950543834563,85.4754146966278,765.061694355273,18.8881310239621,0.0411380120631767,102.077921121419,3.67250639908685,10.2014700283071,14.9310074320402,1.12513753440228,3.91202809422444,14.3501699014423,2.19228876002284,2.48202300579596,3.15381382570949,1.25656327628884,4.7557079455158,4.7188326517944,6.08848788093557,1.98561896675185,4.01130679178107,36.4694017557529,314.076695411325,44.8729852996103,0.427835735906785,1.87175234736938,106.886683666885,0.868391818395487,10.9359263475811,20.5353412261876,1.45602037153008,3.32851688346752,14.9817762602143,454.386746842915,1460.46227169153,22.1263713642426,1.48113890632554,4.72354921511926,2.34145621349102,1.09299455478911,3.37066528021044,5.04178958398427,2.26605750086278,18.2258741184811,1.0252940877674,182.268241735389,14.4817498407401,2.69237011734857,25.503499245679,74.9848883407167,6.25805093808258,0.766992951867721,1.66117830269628,0.798311078633657,4.90520557382329,8.75714333863865,6.57344288739465,56.5516842386746,23.2941477294704,5.73280095031892,18.4324847320154,35.0547752810318,8.73495967648455,66.9836483630146,56.4887109543955,1.76642156014708,29.1131195910264,17.7611225504513,24.6925905847523,20.4036366637956,0.482148793437794,21.4510522910907,37.3595519698702,6.08141554016363,2.39820670741651,2.46872459819403,4.17124353114586,6.28908260820072,8.36871685271918,3.38309107926552,3.65350218642384,15.1302150393693,4.44641128690996,1.64614151177471,9.23408153917853,21.57160058617,38.1963200124533,8.3818578844718,3557.50117214358,1.40577846128748,3.69545878719096,1.32350710985227,4.10654702052641,6.32359862481168,1.76612011844606,5.96540681045194,0.607740415447102,2.17886939653981,6.89933427364607,3.99376014328672,3.18133839915753,20.3058559174714,5.1576923151751,1.67390515090873,4.23313254403452,2.54770192053699,1.18443004627749,3.83416166191561,7.09603365268241,3.11848604493298,0.766056609026754,1.86714062466778,2.56905448542257,2.70937897599682,3.80641182099893,21.731275023908,2.93339362586299,6.3832774969656,2.63408535069291,7.763533117421,3.41578048122697,4.1432897349434,5.09454362005855,6.76114633482363,9.11269478686663,4.06614766155752,9.73512411113227,4.15225137664307,3.87315202543534,14.5701215009181,3.7351229836777,1.66946749940774,9.85485952058882,6.44333099794137,135.456980811085,0.446564320572278,1.63632415430012,4.94915526814279,13.7059065957103,14.3865210305347,194.292706027548,305.901082399015,43.6689265182719,26.9337242762276,110.898999846199,6.14600241466359,9.80004363494661,31.5078487231513,6.92317958968821,3.39678072345789,30.0518265391383,4.35094687726066,3.70154604435619,15.4109560538245,6.58709396419842,49.326087540132,10.6624969568497,85.4377884813991,54.4200368844339,30.7661807632012,14.3908428542606,30.3751842328869,5.9632951898824,16.9355190280354,13.501758357455,5.53606407329465,4.51580456115317,4.35919924185391,29.6857061950916,46.4904123834597,4.36262398841388,4.69218386537836,30.4272303995378,11.5255030739786,18.3917705720111,17.2354921567668,58.1943060305598,15.0192990412352,47.7001228906445,2.81570252880545,25.070846993457,31.5039132635371,1.13604074810939,2.95360949871031,10.7990555705162,45.9132400598112,5.26386120160776,6.76897635592937,3.97744929564137,37.7333978947886,9.37126634611345,13.2600024312702,44.2951394413941,38.7457490842425,31.5230890905243,6.4724850621386,108.079479057023,22.473602800574,28.7440840702531,7.22251409542338,7.21317520807258,23.6803898330768,155.983254275022,5.50565345245502,4.23933976948742,26.2643970437604,23.2939258742894,3.87857211025599,2.65852610968073,72.9302025649823,23.2692929830483,12.5943312791345,19.8953994724203,18.7042267721135,2.27886477581473,7.13442289972734,0.7526036648503,89.9077681655995,5.47229552892379,35.53000079745,6.6346200857946,12.950767967264,8.88106900396303,9.36261656212227,16.5374178634959,1.04949393040784,5.95107660256553,1.78624112350274,4.30543004512175,1.92030437679853,3.06566355476103,7.31274337570484,1.73677774479996,4.60625964626805,3.99139716692368,2.78737474168772,5.55120230470136,3.55226819691211],[3.63845667646701,-0.947104420182307,2.69223514574308,0.649865409135303,1.38574626682667,3.94639807729429,3.34744996373331,3.67081055643585,4.14073972421954,2.51619933141859,3.68659900915063,6.61321279510565,7.34767779602681,5.93183515914746,7.71543030925938,7.96285750674805,4.26880560344223,6.26593417705561,2.80381309431723,4.56872385781504,4.77370995014189,4.12776284407473,8.6154736422588,7.83782676704622,null,4.32759515836773,3.24183450143093,4.45187399170063,7.99354984654287,6.18670398655405,4.4798944009895,5.71195498767673,7.10076867285261,4.28462370861931,4.03936052194402,6.37604405823789,-0.0601109401877955,3.12537696031634,0.430679284106609,0.241220760080008,1.04866751406367,1.5993891180054,6.24459914967083,1.08001999417771,0.9148131677438,-0.584653658847538,0.678717390509339,4.33576739372795,4.33786848580744,2.54365507924372,2.28069051808018,2.82221208889147,2.23119175104293,0.945120537715897,0.717831984686748,0.371997647661569,-0.285628137909315,-0.295155095117091,5.15314384282898,-4.48790525622224,-0.422513645884226,3.14728085744432,0.863171659914368,1.3472179701818,5.42219893694612,8.63640330534125,26.593912833907,1.79227397628141,2.51434462483777,1.76637640298344,0.463220550563143,4.46401944654194,7.4897184169151,4.78669896332141,4.28015332385943,3.59466294991533,3.66936411459581,4.1660771194662,-0.816815141661302,0.632955474470951,3.66385984786482,2.27145749818252,1.07616094832315,7.02489418708174,3.14492301496644,5.87139147781032,6.70410664704754,1.63716074251457,3.81617016344473,1.79148361239549,3.22762408701705,2.44835913390315,4.09954829204149,1.14985525604047,1.48239708854271,2.0312510090233,2.82489514519406,4.41855038780943,3.40803462929703,3.65734038052126,4.53672998342102,1.78852733128207,0.80890545230508,2.00040358736609,1.18046163021422,3.84639650297568,7.1434197224487,0.99156896924108,4.40395855370944,0.551365302604996,2.5749878010086,1.81067334476269,-0.36859041202832,1.20955922004156,2.19791747935799,2.72413530876573,5.92355541850319,1.82818272654518,3.87372679233924,7.93870423145205,2.37785526721906,2.02650007975052,2.2561525567494,6.76444172762259,4.44220122848763,2.26165485314601,3.4687075574598,3.04577443025713,4.68796745665566,4.84351564496396,8.83419199702737,5.40983617943314,9.76205808073659,7.05076362866555,3.10742788054188,4.46020815433887,1.22458070158581,3.1972528670698,5.38691219968261,0.671834403523768,6.08326263514641,4.91118586143644,1.76598541987421,-3.63887113379747,3.94242784184393,3.07088077817436,4.44812665957586,2.09386873778986,2.00436642677101,3.11532708053715,-1.62157874690739,3.50118120797141,4.51415824715373,2.90785256072681,0.885547438619353,2.00728211566305,0.40029460263485,-0.571897617189814,3.12616908364744,2.47843696811345,1.89540276521626,4.79974440430492,7.71797565612593,1.21348202989152,3.13060957509302,2.42094966844296,6.99651999569842,-3.05191367530391,1.91182484314813,5.94753699961772,4.26079979240349,2.13780468819869,0.73668657551881,5.75596297036381,2.99360234041171,6.38517101751509,-3.51791873773532,-1.99154420273725,-0.922506691059435,-0.69276513516563,4.38080512830979,0.634707276922187,-0.430991218510524,4.010097887618,6.10247129258262,3.51288166013726,4.06757885367447,0.0167043184081918,-0.657305862335447,-1.59634631622659,-1.62966895992747,-4.65206037785334,0.396458732144612,6.94480759273883,-3.71216999526887,-3.03131836564449,-0.0988372044894669,-1.39737169570693,-3.7180408088035,-0.518925469596325,-0.505365155001339,1.95844429990582,0.593606751559697,1.3637578391116,2.3458994350494,-0.977500632954734,4.01192788184993,-1.5499503497184,2.8761215591954,-2.89033957189413,-3.45855266436485,-3.35397261984533,0.494908751212175,0.778725770930399,1.15762445618105,-1.87867983876509,0.0223563734041609,2.03160631319639,-3.77966455586176,2.70640945694617,0.301914643396766,7.74129607803909,6.26296189359291,-3.73860758687919,-3.96248830803227,3.98049879581582,11.1630995696016,-3.32327543228282,-0.116334504883676,4.61737057789512,2.02946280350566,3.70078525920286,3.24657251655186,-0.055883587208686,-0.342244600164939,0.274534178025863,-3.22095291443544,1.20502579126681,0.780486828087195,-2.21221034702747,-2.8266037748885,-0.841056185405877,-1.64973702468788,1.27206526106385,2.38743077042301,2.5537508893829,2.9050809122237,5.15604834550894,3.59478670443249,6.47610839938951,2.61906331594702,2.63789064922592,0.538638762000246,-0.24902972900682,2.04628483095148,-1.149174702701,2.35525329996959,-0.600267199762883,0.10387516080477,-1.97938074186059,-4.15839309360369,-3.21539288549129,-0.917548245163306,-1.9365036496353,-2.37478564358237,3.06872666674271,2.15617860016145,-0.196688946767393,-0.929978996793947,-0.684652245122853,-1.21373940393346,-1.9638674286025,-1.09589841232254,-2.23571703689493,1.93546551114011,8.37429709355173,-3.23933225489976,-4.95986943711011,3.04707077714048,-1.05226951764801,-3.05082179784304,-5.62122380517891,-2.93100703840464,-2.70332130049619,-3.36244973003839,3.35384658296921,1.02042658247307,1.46304044254817,-2.32561542498595,-2.80355320711381,-2.15714446092053,0.192223902052562,-0.376212887983844,-2.09450818042546,0.350058428944406,-1.90572203059212,-3.1128786049974,-0.303326912931113,-3.27487384538916,-0.576238723524143,0.431656631611485,-0.343882476681111,-1.62875856642477,-1.63101613686967,7.30275103756084,1.49990481239569,0.304373331680655,-2.54617859632457,1.46598797411835,0.210590030471083,-1.28062952868486,-1.41296241676491,-0.302647588380504,0.546934156563821,1.91006512481752,-4.4803119032198,-3.95334536194433,-3.01544731413599,1.98721130326055,3.4215916139671,-4.4128031370805,1.48377580963434,0.52464333959483,3.68314682023711,3.87953111603913,6.56374493843648,3.08838905835469,7.19532628253846,4.73073312505656,3.32977465011462,2.28663390188674,1.28424121474629,3.88022393130408,-1.25088285157059,-0.496297677138615,-1.51687255483487,0.315852179214582,-0.400733779508512,1.2174223354423,-0.0731372412752882,-0.0316991103986657,0.351002828548415,-0.891360233292242,-3.41978222951539,-3.01255251908037,2.22384018470614,-3.31260437445414,-0.664777387253825,-1.5178879454832,-3.26076150402536,-3.64908145185785,-5.69931884403118,-3.93181885019664,-1.72781795765244,-4.15446580899782,8.17770511965172,8.67938895983255,6.86753704516706,30,4.73976060588726,4.98107472526806,-2.14888993058066,-3.77809287574719,-1.33287660277357,-2.51044528787393,4.46310438524664,3.65001671923859,2.55733475998179,5.37609264568222,-2.49575620490507,2.28616395020585,-3.93797394852688,-2.8053719204196,-1.91877293930264,-3.47328511798633,-1.11758363151965,-1.50507724219941,-3.12074876571755,-4.26833782686323,-2.17080845180753,0.476860493880044,-1.96496696761876,-3.16846649060504,-2.44068904373613,-2.34703812265985,-4.08678074462844,-0.801227464324204,-3.94471113116313,-2.63520293853051,-4.5176581601004,-3.50177349902926,-3.9328747168452,-4.14662949038334,-4.52052964888787,-4.38796245717976,-3.48522242105906,-5.0830437718836,-2.67378553576054,-3.73483988225524,-4.3491300924763,-3.65548385061191,-2.49312141129457,-3.39131088280201,-3.58855740539349,27.9371770173112,1.3924437978178,-2.51978363489335,6.02905612080995,7.52727042503196,7.59880687926314,2.65702140857465,3.28122282820927,5.33513026375814,5.85244444071412,4.8037173454935,-0.581343616601635,4.03257529296248,5.49297937182276,2.82762166069658,1.46325024923528,3.31158599937604,3.21788190774059,2.91497846972699,2.55084773186953,2.58233677993857,5.39199200764611,3.91829381922712,4.15339953423459,4.72955698846525,4.01123105122277,5.2267690736611,3.87976853161121,4.1322493926397,7.82597918402371,3.71565680129087,4.08767225383082,2.09223151107801,4.51331770469863,4.17066155158827,4.16861811308577,3.82728365315337,-1.087456956515,7.36354973664911,7.27050069110103,6.51409283689483,2.60390426477399,5.95018686931176,4.08573813008396,3.17482539245078,1.50130487804717,5.68782133926783,8.26859950896138,-1.11454030059128,2.49044739638221,7.18007429878119,3.96550153844563,4.02395744499231,3.8382054809633,3.20008613493673,5.77293948861593,5.68249711826994,5.0495078626533,3.79163262613449,6.43488313554621,8.2139998292085,3.44475574867904,5.48845918812711,2.7604983293836,3.62954306790257,2.85755949564447,4.33384027736661,7.14138578422317,8.80310814216585,3.66689858493598,3.0153293911148,7.68100675857504,6.25620812338448,4.61806275608368,4.22271680000364,6.1007054588038,3.75450649500139,5.76137737430235,8.0758889615117,1.93379272626958,-0.00273128698916258,4.23614566382205,-0.924402516866658,9.10903841282716,2.51709188291805,5.00931903089728,3.12397227111104,2.40338977104998,3.19858831783553,3.94360904594959,7.78801941091489,1.91935963465047,6.42154203083622,-2.26539249141753,-3.61838862519107,-2.677483097183,-3.35367841792402,-4.61888530090462,3.31334671144583,-3.9527998420326,-3.715363891334,-2.84969045718322,-4.23600592391363,2.77565059038019],[1.93749711149648,0.83586668958435,2.27620515797612,2.91879090284715,0.900897681353354,1.33574356923483,1.71279948270725,2.01746373707157,2.51222278522964,2.92172925739371,1.99953047951036,2.02364199282118,1.45581097161759,1.46927182536515,1.15978378008676,0.977272328698291,1.42352885610034,1.72489793363866,2.92069703083025,1.70855525428381,2.54478316808151,2.23893193943314,0.68360353899288,0.88504397688229,null,1.48433560085515,2.91938473621743,1.27156149406314,1.53710539131626,1.35295461479589,1.4529095512512,2.24494242870752,2.08732955459214,2.38120948755329,1.39577854625093,1.86530226763188,1.3136851764429,0.833255714785861,0.64199193714111,0.582686026900572,1.057322009949,1.17856616719425,0.916388765083221,0.674435019763729,1.52254710647003,1.08005782259481,1.19435416116191,1.59470350485738,1.40983131359892,0.866370484333601,1.09911204804001,1.45422273580316,1.41241262070027,0.835497263411557,2.91904629051811,0.757025073994546,0.561930563444503,0.662061826204272,1.54453416354486,1.52115398203199,1.73071526905323,0.885192623549881,1.68131218792442,1.70624207810674,2.58579453842837,2.38834734925489,2.45724943841506,1.25780921912802,1.21671223099114,1.16501650363881,1.35942076998918,1.66807156731459,1.50442831478294,1.98117576355782,0.850823704434382,1.03437563192462,2.03637643955156,2.01774324677738,1.20967905467498,1.32002521818013,0.892490272555568,1.42710266892216,0.630261745849719,0.809520128097544,1.4526227226379,0.902070265011357,1.36682200559009,0.99636269208637,1.11553278424134,0.772219413862709,0.758516692272872,0.703415758497582,0.687960774063456,0.786257493750715,1.68668373934936,1.14943451357454,1.5989643681285,1.64614130318244,1.09342270953122,1.13774572240292,1.25477522379709,1.2223605528242,1.478656825733,0.552518952850898,0.886463341076531,1.02194525660286,1.53701174034991,1.2260322915897,0.853821886793303,0.59511012153068,0.546902853293838,0.523569376712755,0.980824714804116,0.971961419097076,1.15065202135944,0.60580661564653,1.06019179573518,1.49753687162332,1.48932090449386,2.01737699410693,0.835007282217695,1.27165338147072,1.50530363048267,1.71492020655884,1.52384129953512,0.829502760263958,1.28892228768721,0.826665142597316,1.37964669494317,0.897390793858396,1.95609135345311,0.980543351796746,2.13702780998679,2.09892757179305,1.33152271495862,2.5161235249098,1.16459818856048,1.28417201639478,0.939739666061622,1.38231719497947,1.13754255542361,2.52362692712967,0.920373389283659,1.26533192606768,2.51264405567969,0.87606459975103,0.747892253651573,0.796967292270532,1.3092916243042,1.22590034195158,1.84069073283139,0.757231606918423,1.09133803128128,1.25171257220416,0.551954919688603,2.92167117271784,1.02973327630957,1.48195816196315,1.41788533787787,0.880973926210147,1.38239911427915,1.53989759532184,1.78165543027846,1.03352304223781,1.29017157222391,0.898777749971358,1.9493990890691,1.5566035103435,0.887892725085212,1.3583634494888,1.14179365695469,0.738056252435658,2.25981708968292,1.42388705380899,0.707857953489866,1.55826395793731,0.712902122470435,0.642443269495729,0.954254464939546,0.940267709585033,1.38851303100502,1.1756906489205,1.09432274884531,1.45518627696115,2.54760342827121,1.43642110797256,1.35401285144079,1.18314848451057,0.926436089430785,0.934753931056613,1.21897185607232,1.23481259900117,0.935388222274034,1.58559163385271,1.09689268953442,1.67762954972596,1.29875033126569,1.17565795920984,1.01755421513935,1.28649433111171,1.71474336085737,1.49344078564828,0.597709235250834,0.895124398024629,1.55375502633275,1.28822798447995,1.69563452063842,1.08865582541689,0.715204577714931,0.739597159634694,1.6918244288217,1.46587809946578,2.6274067726978,0.5792526001176,0.951708414224118,0.756083610281749,0.680357993336587,0.466435533270838,1.22046887018156,1.68043835334261,1.00391609162731,1.866846088217,2.40612671166391,1.17060288586416,1.40962203707274,2.22715493072712,2.22288082611622,1.63304905353548,1.20166433693533,2.90941014013578,1.59790616907557,2.05584008245534,1.52908591306355,0.642290573652251,1.05097003331013,0.787647052579756,0.76943267454254,2.41178929196297,1.96133392303389,0.924677369173086,0.854067449395017,1.47992657429072,0.851762884597551,1.89514470557631,0.521331172589019,1.30444242803642,0.904350167564652,1.66281604884599,0.795316609861527,1.11577726386321,1.16299754210018,1.0431916418632,0.911016315449072,1.05259115294779,0.703039246085335,0.495066878679665,0.495852904722132,0.630096497708052,1.0400419860291,1.91720099896448,0.994370804469118,1.5245857336939,0.930650837644899,1.22384369774024,1.31487848425733,1.53061411608514,1.39570247509654,1.54379486806536,1.1254737756722,0.682048620413082,0.60393448196618,0.512863163771512,0.643040227038829,0.916919572075735,2.92296096140433,2.75663667071254,0.94137897643406,1.2188806697706,1.26287495793286,2.09992071629087,0.993098108043293,1.13975248879244,1.27673092853489,1.45310991707917,1.62590649116259,1.86914353794747,1.21670909333788,1.16264452833665,1.14246013523077,1.27158397043005,0.744575618841438,0.510450050695724,0.459137974890837,0.581163195959516,2.3485888518724,0.869797237565126,0.680468005380384,1.31322270554856,0.900501047411453,0.710331513567862,1.16535751726028,1.23727680982234,0.665933308199231,0.584253640653582,0.880162384625604,0.781337233073215,1.24493553721444,0.854413671351079,1.22449716760809,1.32981997013498,1.15465698159462,1.2256660315662,1.00085561527751,0.726294598425981,1.52741523066766,1.26102373798995,1.47912701541872,0.858117721582115,0.618552978314856,1.13129242163279,1.50192588572338,1.41643291113932,1.08848711999004,2.91824230462073,2.4552420916896,1.97660595478295,2.00629036761064,1.55220999782883,1.42730914627123,1.94147353030527,1.32034426687878,0.702409955412292,1.49200849099349,0.473904148844036,0.396486122354481,0.839010253580951,0.656168201153261,0.499285430166893,0.406253288111389,0.421643201366112,1.29346609211962,0.769836587029757,0.760654479136723,0.895721432515311,1.80486365144626,1.88708712441781,1.52479617057569,1.0260124619121,0.763455163175146,1.64190188871033,1.30644124815529,1.37656371095903,1.33113357324893,1.45316754728018,1.01927535262317,2.20937377501526,2.45726182709479,2.05157705126898,2.65918174769684,2.91560770546725,1.22533237826483,1.8057343226217,1.79664933791199,1.09832690837794,1.59238041247891,1.69364112856171,2.03513338731054,1.03123074169281,2.17824841378048,1.44995190243049,1.53608119222831,0.987057065046954,0.98415444167435,1.45269652772971,1.53465545972772,1.45981321293372,1.46761003793662,0.935261257972296,0.775807338758521,1.21002423964169,1.0409182843524,0.641647476281892,1.2458995301805,1.16122764501722,1.91021140767741,0.953256037261534,0.994025683542469,1.04912090569447,1.40033891251187,1.81563834822581,1.66457146540563,0.804183642693298,1.14103370326729,1.514036705636,1.50642647244172,1.35591362559289,1.21540762644733,0.773542763383184,1.25170425149741,0.863061865011021,1.47847178603412,1.48482530171486,0.984768078300038,1.26019360872873,1.96467730250174,2.74110104586869,1.20858349045661,2.39112377287388,2.30875909913471,2.30588395206745,1.07565264009808,0.904597165760025,1.55287262734474,1.27017332630895,0.96746525386698,1.10934523262212,2.90769738036589,1.51420927145609,0.964567550964403,1.39725867862178,0.899876993532071,2.07416224946157,1.35295337024302,1.35388759500029,1.35356047805016,0.924914336359789,1.44734431635037,0.865897759690278,0.812606943104414,0.926723944054577,1.90996162230667,0.889500735830835,1.62061118602932,2.35014932529479,1.39808150301116,1.42237121363775,1.10390561318403,1.70779423134019,0.96635833212926,1.43401137991956,2.11302602373974,2.17246402684881,1.32572879117497,2.14121336083143,1.35743216021315,1.5849314106912,0.918816769586389,1.71201717254671,0.921182798324097,1.48499050623913,1.3830864759527,1.99706446883147,1.30998159248101,1.67428191514596,2.27826540899997,0.630513046269658,0.832648419989785,1.48207330886362,0.938876719165039,1.05974717165054,1.23843692764512,1.22681550814518,0.700657804778301,1.48519761605579,1.24509236702568,1.05483722230464,0.889297567757018,0.838201466677096,0.7758572553564,0.73915181769312,0.872629091085822,1.5276887403073,1.06273857444805,0.927736743927703,0.984976382535297,0.906045380156343,1.31706811008415,1.09815955492118,0.890995018476978,1.02499398434694,1.41068280859943,1.43792690357506,1.85825990843216,0.864603558595621,1.62932975518774,1.2311055144716,1.89772043493891,1.82146529305835,1.23231875819775,0.986808889443943,1.08447003672589,1.06847529837315,1.75155256368834,1.41118240905839,2.57067460439318,1.54723855575291,2.67073109157767,1.87252846449228,1.33529443984104,1.49375798780654,1.66500942297185,1.65139791228748,1.54350048335835,1.58626938602746,1.4337308357223,1.56889341213265,1.51869065217904,1.1665609147293],[1.87791592301097,-1.13308070770624,1.18277350190036,0.222648840141782,1.53818385318182,2.95445785268122,1.95437352564021,1.81951749069065,1.6482374686531,0.861202086076633,1.84373233963074,3.26797566890085,5.04713725839187,4.03726189854165,6.6524730227579,8.14804356259061,2.99874890849515,3.63264054925131,0.959980807567776,2.67402757175105,1.87588082553248,1.84363033613242,12.6030266826172,8.85586137160802,null,2.91550991290281,1.1104512746173,3.50110789960708,5.2003915227295,4.57273578795354,3.08339524448135,2.54436591096248,3.40184359351923,1.7993476554731,2.89398381483493,3.41823637320331,-0.0457574929410099,3.75080171051636,0.67084843156207,0.413980684182718,0.991814701856295,1.35706349166036,6.8143558581316,1.60136998009989,0.600843917312197,-0.541316998605614,0.568271466353881,2.71885487209469,3.07687057590884,2.93599000109088,2.07503004097463,1.94070139285284,1.57970250218857,1.13120722126213,0.245913189872484,0.491394090421171,-0.508297922359804,-0.445811982257416,3.33637414079726,-2.95032936128345,-0.244126606749912,3.55547569389226,0.513391662841601,0.789581963467153,2.09691793232795,3.61605832084501,10.8226346166388,1.42491718857325,2.06650723219044,1.5161814424657,0.340748472282669,2.67615582809106,4.97844818747361,2.41609000643405,5.03059952555604,3.47520072879799,1.80190854860011,2.06472113145219,-0.675232937616472,0.479502562340122,4.10520983872875,1.59165668150425,1.70748257435849,8.67784993016907,2.16499643434972,6.50879616094695,4.90488638581233,1.64313733896076,3.4209394984658,2.31991527308843,4.25517871906756,3.48067142984196,5.95898552155439,1.46244107710219,0.878882658295234,1.76717419307905,1.76670299945486,2.68418657576185,3.11685005221645,3.21454988448293,3.61557185492743,1.46317494224579,0.547054217197482,3.62051577967482,1.33165307070753,3.76379896880371,4.6476025751257,0.808762522849534,5.15793589017656,0.926492900485093,4.70830931947089,3.4583255348719,-0.375796415470559,1.24445188489601,1.91014958350419,4.49670775856165,5.5872488754693,1.22079313116574,2.60100209474714,3.93516147682967,2.84770602347768,1.59359469276666,1.49880230875812,3.944464414001,2.91513376743551,2.72651877906509,2.69116888628244,3.68441134543008,3.39794780347644,5.39733155066023,4.51624714839227,5.51718204964642,4.56805383398212,3.35922197765132,2.33374004486168,1.77265071058018,1.05150489981397,2.48973877817852,5.73234523797293,0.486020434357503,5.34772313013033,1.94608236607395,1.91877062118093,-2.87582337790696,1.56903554760663,3.50531316874016,5.94755011548516,2.62729569719794,1.53087852206814,2.54125639248757,-0.880962085582431,4.62365962538143,4.13635199888882,2.32309926839381,1.60438363176281,0.687032180214793,0.38873620173707,-0.385906722516526,2.20481092520947,2.8132920786605,1.37109662877976,3.11692441035455,4.3319126274151,1.17412189210997,2.42650639844489,2.69360213748072,3.58906497644845,-1.96062366236758,2.15321602388921,4.3784577697935,3.73167232665103,2.89653353811951,0.325993895205995,4.04242945742519,4.22910038045447,4.09761836882066,-4.93464478061112,-3.09995340802693,-0.966730285215776,-0.736774354902995,3.1550335002178,0.539859084109383,-0.393842875847452,2.75572821920245,2.39537724940327,2.44557925293616,3.00409176275263,0.0141185308749322,-0.709499413758055,-1.7077717067444,-1.33692090741001,-3.76742218342795,0.423844049672527,4.37994717206231,-3.38425994692746,-1.80690568197231,-0.0761017742287276,-1.18858693956029,-3.65389947138523,-0.403363976853206,-0.294717662442883,1.3113638777822,0.993136322062322,1.52354001535558,1.50982580605793,-0.758794751186335,2.36603338338465,-1.42372852239583,4.02139702235208,-3.90799171446486,-2.04427398342605,-2.28802969432973,0.188363962655088,1.34436301325588,1.21636463319997,-2.48475143914972,0.0328597203576923,4.35559936643319,-3.09689550320075,1.61053778114667,0.300736930023079,4.14672432124959,2.60292272357588,-3.19374540420623,-2.81102891684419,1.78725724955123,5.02190645510471,-2.03501261954629,-0.0968111487608679,1.58704698048506,1.27007633037662,1.80013284631698,2.1232113178306,-0.0870067061562427,-0.325646392682585,0.348549743348483,-4.18614002368749,0.499639746839591,0.397936740358775,-2.3924132035434,-3.30957909342024,-0.568309401301865,-1.93685009586601,0.67122328829081,4.57948976763968,1.95773369103538,3.2123407684513,3.10079298854934,4.51994420820455,5.80412292769521,2.25199385307162,2.52867310604071,0.591250401190381,-0.236587328621763,2.91062674288186,-2.32125143529259,4.74990320221969,-0.952659159265807,0.0998759302029413,-1.03243256337217,-4.18193401788762,-2.1090272684769,-0.985921043691585,-1.58231288293672,-1.80608753737704,2.00489897126494,1.54486979756363,-0.127406141085233,-0.826300014177149,-1.00381735939616,-2.00972032592341,-3.82922301176894,-1.70424549855785,-2.43829132345128,0.662159206604738,3.03786755161576,-3.44105013601465,-4.06920017694891,2.41280481333487,-0.50109964127915,-3.07202457957965,-4.93196887960698,-2.29571241120329,-1.86036945225039,-2.06804619350163,1.79432264824997,0.838677534392102,1.2583729651584,-2.03562063416436,-2.2047723723394,-2.89714624859334,0.376577300346172,-0.819389613924423,-3.60399315542921,0.149050536736272,-2.19099572669018,-4.57461420725769,-0.230979034743697,-3.6367240824461,-0.811225058324955,0.370407042661293,-0.277934956794744,-2.44582835303605,-2.79162340357027,8.29704968665211,1.91966381340379,0.244489230632532,-2.98003026133502,1.19721630469917,0.158359804485195,-1.10909954133415,-1.15281192459856,-0.302388859852265,0.753047258989853,1.25052119847109,-3.55291638709462,-2.67275583552586,-3.51402521856371,3.21267760875452,3.02449795343693,-2.93809646602844,1.04754400859046,0.481993153579651,1.26211137930707,1.58010125729369,3.32071494703011,1.53935298111048,4.63553661721222,3.31444182041106,1.71507599673072,1.7318467306199,1.82833572453068,2.60067148057605,-2.63952711665805,-1.25174034892171,-1.80793089042805,0.481358558155439,-0.802614607389126,2.99670764783693,-0.173457655758057,-0.0245071058234854,0.45594459195903,-1.17183328007725,-3.81790823058923,-1.66913025073466,1.17845125216051,-2.17248996185731,-0.647923306910846,-1.98818217322734,-1.98596610823477,-2.79314623371728,-4.14025068266586,-2.95373727266164,-1.18900120009308,-4.0759013727802,3.70136787723717,3.53213844130487,3.34744290540744,11.2816658831174,1.62565100819271,4.06508047418256,-1.19003659821936,-2.10285490664415,-1.21355180557493,-1.57653615191475,2.63521256657061,1.7935024514841,2.47988607843847,2.46808059708474,-1.72126827153477,1.48830931709374,-3.98961122712754,-2.85054032337323,-1.32083535871138,-2.26323445824286,-0.76556618450774,-1.02552940038177,-3.33676685430499,-5.50180130249039,-1.79402063255389,0.458115205629921,-3.0623777701192,-2.54311556738929,-2.10181789437155,-1.22867977503787,-4.28718055263383,-0.806043020406496,-3.76001575199944,-1.88183225859488,-2.4881927419714,-2.10370871530946,-4.8905181702945,-3.63409904414714,-2.98574640367714,-2.91282882865663,-2.57038675272189,-4.18217202301213,-3.45654521291934,-2.9838037841505,-5.03918695610628,-2.47247454103771,-1.67906716595898,-3.44376605774659,-2.8476238734567,14.2197280854913,0.507987036784527,-2.08490654951886,2.52143205182711,3.26031002015458,3.2953986571831,2.47014817751238,3.62727515894045,3.43565220341393,4.60759513642205,4.96526084662259,-0.524042110162166,1.38686209926531,3.62762233422373,2.93149158694945,1.04722931524648,3.68004296495888,1.55141282152634,2.15452988538946,1.88409122093255,1.90781041690763,5.829720435373,2.70722990719133,4.79663965838208,5.82022714499196,4.32839906312654,2.73658329707625,4.36173729298529,2.54980924990661,3.32999231146389,2.65768254088775,2.87384349081172,1.8952992774838,2.64277605690049,4.31585408116541,2.90696306281726,1.81128088823992,-0.500563849654335,5.55434096752393,3.39550500856109,4.79883490890033,1.64291290286083,6.47592323765519,2.38650534328826,3.44646621520367,1.01098617919745,4.11241194108991,4.14037685713748,-0.85080607772543,1.48747195669559,3.15155305014829,6.28932511691386,4.83272092804989,2.58975413564816,3.40841994440188,5.44746864445474,4.58844289234429,4.11594720569488,5.41153270580383,4.33267806652909,6.5971007828362,3.26567519219017,6.17167907247298,3.29335898244978,4.67810675590743,3.86599806324345,4.96641737209788,4.67463403755051,8.2834182872659,3.95252059265396,3.06132151448489,8.47750777919053,4.75010219705704,4.20527484862172,4.73932705844051,5.9519426962206,2.66148171092336,4.00672479246204,4.3459415579414,2.23662360285753,-0.00167632548320329,3.44092818529875,-0.487112063424883,5.00093987381584,2.042565583112,5.076280812306,2.88064415365739,2.24936390640884,1.82614463541995,2.7945423785299,3.02956251157011,1.24050659642235,2.40441355218689,-1.20980403469155,-2.70980580554339,-1.7924477184652,-2.01420987272138,-2.79695478996133,2.1466444275007,-2.49188433998068,-2.59139567815897,-1.81636970054552,-2.78924869777512,2.37934475202633],[0.0603926677493273,0.257180362212312,0.236898924940971,0.823808821465459,0.124003667838815,0.00313218933740801,0.0506570592657978,0.0688325168388905,0.0993039508439251,0.389126751343729,0.0652221575258626,0.00108319677243263,4.48479163318717e-07,5.40786858311728e-05,2.88208659751218e-11,3.69859128015325e-16,0.00271090619280312,0.0002805356829659,0.337064874356583,0.00749462894509782,0.0606716461401958,0.0652370318322447,2.03194725210213e-36,8.30400319236644e-19,null,0.00355107825851497,0.266804613589317,0.000463328213078866,1.98869159953854e-07,4.81397016017751e-06,0.0020465314746044,0.0109476335225814,0.000669329321244594,0.0719637041250608,0.00380387768865666,0.000630283433774855,0.963503539018508,0.00017627006013008,0.502317090653581,0.678888252932911,0.321287924548213,0.174761037424102,9.46870574522513e-12,0.109294997668465,0.547943949913214,0.588289105927245,0.569850650819142,0.00655083433903035,0.00209186105313573,0.00332485039372372,0.0379837506642679,0.052294507344652,0.114175012344064,0.257967883256417,0.805749433265544,0.623147743143008,0.611244426874808,0.655733065712154,0.000848788509231466,0.00317435336633857,0.8071327666363,0.000377295825984944,0.607677376328815,0.429771945132645,0.0360008408222598,0.000299123011613154,2.6893346393061e-27,0.154181140398065,0.0387806102309517,0.129473479176348,0.733292944436082,0.0074472010617784,6.40960963641267e-07,0.0156881828290741,4.88948493264052e-07,0.000510471222378485,0.0715597950327874,0.0389493939745379,0.49952778330531,0.631581145786944,4.03948033249461e-05,0.111461866659205,0.0877323939609206,4.0332073395503e-18,0.0303879583348196,7.57554347869586e-11,9.34814325172227e-07,0.100354520926434,0.000624052133861722,0.020345461191812,2.08882102446612e-05,0.000500158638892797,2.53808581811621e-09,0.143620379956816,0.379464902330462,0.0771990602326576,0.0772779807918548,0.00727065190618282,0.00182794521546579,0.00130649211733092,0.000299685331855197,0.143419515503289,0.584341484524115,0.000294016317846302,0.182974217046436,0.000167351435318486,3.35815115715271e-06,0.418651757018682,2.49687075808141e-07,0.35418988493452,2.49779869295522e-06,0.000543544184125375,0.707068252856479,0.213333297239699,0.0561139563973983,6.90137419554886e-06,2.30695002957583e-08,0.222164355173211,0.00929518864079573,8.31407776338317e-05,0.00440355811314634,0.111026843964297,0.133924925492957,7.9978528753511e-05,0.00355536117382688,0.00640063103330857,0.00712021396354159,0.000229231792370418,0.000678933724995796,6.76393272153211e-08,6.29451958916054e-06,3.44478541030075e-08,4.92273613397095e-06,0.000781622556588947,0.0196093378862726,0.0762866032388587,0.293026760193776,0.0127837014880806,9.90513999365302e-09,0.626952677903627,8.90675744156415e-08,0.0516448464464251,0.0550133694605044,0.00402975130006413,0.116639656282193,0.000456070472948963,2.7218544654184e-09,0.00860665071865021,0.125799418352802,0.0110454888106268,0.378338341555746,3.77028353516948e-06,3.52870766107175e-05,0.0201738202804317,0.108629516717907,0.49206244985011,0.697471299431213,0.69956575171614,0.0274673650822012,0.00490370873730015,0.170344835761402,0.00182748423113831,1.47819604807162e-05,0.240346205853517,0.0152449814986075,0.00706844846373786,0.000331866125199647,0.0499229400001311,0.0313017049136405,1.19522094719476e-05,0.000190212821023373,0.00377310309828126,0.744428973979956,5.2900230158887e-05,2.34627647653859e-05,4.17422727439649e-05,8.02967637857588e-07,0.00193551086351274,0.333678883197062,0.461259581058863,0.00160479677477461,0.589294216800177,0.693697047085998,0.00585616345458561,0.0166032725827448,0.0144619660050793,0.00266374971194385,0.988735416428628,0.478014615163897,0.0876787108687693,0.181248455463496,0.000164941930445354,0.67167955057147,1.18708083853026e-05,0.000713703977220962,0.0707769864676474,0.939338128606063,0.234602249764428,0.000258287429310841,0.686680483232951,0.768209569481384,0.189734856648739,0.320643525279119,0.127623657398101,0.131087878378013,0.447975345979999,0.017979823079954,0.154525073789046,5.78539991151553e-05,9.30664970988097e-05,0.0409264879164415,0.0221357919191651,0.850591347636486,0.178831028087308,0.223846050259187,0.0129641919065275,0.973786453934257,1.32703299787967e-05,0.00195558797045125,0.107280504362165,0.763615105540696,3.37265737552006e-05,0.00924327854624564,0.00140439914510485,0.00493833474050097,0.0738959201426138,5.1161100851801e-07,0.0418496032175035,0.922876370095013,0.112502004638981,0.204057442001264,0.0718396642581857,0.0337361479897183,0.930666181583198,0.744691907489909,0.727427363159652,2.8373834979569e-05,0.617328765587064,0.690676816804467,0.0167379865352375,0.000934363629243569,0.569824896446183,0.0527636701819119,0.502078295048358,4.66111589646502e-06,0.0502612697302604,0.00131658108825495,0.00193003168981236,6.18559303494316e-06,6.4703795143482e-09,0.0243226604686409,0.0114494610030047,0.554352656904954,0.812976951452428,0.00360704638876112,0.0202732776419485,2.0351403992996e-06,0.34076279244187,0.920442825700748,0.30186952385025,2.89039860118937e-05,0.0349422279748614,0.32417185950452,0.113578161176744,0.0709046671908568,0.0449738487242368,0.122377760205378,0.89861895596894,0.408633925462344,0.315466655470399,0.0444607974521495,0.000128548477843625,0.0883352323181057,0.0147568760621128,0.507869194769638,0.00238258649586097,0.00057946115259562,4.71748037274258e-05,0.015830294531175,0.616300999297038,0.00212612217052888,8.14048884365589e-07,0.021692330339582,0.0628332735230846,0.0386356795651374,0.0727616851995485,0.40165028840354,0.208256904361157,0.0417884641701754,0.0274700716628583,0.00376574162127188,0.70648775965934,0.41256415869404,0.000313365311459602,0.881513755757795,0.0284521016908677,4.77098300864966e-06,0.817331089517061,0.000276127435393124,0.417236437816427,0.711079227125721,0.781062289022944,0.01445197854876,0.00524443553733453,1.06728748553814e-16,0.0549003778937028,0.806851941657592,0.00288219909092721,0.231222256361289,0.874173285428822,0.267387242751363,0.248987588830351,0.762355646051488,0.451421515721422,0.211109216501046,0.000380985539413987,0.00752309851554647,0.000441370907993804,0.00131503811693144,0.00249046156656994,0.0033023425239491,0.294848745948106,0.629810809847189,0.206908711167942,0.114083679438026,0.000897871900705978,0.123718146149951,3.5601269310516e-06,0.000918262868772078,0.0863312944698633,0.0833008553350599,0.067499181394076,0.00930415056290237,0.00830217811568388,0.210664492388039,0.0706172573192414,0.630261685004453,0.422197522742158,0.00272912301538288,0.862291709113265,0.980448115790927,0.648429822461594,0.24126399835717,0.00013458796733416,0.0950915693277026,0.238616755516355,0.0298187259780939,0.517034555352958,0.0467915458294042,0.0470370872878573,0.00521980890092893,3.46926487124255e-05,0.00313951159782237,0.234439194683715,4.58364448112022e-05,0.000214440308599987,0.000412213490321663,0.000815607865426727,1.61655379155625e-29,0.104023917615845,4.80158914807248e-05,0.234032007758803,0.0354784546669216,0.224918920276213,0.114902294007616,0.00840846073405083,0.0728926190007444,0.013142436488743,0.013583973050355,0.0852021541766021,0.136669338973784,6.61816797383318e-05,0.00436450159281419,0.186556267109079,0.0236212401259139,0.443934471617044,0.305113460295388,0.00084759016867759,3.75930488466885e-08,0.072809875689996,0.646869675141019,0.00219586134741427,0.0109868883402844,0.0355692310063813,0.219191892081434,1.80955209870886e-05,0.420218044034718,0.000169902658516605,0.0598587943859312,0.0128394128180073,0.0354038637541899,1.00570873897104e-06,0.000278953695448818,0.00282887130867371,0.00358170874770771,0.0101585034333359,2.88737367302371e-05,0.000547147411406283,0.0028468927335872,4.67513632148482e-07,0.0134181270556058,0.0931389544173246,0.00057367184961976,0.00440469484564746,6.91209885742537e-46,0.611462434311162,0.0370777840516396,0.0116878245968668,0.00111290495324935,0.000982821453884256,0.0135057095804923,0.000286428007899249,0.000591129311966002,4.07352840792337e-06,6.86087918820615e-07,0.600249251253101,0.165483816807576,0.00028604325489754,0.00337338503220249,0.294993827772796,0.000233194659712871,0.12080278454266,0.0311986408937914,0.0595526375286564,0.0564157239172793,5.55203111135129e-09,0.00678472533313088,1.61349475544938e-06,5.87677069588732e-09,1.5019713999717e-05,0.00620808758563256,1.29033748251718e-05,0.0107781872705884,0.000868483821650116,0.00786799683772657,0.00405509857674999,0.0580527638486346,0.00822294022784116,1.58986981183035e-05,0.00364956289276619,0.0700973825546277,0.616678109607585,2.78661078720139e-08,0.000685021205273499,1.59591270929657e-06,0.100400955017503,9.42339486581571e-11,0.0170093601914803,0.000567969577459768,0.312023044727354,3.91546838008651e-05,3.46735708138004e-05,0.394877084939648,0.136890204485093,0.00162404657757126,3.18849077379282e-10,1.3467952027971e-06,0.00960445010503506,0.00065340254312877,5.10917183832431e-08,4.46564431831692e-06,3.85592567578543e-05,6.24875784733896e-08,1.47306434567779e-05,4.19275763864471e-11,0.00109203430953291,6.75685448104301e-10,0.000989979879571804,2.89535801911703e-06,0.000110635815488977,6.8201091759587e-07,2.94478257202842e-06,1.19689108744511e-16,7.73322717510351e-05,0.00220362329230905,2.3006898399608e-17,2.03313873292688e-06,2.6076506902529e-05,2.14429158755782e-06,2.64978157933001e-09,0.00777975672363941,6.15665290902518e-05,1.38679492224029e-05,0.0253109509525834,0.998662486404489,0.000579722376451817,0.626178917964827,5.70515042970919e-07,0.0410954610198791,3.8489433395756e-07,0.00396863424054222,0.0244893529946578,0.0678284782980739,0.00519732282638234,0.00244908215174454,0.214788075868315,0.0161984369018379,0.226354097672123,0.00673226121158804,0.0730612768114558,0.0439875035910053,0.00515867512319863,0.0318216001074799,0.0127067407617842,0.00955875177530806,0.0693136798364326,0.00528304789602635,0.0173434469067501],[0.0972034366632031,0.321158728181384,0.299520585897935,0.847202986780909,0.172246190669258,0.008466661596255,0.0844839771307877,0.108379149184216,0.145092516074553,0.463115640683734,0.103683934604853,0.00345396706681347,6.31608155007193e-06,0.000282658698107264,1.21768158744889e-09,1.8751857790377e-14,0.00755181010852299,0.00119522345599757,0.405918981707334,0.0169520486550314,0.09734343225658,0.103683934604853,5.1509862840789e-34,8.42025923705957e-17,null,0.00929158822232076,0.331455579645333,0.00177960154568928,3.05535345747285e-06,3.81356698626562e-05,0.00599763848337821,0.0232098016188508,0.00234034459221386,0.110562418155775,0.00964282994074463,0.00223464126520176,0.971165594994798,0.000805125409783336,0.573591812976048,0.730777800927783,0.389696119009435,0.233783234759946,4.3642125571174e-10,0.156976101467173,0.621493473391498,0.659541209531324,0.642031733256233,0.0153054055755225,0.00609525030999895,0.00882564999799961,0.0666358532414665,0.0866448209926096,0.161244376764458,0.321350655555291,0.835135332009396,0.685327344411074,0.678362044192033,0.708862823701625,0.00283115640908127,0.00851532887160663,0.835135332009396,0.0015062124706643,0.677126219337823,0.500906611913221,0.0635973041703336,0.00122532631653697,3.40873165532048e-25,0.208362267050655,0.0675662178250603,0.178377863973935,0.772930400892086,0.0169315288713975,7.9260294772225e-06,0.0310699558372679,6.52360226539144e-06,0.00193140977422307,0.110562418155775,0.0676278861133244,0.572987751438443,0.687149444021417,0.000225056761381842,0.159186384214696,0.129680244134655,3.40806020192e-16,0.0554197657401206,2.74342895978486e-09,1.03032796274417e-05,0.145854682503938,0.00222812980188657,0.038633516195688,0.000134054716380294,0.00190661977382442,6.89990106983565e-08,0.194693937535042,0.452679307015398,0.115916971187782,0.115916971187782,0.016604596920877,0.00548383564639736,0.00407016226673939,0.00122532631653697,0.194693937535042,0.65689829856702,0.00122185469793504,0.242847979168961,0.000778414474371308,2.98698708188847e-05,0.491334353723314,3.7232749245508e-06,0.424525464921517,2.34515543949685e-05,0.00203973336458078,0.749965699159487,0.277333286411609,0.091773470624132,5.14558340756364e-05,4.67849465997978e-07,0.286608977284524,0.0201589928862885,0.000409246352042259,0.0108406810036081,0.159013022287849,0.18351334385116,0.000397540334098334,0.00929158822232076,0.0150237033976271,0.0163346085045954,0.00101947823448949,0.0023576671135128,1.10623028703767e-06,4.7631663159767e-05,6.46854149267585e-07,3.83973418449734e-05,0.00265961500799058,0.0376588420770463,0.115111035244349,0.362352603459133,0.0264544353243138,2.0924608236592e-07,0.686533493946304,1.41116438214782e-06,0.0858489742568444,0.0902646547458762,0.0101142767778837,0.163812481260587,0.00176509717393225,6.89990106983565e-08,0.0188899217071673,0.174263128701833,0.0232367752157169,0.452399856530102,3.23988771581513e-05,0.000203301680018566,0.0385967052157693,0.156463536863576,0.565704449147406,0.744458839603421,0.745125706134628,0.0506448230293424,0.0120105329942569,0.228478390822833,0.00548383564639736,9.99260528496418e-05,0.302371033170554,0.0303106102737021,0.0162895607777959,0.0013353660752081,0.0838110284108161,0.056678444254342,8.65681457468202e-05,0.00086105268088259,0.00961288075793265,0.781695232085681,0.000279379340526622,0.000148695271700633,0.000230036220447719,9.17161743051897e-06,0.00573861992866059,0.402798080430739,0.532707534389165,0.00490139737837788,0.659541209531324,0.741992411123631,0.0138741816424061,0.0325013868704695,0.0289810939311273,0.00746144256329024,0.99068943899074,0.550803204291127,0.129680244134655,0.241188889553786,0.000774310729035134,0.724556451361139,8.65681457468202e-05,0.00244491835439884,0.109934759222521,0.948694086062299,0.297358351576413,0.00112889419534997,0.737599586862513,0.801403810137987,0.250509302919039,0.389696119009435,0.176308431337432,0.180112613381172,0.519733410553454,0.0346607235799874,0.208362267050655,0.000299305893381467,0.000453699173356697,0.0708181889885183,0.0417206189703224,0.872975330469026,0.238598240105961,0.288045551983268,0.0266107097028723,0.979582801874342,9.34452402673598e-05,0.00576443663383015,0.154960728523128,0.798253316513676,0.000201169092869256,0.0201589928862885,0.00431533555495855,0.0120371909299711,0.11183651197703,6.65094311073413e-06,0.0716815838894402,0.935796639276343,0.160220551550459,0.26871980024582,0.110562418155775,0.060653287343217,0.94181188435665,0.781695232085681,0.768345152337383,0.000174456201286073,0.680403661201394,0.740323776151934,0.0326390737437132,0.0030366817950416,0.642031733256233,0.0871373966847861,0.573591812976048,3.81158993468994e-05,0.0841005404397427,0.00407016226673939,0.00573861992866059,4.75166010411542e-05,1.4262967016411e-07,0.0455040179247268,0.0239870939195181,0.627358921988418,0.839469072070022,0.00933047203623412,0.038633516195688,1.98426188931711e-05,0.409399847791536,0.935199424108776,0.370575904581299,0.000174456201286073,0.0625996805062005,0.392255686799026,0.161244376764458,0.109934759222521,0.0762600043584885,0.170924309708337,0.914859057582837,0.482931002819134,0.384474986354548,0.0756430345914088,0.000614849794969038,0.13019175228279,0.0294556541869731,0.578628498310576,0.00678635591798602,0.00209942317757908,0.000254442824359626,0.0312294137249249,0.680403661201394,0.00615967965976081,9.17161743051897e-06,0.0410373562767466,0.100493595193072,0.067545825998361,0.110904393243737,0.475786673412605,0.27283268865919,0.0716815838894402,0.0506448230293424,0.00961288075793265,0.749965699159487,0.486441926646228,0.00127100970328014,0.899250451044672,0.0522652737582243,3.81356698626562e-05,0.84224972029502,0.00119522345599757,0.490809452373384,0.752645444995283,0.813138769064954,0.0289810939311273,0.0125421170633425,6.74248645927411e-15,0.0902646547458762,0.835135332009396,0.00785631687688224,0.295288876511772,0.893560192968574,0.331455579645333,0.311695574165402,0.798253316513676,0.522535864088495,0.275147487830412,0.00150905991002259,0.0169520486550314,0.00172134654117583,0.00407016226673939,0.00701480007917199,0.00881204031390627,0.363014249225261,0.687149444021417,0.271768695756856,0.161244376764458,0.00295598086790864,0.172246190669258,3.11204198972959e-05,0.0030036082223706,0.128357672422935,0.124582695147125,0.106944015521239,0.0201589928862885,0.0183808048238067,0.275147487830412,0.109934759222521,0.687149444021417,0.493212313433811,0.00756101294425748,0.883195750546314,0.984331078625743,0.70246564100006,0.302774374175954,0.000637720555499244,0.139339380488859,0.300942027479582,0.054577956934634,0.587750043865358,0.0790777124516931,0.0792285822423378,0.0125421170633425,0.000202174401117238,0.008466661596255,0.297358351576413,0.000249882553970748,0.000962134835930916,0.00162009488056654,0.00275675458514234,2.73197590773006e-27,0.150686074946382,0.000256253231376079,0.297358351576413,0.0630545458749487,0.288693398936811,0.161820730727392,0.0185351721398425,0.110904393243737,0.0268678036281964,0.0274385431734261,0.12705144755158,0.186568101274038,0.000335541116273342,0.0108406810036081,0.246955685180948,0.0443554397919938,0.516226553004223,0.373653440506671,0.00283115640908127,6.80702705902539e-07,0.110904393243737,0.702276071298709,0.00631207349830898,0.0232098016188508,0.0630545458749487,0.283495635931855,0.000117620886416076,0.492033598904393,0.000783096798799263,0.0966509832919336,0.0264617166615029,0.0630545458749487,1.08488155459217e-05,0.00119522345599757,0.00779477039944331,0.00931244274404004,0.0217314820282756,0.000174456201286073,0.00203973336458078,0.007802024950966,6.40620031079136e-06,0.0273212466553901,0.136873767795894,0.00209942317757908,0.0108406810036081,3.50443412071466e-43,0.678362044192033,0.0652723490075739,0.0243857081095123,0.00350461373476658,0.0031738246950275,0.0273895790292384,0.00120015702483404,0.0021255500791969,3.44213150469525e-05,8.08945522888493e-06,0.670322401729784,0.222547201913637,0.00120015702483404,0.0089078448506597,0.363014249225261,0.00102808428238631,0.169190640229637,0.056678444254342,0.0964638569553636,0.0919703280580726,1.34041893974052e-07,0.0157071038534126,1.63608368202567e-05,1.35432851946131e-07,0.000100197302603375,0.014639536771701,9.21410005121422e-05,0.0229602560764215,0.0028779169776249,0.0175730149635567,0.010127758514346,0.0943357412540313,0.018285222348752,0.000104683635662077,0.00939252988138302,0.109689422701223,0.680403661201394,5.43389103504271e-07,0.0023626241569637,1.63608368202567e-05,0.145854682503938,3.18510746464571e-09,0.0330411709466686,0.00209942317757908,0.381194418498237,0.00022057138541154,0.000202174401117238,0.468858740197662,0.186568101274038,0.00493048871154867,1.0103530139456e-08,1.42255243295443e-05,0.0206332889968338,0.00230052145393255,8.93224180010491e-07,3.71160929407652e-05,0.00021965778849699,1.05604007620028e-06,9.99260528496418e-05,1.63517547907144e-09,0.00346038371833241,2.015132483464e-08,0.00317670758824623,2.66607993574716e-05,0.000534212937646773,8.08945522888493e-06,2.66607993574716e-05,6.74248645927411e-15,0.000388192690869057,0.00631207349830898,1.66635678408589e-15,1.98426188931711e-05,0.000163219617278793,2.05123742432418e-05,6.89990106983565e-08,0.0174528170747132,0.000315295255037956,9.63157569281958e-05,0.0470060517690834,0.998662486404489,0.00209942317757908,0.686533493946304,7.2312781696564e-06,0.0708687031873425,5.57546935189951e-06,0.0100104356216662,0.045647433706954,0.107130961050229,0.0125421170633425,0.00693678575941051,0.278510369476306,0.0318318120512861,0.289801837171127,0.0156571396067667,0.110904393243737,0.0750897788573727,0.0125141066385728,0.0574147731476594,0.0264029408451827,0.0206224985109838,0.108798872065236,0.0125751421750486,0.0335615556554286]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>baseMean<\/th>\n      <th>log2FoldChange<\/th>\n      <th>lfcSE<\/th>\n      <th>stat<\/th>\n      <th>pvalue<\/th>\n      <th>padj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"rowCallback":"function(row, data) {\nDTWidget.formatRound(this, row, data, 1, 4, 3, ',', '.');\nDTWidget.formatRound(this, row, data, 2, 4, 3, ',', '.');\nDTWidget.formatRound(this, row, data, 3, 4, 3, ',', '.');\nDTWidget.formatRound(this, row, data, 4, 4, 3, ',', '.');\nDTWidget.formatRound(this, row, data, 5, 4, 3, ',', '.');\nDTWidget.formatRound(this, row, data, 6, 4, 3, ',', '.');\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<p>Or only select the OTUs with an adjusted p-value lower than <span class="math inline">\(0.05\)</span> and sort them according to fold-change.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+da_otus &lt;- results %&gt;% as_tibble(rownames = &quot;OTU&quot;) %&gt;% 
+  filter(padj &lt; 0.05) %&gt;% 
+  arrange(log2FoldChange) %&gt;% 
+  pull(OTU)
+length(da_otus)</code></pre>
+<pre><code>
+[1] 273</code></pre>
+</div>
+<p>We end up with 273 significant OTUs sorted according to their fold-change. We keep only those OTUs in that order in the heat map.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+p &lt;- plot_heatmap(prune_taxa(da_otus, food), ## keep only da otus...
+                  taxa.order = da_otus       ## ordered according to fold-change
+                  ) + 
+  facet_grid(~EnvType, scales = &quot;free_x&quot;, space = &quot;free_x&quot;) + 
+  scale_fill_gradient2(low = &quot;#1a9850&quot;, mid = &quot;#ffffbf&quot;, high = &quot;#d73027&quot;,
+                       na.value = &quot;white&quot;, trans = log_trans(4),
+                       midpoint = log(100, base = 4))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot(p)</code></pre>
+<p><img src="formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/heatmap2_plot-1.png" width="1008" /></p>
+</div>
+<h1 id="a-few-conclusions">A few conclusions</h1>
+<p>The different elements we’ve seen allow us to draw a few conclusions:</p>
+<ul>
+<li>different foods harbor different ecosystems;</li>
+<li>they may harbor a lot of taxa, the effective number of species is quite low;</li>
+<li>the high observed number of OTUs in dices of bacon is caused to by salt addition, which also moves bacon samples towards seafoods.</li>
+<li>the samples are really different and well separated when considering the UniFrac distance (in which case food origin accounts for 63% of the total variability)</li>
+<li>differential analyses is helpful to select and zoom at specific portions of the count table.</li>
+</ul>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+  <h3 id="citation">Citation</h3>
+  <p>For attribution, please cite this work as</p>
+  <pre class="citation-appendix short">Migale (2019, March 20). Migale Blog: Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis. Retrieved from https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/</pre>
+  <p>BibTeX citation</p>
+  <pre class="citation-appendix long">@misc{migale2019formation,
+  author = {Migale, Équipe},
+  title = {Migale Blog: Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis},
+  url = {https://inra-migale.github.io/posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/},
+  year = {2019}
+}</pre>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

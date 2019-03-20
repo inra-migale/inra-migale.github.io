@@ -1,5 +1,27 @@
 [
   {
+    "path": "posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/",
+    "title": "Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis",
+    "description": "Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training \"Analyse de données métagénomiques 16S\" that took place on the 18-21 March 2019",
+    "author": [
+      {
+        "name": "Équipe Migale",
+        "url": "http://migale.jouy.inra.fr/"
+      }
+    ],
+    "date": "2019-03-20",
+    "categories": [
+      "R",
+      "Formation 16S",
+      "Tutorials",
+      "English"
+    ],
+    "preview": "posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition-1.png",
+    "last_modified": "2019-03-20T19:07:50+01:00",
+    "preview_width": 2016,
+    "preview_height": 672
+  },
+  {
     "path": "posts/2019-03-04-future-batchtools/",
     "title": "Utiliser SGE depuis R",
     "description": "Utiliser future.batchtools pour faire communiquer R et SGE directement depuis R.",

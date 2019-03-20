@@ -1,0 +1,331 @@
+---
+title: "Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis"
+description: |
+  Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training "Analyse de données métagénomiques 16S" that took place on the 18-21 March 2019
+author:
+  - name: Équipe Migale 
+    url: http://migale.jouy.inra.fr/
+    affiliation: INRA - MaIAGE
+    affiliation_url: http://maiage.jouy.inra.fr/
+date: 03-20-2019
+categories:
+  - R 
+  - Formation 16S
+  - Tutorials
+  - English
+output:
+  distill::distill_article:
+    number_sections: yes
+    theme: united
+    toc: yes
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo =TRUE, 
+                      cache = TRUE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      fig.height = 3.5, 
+                      fig.width = 10.5)
+knitr::opts_knit$set(root.dir = '..')
+```
+
+# Introduction
+
+This vignette is a re-analysis of the data set from [Chaillou et al. (2015)](http://dx.doi.org/10.1038/ismej.2014.202), as suggested in the *Homeworks* section of the slides. Note that this is only one of many analyses that could be done on the data. 
+
+# Analysis
+
+## Setup
+
+We first setup our environment by loading a few packages
+
+```{r packages}
+library(tidyverse)  ## data manipulation
+library(phyloseq)   ## analysis of microbiome census data
+library(ape)        ## for tree manipulation
+library(vegan)      ## for community ecology analyses
+## You may also need to install gridExtra with 
+## install.packages("gridExtra")
+## and load it with 
+## library(gridExtra)
+## if you want to reproduce some of the side-by-side graphs shown below
+```
+
+## Data import
+
+We then load the data from the Chaillou et al. (2015) dataset. We assume that they are located in the `data/chaillou` folder. A quick look at the folder content shows we have access to a tree (in newick format, file extension `nwk`) and a biom file (extension `biom`). A glance at the biom file content shows that the taxonomy is `"k__Bacteria", "p__Tenericutes", "c__Mollicutes", "o__Mycoplasmatales", "f__Mycoplasmataceae", "g__Candidatus Lumbricincola", "s__NA"`. This is the so called greengenes format and the taxonomy should thus be parsed using the `parse_taxonomy_greengenes` function. 
+
+```{r import_tables}
+food <- import_biom("data/chaillou/chaillou.biom", 
+                    parseFunction = parse_taxonomy_greengenes)
+```
+
+We can then add the phylogenetic tree to the `food` object
+
+```{r create_food}
+phy_tree(food) <- read_tree("data/chaillou/tree.nwk")
+food
+```
+
+The data consists of 64 samples of food: 8 replicates for each of 8 food types. We have access to the following descriptors 
+
+- **EnvType**: Food of origin of the samples
+- **FoodType**: Either meat or seafood
+- **Description**: Replicate number
+
+We can navigate through the metadata
+
+```{r metadata, echo=FALSE}
+DT::datatable(sample_data(food))
+```
+
+EnvType is coded in French and with categories in no meaningful order. We will translate them and order them to have food type corresponding to meat first and to seafood second.
+
+```{r translate_EnvType}
+## We create a "dictionary" for translation and order the categories 
+## as we want 
+dictionary = c("BoeufHache"      = "Ground_Beef", 
+               "VeauHache"       = "Ground_Veal", 
+               "MerguezVolaille" = "Poultry_Sausage", 
+               "DesLardons"      = "Bacon_Dice", 
+               "SaumonFume"      = "Smoked_Salmon", 
+               "FiletSaumon"     = "Salmon_Fillet", 
+               "FiletCabillaud"  = "Cod_Fillet", 
+               "Crevette"        = "Shrimp")
+env_type <- sample_data(food)$EnvType
+sample_data(food)$EnvType <- factor(dictionary[env_type], levels = dictionary)
+```
+
+We can also build a custom color palette to remind ourselves which samples correspond to meat and which to seafood. 
+
+```{r my_palette}
+my_palette <- c('#67001f','#b2182b','#d6604d','#f4a582',
+                 '#92c5de','#4393c3','#2166ac','#053061')
+names(my_palette) <- dictionary
+```
+
+
+
+Before moving on to elaborate statistics, we'll look at the taxonomic composition of our samples 
+## Taxonomic Composition {.tabset}
+
+To use the `plot_composition` function, we first need to source it:
+
+```{r graphical_methods, eval = FALSE}
+download.file(url = "https://raw.githubusercontent.com/mahendra-mariadassou/phyloseq-extended/master/R/graphical_methods.R", 
+              destfile = "graphical_methods.R")
+source("graphical_methods.R")
+```
+
+```{r echo = FALSE}
+source("~/Documents/phyloseq-extended/R/graphical_methods.R")
+```
+
+We then look at the community composition at the phylum level. In order to highlight the structure of the data, we split the samples according to their food of origin. We show several figures, corresponding to different taxonomic levels.
+
+### Phylum level
+
+We can see right away that meat products are whereas Bacteroidetes and Proteobacteria are more abundant in seafood.
+
+```{r plot_composition}
+plot_composition(food, "Kingdom", "Bacteria", "Phylum", fill = "Phylum") + 
+  facet_grid(~EnvType, scales = "free_x", space = "free_x") + 
+  theme(axis.text.x = element_blank())
+```
+
+We have access to the following taxonimic ranks:
+```{r ranks}
+rank_names(food)
+```
+
+### Within firmicutes
+
+Given the importance of Firmicutes, we can zoom in within that phylum and investigate the composition at the genus level. 
+
+```{r plot_composition_2}
+plot_composition(food, "Phylum", "Firmicutes", "Genus", fill = "Genus", numberOfTaxa = 5) + 
+  facet_grid(~EnvType, scales = "free_x", space = "free_x") + 
+  theme(axis.text.x = element_blank())
+```
+
+We see that there is a high diversity of genera across the different types of food and that no single OTU dominates all communities. 
+
+## Alpha-diversity
+
+The samples have very similar sampling depths
+```{r}
+sample_sums(food) %>% range()
+```
+there is thus no need for rarefaction. 
+
+### Graphics {.tabset}
+
+We compare the different types of food in terms of diversity.
+
+```{r alpha_diversity_score}
+plot_richness(food, x = "EnvType", color = "EnvType",
+              measures = c("Observed", "Shannon", "InvSimpson")) + 
+  geom_boxplot(aes(group = EnvType)) +    ## add one boxplot per type of food
+  scale_color_manual(values = my_palette) ## custom color palette
+```
+
+Different foods have very different diversities with dice of bacon having the highest number ($\sim$ 250) of OTUs. However, most foods have low effective diversities. 
+
+### Anova {.tabset}
+
+We can quantify the previous claims by performing an ANOVA of the diversity against the covariates of interest. For the sake of brevity, we focus here on both the observed and  effective number of species (as measured by the InvSimpson measure). We first build a data.frame with both covariates and diversity indices. 
+
+```{r diversities}
+div_data <- cbind(estimate_richness(food),  ## diversity indices
+                  sample_data(food)         ## covariates
+                  )
+```
+
+Foods differ significantly in terms of number of observed OTUs...
+
+```{r anova_cat}
+model <- aov(Observed ~ EnvType, data = div_data)
+anova(model)
+```
+
+... but no in terms of effective number of species
+
+```{r anova_cst}
+model <- aov(InvSimpson ~ EnvType, data = div_data)
+anova(model)
+```
+
+## Beta diversities
+
+We have access to a phylogenetic tree so we can compute all 4 distances seen during the tutorial. 
+
+```{r distances}
+dist.jac <- distance(food, method = "cc")
+dist.bc <- distance(food, method = "bray")
+dist.uf <- distance(food, method = "unifrac")
+dist.wuf <- distance(food, method = "wunifrac")
+```
+
+```{r ordination-envtype, fig.height=7}
+p.jac <- plot_ordination(food, 
+                         ordinate(food, method = "MDS", distance = dist.jac), 
+                         color = "EnvType") + 
+  ggtitle("Jaccard") + scale_color_manual(values = my_palette)
+p.bc <- plot_ordination(food, 
+                         ordinate(food, method = "MDS", distance = dist.bc), 
+                         color = "EnvType") + 
+  ggtitle("Bary-Curtis") + scale_color_manual(values = my_palette)
+p.uf <- plot_ordination(food, 
+                         ordinate(food, method = "MDS", distance = dist.uf), 
+                         color = "EnvType") + 
+  ggtitle("UniFrac") + scale_color_manual(values = my_palette)
+p.wuf <- plot_ordination(food, 
+                         ordinate(food, method = "MDS", distance = dist.wuf), 
+                         color = "EnvType") + 
+  ggtitle("wUniFrac") + scale_color_manual(values = my_palette)
+gridExtra::grid.arrange(p.jac, p.bc, p.uf, p.wuf,
+                        ncol = 2)
+```
+
+In this example, Jaccard and UniFrac distances provide a clear separation of meats and seafoods, unlike Bray-Curtis and wUniFrac. This means that food ecosystems share their abundant taxa but not the rare ones. 
+
+UniFrac also gives a much better separation of poultry sausages and ground beef / veal than Jaccard. This means that although those foods have taxa in common, their specific taxa are located in different parts of the phylogenetic tree. Since UniFrac appears to the most relevant distance here, we'll restrict downstream analyses to it. 
+
+One can also note that dices of bacon are located between meats and seafoods. We'll come back latter to that point latter. 
+
+### Hierarchical clustering
+
+The hierarchical clustering of uniFrac distances using the Ward linkage function (to produce spherical clusters) show a perfect separation according. 
+
+```{r hclust}
+par(mar = c(1, 0, 2, 0))
+plot_clust(food, dist = "unifrac", method = "ward.D2", color = "EnvType", 
+           palette = my_palette, 
+           title = "Clustering of samples (UniFrac + Ward)\nsamples colored by EnvType")
+```
+
+### PERMANOVA
+
+We use the Unifrac distance to assess the variability in terms of microbial repertoires between foods. 
+
+```{r adonis}
+metadata <- sample_data(food) %>% as("data.frame")
+model <- adonis(dist.uf ~ EnvType, data = metadata, permutations = 999)
+model
+```
+
+The results show that food origin explains a bit less than 2 thirds of the total variability observed between samples in terms of species repertoires. This is quite strong! Don't expect such strong results in general.
+
+## Heatmap
+
+We investigate the content of our samples when looking at the raw count table and use a custom color scale to reproduce (kind of) the figures in the paper. 
+
+```{r heatmap-raw}
+p <- plot_heatmap(food) + 
+  facet_grid(~EnvType, scales = "free_x", space = "free_x") + 
+  scale_fill_gradient2(low = "#1a9850", mid = "#ffffbf", high = "#d73027",
+                       na.value = "white", trans = log_trans(4),
+                       midpoint = log(100, base = 4))
+```
+
+```{r plot_heatmap_raw, fig.height=7}
+plot(p)
+```
+
+It looks like:
+- there is some kind of block structure in the data (eg. OTUs that are abundant in seafoods but not meat products or vice-versa)
+- dices of bacon have a lot of OTU in common with seafoods. This is indeed the case and the result of "contamination", sea salt is usually added to bacon to add flavor. But, in addition to flavor, the grains of salt also bring sea-specific bacterial taxa (at least their genetic material) with them. 
+
+## Differential abundance study 
+
+To highlight the structure, we're going to perform a differential analysis (between meat products and seafoods) and look only at the differentially abundant taxa. 
+
+```{r deseq2}
+cds <- phyloseq_to_deseq2(food, ~ FoodType)
+dds <- DESeq2::DESeq(cds)
+results <- DESeq2::results(dds) %>% as.data.frame()
+```
+
+We can explore the full result table
+```{r explore_result}
+DT::datatable(results, filter = "top") %>% 
+  DT::formatRound(columns = names(results), digits = 4)
+```
+
+Or only select the OTUs with an adjusted p-value lower than $0.05$ and sort them according to fold-change.
+
+```{r da_otus}
+da_otus <- results %>% as_tibble(rownames = "OTU") %>% 
+  filter(padj < 0.05) %>% 
+  arrange(log2FoldChange) %>% 
+  pull(OTU)
+length(da_otus)
+```
+
+We end up with `r length(da_otus)` significant OTUs sorted according to their fold-change. We keep only those OTUs in that order in the heat map. 
+
+```{r heatmap2}
+p <- plot_heatmap(prune_taxa(da_otus, food), ## keep only da otus...
+                  taxa.order = da_otus       ## ordered according to fold-change
+                  ) + 
+  facet_grid(~EnvType, scales = "free_x", space = "free_x") + 
+  scale_fill_gradient2(low = "#1a9850", mid = "#ffffbf", high = "#d73027",
+                       na.value = "white", trans = log_trans(4),
+                       midpoint = log(100, base = 4))
+```
+
+```{r heatmap2_plot, fig.height=7}
+plot(p)
+```
+
+# A few conclusions
+
+The different elements we've seen allow us to draw a few conclusions:
+
+- different foods harbor different ecosystems;
+- they may harbor a lot of taxa, the effective number of species is quite low;
+- the high observed number of OTUs in dices of bacon is caused to by salt addition, which also moves bacon samples towards seafoods. 
+- the samples are really different and well separated when considering the UniFrac distance (in which case food origin accounts for 63% of the total variability)
+- differential analyses is helpful to select and zoom at specific portions of the count table. 
