@@ -1,13 +1,14 @@
 ---
 title: "Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis"
 description: |
-  Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training "Analyse de données métagénomiques 16S" that took place on the March 2019
+  Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019
+date: 03-20-2019
 author:
   - name: Équipe Migale 
     url: http://migale.jouy.inra.fr/
     affiliation: INRA - MaIAGE
     affiliation_url: http://maiage.jouy.inra.fr/
-date: 03-20-2019
+draft: false
 categories:
   - R 
   - Formation 16S

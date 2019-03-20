@@ -2,7 +2,7 @@
   {
     "path": "posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/",
     "title": "Formation Métagnénomique 16S March 2019 - Chaillou dataset analysis",
-    "description": "Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training \"Analyse de données métagénomiques 16S\" that took place on the March 2019",
+    "description": "Analysis of the Chaillou et al. (2015) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019",
     "author": [
       {
         "name": "Équipe Migale",
@@ -17,7 +17,7 @@
       "English"
     ],
     "preview": "posts/2019-03-20-formation-16s-chaillou-dataset-analysis-with-r/formation-16s-chaillou-dataset-analysis-with-r_files/figure-html5/plot_composition-1.png",
-    "last_modified": "2019-03-20T19:33:19+01:00",
+    "last_modified": "2019-03-20T19:47:21+01:00",
     "preview_width": 2016,
     "preview_height": 672
   },
