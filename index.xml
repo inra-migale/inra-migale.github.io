@@ -9,7 +9,7 @@
     <generator>Distill</generator>
     <lastBuildDate>jeu., 21 mars 2019 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Formation Métagnénomique 16S March 2019 - Ravel dataset analysis</title>
+      <title>Formation Métagénomique 16S March 2019 - Ravel dataset analysis</title>
       <dc:creator>Équipe Migale</dc:creator>
       <link>https://inra-migale.github.io/posts/2019-03-21-formation16sravel</link>
       <description>Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019</description>
