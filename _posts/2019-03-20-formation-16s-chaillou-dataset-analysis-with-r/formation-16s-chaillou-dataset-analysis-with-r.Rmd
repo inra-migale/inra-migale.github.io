@@ -134,7 +134,8 @@ plot_composition(food, "Kingdom", "Bacteria", "Phylum", fill = "Phylum") +
   theme(axis.text.x = element_blank())
 ```
 
-We have access to the following taxonimic ranks:
+We have access to the following taxonomic ranks:
+
 ```{r ranks}
 rank_names(food)
 ```
@@ -154,6 +155,7 @@ We see that there is a high diversity of genera across the different types of fo
 ## Alpha-diversity
 
 The samples have very similar sampling depths
+
 ```{r}
 sample_sums(food) %>% range()
 ```
@@ -287,9 +289,12 @@ dds <- DESeq2::DESeq(cds)
 results <- DESeq2::results(dds) %>% as.data.frame()
 ```
 
-We can explore the full result table
+We can explore the full result table:
+
 ```{r explore_result}
-DT::datatable(results, filter = "top") %>% 
+DT::datatable(results, filter = "top", 
+              extensions = 'Buttons', 
+              options = list(dom = "Bltip", buttons = c('csv'))) %>% 
   DT::formatRound(columns = names(results), digits = 4)
 ```
 
@@ -317,6 +322,9 @@ p <- plot_heatmap(prune_taxa(da_otus, food), ## keep only da otus...
 
 ```{r heatmap2_plot, fig.height=7}
 plot(p)
+## or
+## plotly::ggplotly(p)
+## for an interactive version
 ```
 
 # A few conclusions

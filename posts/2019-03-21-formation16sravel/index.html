@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+<title>Migale Blog: Formation Métagnénomique 16S March 2019 - Ravel dataset analysis</title>
+
+<meta property="description" itemprop="description" content="Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019"/>
+
+<link rel="canonical" href="https://inra-migale.github.io/posts/2019-03-21-formation16sravel/"/>
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2019-03-21"/>
+<meta property="article:created" itemprop="dateCreated" content="2019-03-21"/>
+<meta name="article:author" content="Équipe Migale"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="Migale Blog: Formation Métagnénomique 16S March 2019 - Ravel dataset analysis"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019"/>
+<meta property="og:url" content="https://inra-migale.github.io/posts/2019-03-21-formation16sravel/"/>
+<meta property="og:image" content="https://inra-migale.github.io/posts/2019-03-21-formation16sravel/formation16sravel_files/figure-html5/plot_composition-1.png"/>
+<meta property="og:image:width" content="2016"/>
+<meta property="og:image:height" content="672"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="Migale Blog"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="Migale Blog: Formation Métagnénomique 16S March 2019 - Ravel dataset analysis"/>
+<meta property="twitter:description" content="Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019"/>
+<meta property="twitter:url" content="https://inra-migale.github.io/posts/2019-03-21-formation16sravel/"/>
+<meta property="twitter:image" content="https://inra-migale.github.io/posts/2019-03-21-formation16sravel/formation16sravel_files/figure-html5/plot_composition-1.png"/>
+<meta property="twitter:image:width" content="2016"/>
+<meta property="twitter:image:height" content="672"/>
+
+<!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+<meta name="citation_title" content="Migale Blog: Formation Métagnénomique 16S March 2019 - Ravel dataset analysis"/>
+<meta name="citation_fulltext_html_url" content="https://inra-migale.github.io/posts/2019-03-21-formation16sravel/"/>
+<meta name="citation_online_date" content="2019/03/21"/>
+<meta name="citation_publication_date" content="2019/03/21"/>
+<meta name="citation_author" content="Équipe Migale"/>
+<meta name="citation_author_institution" content="INRA - MaIAGE"/>
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Formation Métagnénomique 16S March 2019 - Ravel dataset analysis"]},{"type":"character","attributes":{},"value":["Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Équipe Migale"]},{"type":"character","attributes":{},"value":["http://migale.jouy.inra.fr/"]},{"type":"character","attributes":{},"value":["INRA - MaIAGE"]},{"type":"character","attributes":{},"value":["http://maiage.jouy.inra.fr/"]}]}]},{"type":"character","attributes":{},"value":["03-21-2019"]},{"type":"character","attributes":{},"value":["R","Formation 16S","Tutorials","English"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-21-formation16sravel/"]},{"type":"character","attributes":{},"value":["https://inra-migale.github.io/posts/2019-03-21-formation16sravel/"]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["formation16sravel_files/bowser-1.9.3/bowser.min.js","formation16sravel_files/crosstalk-1.0.0/css/crosstalk.css","formation16sravel_files/crosstalk-1.0.0/js/crosstalk.js","formation16sravel_files/crosstalk-1.0.0/js/crosstalk.js.map","formation16sravel_files/crosstalk-1.0.0/js/crosstalk.min.js","formation16sravel_files/crosstalk-1.0.0/js/crosstalk.min.js.map","formation16sravel_files/datatables-binding-0.5/datatables.js","formation16sravel_files/datatables-css-0.0.0/datatables-crosstalk.css","formation16sravel_files/distill-2.2.21/template.v2.js","formation16sravel_files/dt-core-1.10.16/css/jquery.dataTables.extra.css","formation16sravel_files/dt-core-1.10.16/css/jquery.dataTables.min.css","formation16sravel_files/dt-core-1.10.16/js/jquery.dataTables.min.js","formation16sravel_files/figure-html5/alpha_diversity_cst-1.png","formation16sravel_files/figure-html5/alpha_diversity_ph-1.png","formation16sravel_files/figure-html5/alpha_diversity_score-1.png","formation16sravel_files/figure-html5/cap-all-1.png","formation16sravel_files/figure-html5/cap-ethnic-1.png","formation16sravel_files/figure-html5/confounding-1.png","formation16sravel_files/figure-html5/hclust-1.png","formation16sravel_files/figure-html5/heatmap-raw-1.png","formation16sravel_files/figure-html5/ordination-cst-1.png","formation16sravel_files/figure-html5/ordination-pH-1.png","formation16sravel_files/figure-html5/ordination-score-1.png","formation16sravel_files/figure-html5/plot_composition_2-1.png","formation16sravel_files/figure-html5/plot_composition_3-1.png","formation16sravel_files/figure-html5/plot_composition_cst-1.png","formation16sravel_files/figure-html5/plot_composition_ethnic-1.png","formation16sravel_files/figure-html5/plot_composition_ph_1-1.png","formation16sravel_files/figure-html5/plot_composition_ph-1.png","formation16sravel_files/figure-html5/plot_composition_score-1.png","formation16sravel_files/figure-html5/plot_composition-1.png","formation16sravel_files/figure-html5/small-heatmap-1.png","formation16sravel_files/htmlwidgets-1.3/htmlwidgets.js","formation16sravel_files/jquery-1.12.4/jquery.min.js","formation16sravel_files/jquery-1.12.4/LICENSE.txt","formation16sravel_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #455a64;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative;}
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+</style>
+
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for table of contents */
+
+.d-toc {
+  color: rgba(0,0,0,0.8);
+  font-size: 0.8em;
+  line-height: 1em;
+}
+
+.d-toc-header {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 1.3em;
+}
+
+.d-toc a {
+  border-bottom: none;
+}
+
+.d-toc ul {
+  padding-left: 0;
+}
+
+.d-toc li>ul {
+  padding-top: 0.8em;
+  padding-left: 16px;
+  margin-bottom: 0.6em;
+}
+
+.d-toc ul,
+.d-toc li {
+  list-style-type: none;
+}
+
+.d-toc li {
+  margin-bottom: 0.9em;
+}
+
+.d-toc-separator {
+  margin-top: 20px;
+  margin-bottom: 2em;
+}
+
+.d-article-with-toc {
+  border-top: none;
+  padding-top: 0;
+}
+
+
+
+/* Tweak code blocks (note that this CSS is repeated above in an injection
+   into the d-code shadow dom) */
+
+d-code {
+  overflow-x: auto !important;
+}
+
+pre.d-code code.d-code {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+pre.text-output {
+
+  font-size: 12px;
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+@media(min-width: 768px) {
+
+d-code {
+  overflow-x: visible !important;
+}
+
+pre.d-code code.d-code  {
+    padding-left: 18px;
+    font-size: 14px;
+}
+pre.text-output {
+  font-size: 14px;
+}
+}
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // create d-bibliography
+  var bibliography = $('<d-bibliography></d-bibliography>');
+  $('#distill-bibliography').wrap(bibliography);
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace citations with <d-cite>
+  $('.citation').each(function(i, val) {
+    appendix = true;
+    var cites = $(this).attr('data-cites').split(" ");
+    var dt_cite = $('<d-cite></d-cite>');
+    dt_cite.attr('key', cites.join());
+    $(this).replaceWith(dt_cite);
+  });
+  // remove refs
+  $('#refs').remove();
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-toc a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // replace code blocks with d-code
+  $('pre>code').each(function(i, val) {
+    var code = $(this);
+    var pre = code.parent();
+    var clz = "";
+    var language = pre.attr('class');
+    if (language) {
+      // map unknown languages to "clike" (without this they just dissapear)
+      if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                               "javascript", "js", "julia", "lua", "markdown",
+                               "markup", "mathml", "python", "svg", "xml"]) == -1)
+        language = "clike";
+      language = ' language="' + language + '"';
+      var dt_code = $('<d-code block' + language + clz + '></d-code>');
+      dt_code.text(code.text());
+      pre.replaceWith(dt_code);
+    } else {
+      code.addClass('text-output').unwrap().changeElementType('pre');
+    }
+  });
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('d-code, pre.text-output, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // table of contents
+    if (have_authors) // adjust border if we are in authors
+      $('.d-toc').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+    $('d-code').each(function(i, val) {
+      var style = document.createElement('style');
+      style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                        '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+      if (this.shadowRoot)
+        this.shadowRoot.appendChild(style);
+    });
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-toc-header').remove();
+  $('.d-toc').remove();
+  $('.d-toc-separator').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+  <script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script>
+  <link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+  <script src="../../site_libs/datatables-binding-0.5/datatables.js"></script>
+  <link href="../../site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link href="../../site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+  <script src="../../site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+  <link href="../../site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+  <script src="../../site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Formation Métagnénomique 16S March 2019 - Ravel dataset analysis","description":"Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training *Analyse de données métagénomiques 16S* that took place on March 2019","authors":[{"author":"Équipe Migale","authorURL":"http://migale.jouy.inra.fr/","affiliation":"INRA - MaIAGE","affiliationURL":"http://maiage.jouy.inra.fr/"}],"publishedDate":"2019-03-21T00:00:00.000+01:00","citationText":"Migale, 2019"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="http://migale.jouy.inra.fr/">
+<img src="../../images/migale.png"/>
+</a>
+<a href="../../index.html" class="title">Migale Blog</a>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../about.html">About</a>
+<a href="../../publications.html">Publications</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Formation Métagnénomique 16S March 2019 - Ravel dataset analysis</h1>
+<p>Analysis of the Ravel et al. (2011) dataset with R. This vignette documents and reproduces the analyses performed with FROGSSTATS during the training <em>Analyse de données métagénomiques 16S</em> that took place on March 2019</p>
+</div>
+
+<div class="d-byline">
+  Équipe Migale <a href="http://migale.jouy.inra.fr/" class="uri">http://migale.jouy.inra.fr/</a> (INRA - MaIAGE)<a href="http://maiage.jouy.inra.fr/" class="uri">http://maiage.jouy.inra.fr/</a>
+  
+<br/>03-21-2019
+</div>
+
+<div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#analysis">Analysis</a><ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#data-import">Data import</a></li>
+<li><a href="#taxonomic-composition">Taxonomic Composition</a><ul>
+<li><a href="#nugent-category">Nugent Category</a></li>
+<li><a href="#nugent-score">Nugent Score</a></li>
+<li><a href="#cst">CST</a></li>
+<li><a href="#ethnic-group">Ethnic group</a></li>
+<li><a href="#ph">pH</a></li>
+</ul></li>
+<li><a href="#alpha-diversity">Alpha-diversity</a><ul>
+<li><a href="#graphics">Graphics</a></li>
+<li><a href="#anova">Anova</a></li>
+</ul></li>
+<li><a href="#beta-diversities">Beta diversities</a><ul>
+<li><a href="#unconstrained-ordination">Unconstrained ordination</a></li>
+<li><a href="#constrained-ordination">Constrained Ordination</a></li>
+<li><a href="#hierarchical-clustering">Hierarchical clustering</a></li>
+<li><a href="#permanova">PERMANOVA</a></li>
+</ul></li>
+<li><a href="#heatmap">Heatmap</a></li>
+</ul></li>
+<li><a href="#a-few-conclusions">A few conclusions</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
+<h1 id="introduction">Introduction</h1>
+<p>This vignette is a re-analysis of the data set from <a href="dx.doi.org/10.1073/pnas.1002611107">Ravel et al. (2011)</a>, as suggested in the <em>Homeworks</em> section of the slides. Note that this is only one of many analyses that could be done on the data.</p>
+<h1 id="analysis">Analysis</h1>
+<h2 id="setup">Setup</h2>
+<p>We first setup our environment by loading a few packages</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+library(tidyverse)  ## data manipulation
+library(phyloseq)   ## analysis of microbiome census data
+library(ape)        ## for tree manipulation
+library(vegan)      ## for community ecology analyses
+## You may also need to install gridExtra with 
+## install.packages(&quot;gridExtra&quot;)
+## and load it with 
+## library(gridExtra)
+## if you want to reproduce some of the side-by-side graphs shown below</code></pre>
+</div>
+<h2 id="data-import">Data import</h2>
+<p>We then load the data from the Ravel et al. (2011) dataset. We assume that they are located in the <code>data/ravel</code> folder. A quick look at the folder content show that all files are plain text files in <code>tsv</code> format. We import them in the proper format (matrix for the abundances and the taxonomy, data.frame for the covariates)</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+otu &lt;- read.table(&quot;data/ravel/counts.tsv&quot;) %&gt;% as.matrix()
+tax &lt;- read.table(&quot;data/ravel/taxonomy.tsv&quot;) %&gt;% as.matrix()
+map &lt;- read.table(&quot;data/ravel/metadata.tsv&quot;)</code></pre>
+</div>
+<p>The count table is in the taxa <span class="math inline">\(\times\)</span> samples format, so we build our phyloseq object as follows:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+ravel &lt;- phyloseq(otu_table(otu, taxa_are_rows = TRUE),
+                  tax_table(tax), 
+                  sample_data(map))
+ravel</code></pre>
+<pre><code>
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 247 taxa and 394 samples ]
+sample_data() Sample Data:       [ 394 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 247 taxa by 7 taxonomic ranks ]</code></pre>
+</div>
+<p>The data consists of 394 samples of the vaginal microbiome of women of reproductive ages and the original studies focused on the link between microbial composition and vaginosis. Each sample is associated to several covariates:</p>
+<ul>
+<li><strong>ID</strong>: Woman unique ID</li>
+<li><strong>Ethnic_Group</strong>: Ethnic group of the woman (in Asian, Black, Hispanic and White)</li>
+<li><strong>pH</strong>: pH in the vagina</li>
+<li><strong>Nugent_Score</strong>: Nugent score, a score of bacterial vaginosis on scale from 0 to 10</li>
+<li><strong>Nugent_Cat</strong>: Nugent category, derived from the Nugent score. Can be either low (score in 0-3), intermediate (score in 4-6) or high (score in 7-10)</li>
+<li><strong>CST</strong>: Community State Type, more on that later.</li>
+</ul>
+<p>We can navigate through the metadata</p>
+<div class="layout-chunk" data-layout="l-body">
+<div id="htmlwidget-a1a9193887ebaeef802b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a1a9193887ebaeef802b">{"x":{"filter":"none","data":[["S001","S002","S003","S004","S005","S006","S007","S008","S009","S010","S011","S012","S013","S014","S015","S016","S017","S018","S019","S020","S021","S022","S023","S024","S025","S026","S027","S028","S029","S030","S031","S032","S033","S034","S035","S036","S037","S038","S039","S040","S041","S042","S043","S044","S045","S046","S047","S048","S049","S050","S051","S052","S053","S054","S055","S056","S057","S058","S059","S060","S061","S062","S063","S064","S065","S066","S067","S068","S069","S070","S071","S072","S073","S074","S075","S076","S077","S078","S079","S080","S081","S082","S083","S084","S085","S086","S087","S088","S089","S090","S091","S092","S093","S094","S095","S096","S097","S098","S099","S100","S101","S102","S103","S104","S105","S106","S107","S108","S109","S110","S111","S112","S113","S114","S115","S116","S117","S118","S119","S120","S121","S122","S123","S124","S125","S126","S127","S128","S129","S130","S131","S132","S133","S134","S135","S136","S137","S138","S139","S140","S141","S142","S143","S144","S145","S146","S147","S148","S149","S150","S151","S152","S153","S154","S155","S156","S157","S158","S159","S160","S161","S162","S163","S164","S165","S166","S167","S168","S169","S170","S171","S172","S173","S174","S175","S176","S177","S178","S179","S180","S181","S182","S183","S184","S185","S186","S187","S188","S189","S190","S191","S192","S193","S194","S195","S196","S197","S198","S199","S200","S201","S202","S203","S204","S205","S206","S207","S208","S209","S210","S211","S212","S213","S214","S215","S216","S217","S218","S219","S220","S221","S222","S223","S224","S225","S226","S227","S228","S229","S230","S231","S232","S233","S234","S235","S236","S237","S238","S239","S240","S241","S242","S243","S244","S245","S246","S247","S248","S249","S250","S251","S252","S253","S254","S255","S256","S257","S258","S259","S260","S261","S262","S263","S264","S265","S266","S267","S268","S269","S270","S271","S272","S273","S274","S275","S276","S277","S278","S279","S280","S281","S282","S283","S284","S285","S286","S287","S288","S289","S290","S291","S292","S293","S294","S295","S296","S297","S298","S299","S300","S301","S302","S303","S304","S305","S306","S307","S308","S309","S310","S311","S312","S313","S314","S315","S316","S317","S318","S319","S320","S321","S322","S323","S324","S325","S326","S327","S328","S329","S330","S331","S332","S333","S334","S335","S336","S337","S338","S339","S340","S341","S342","S343","S344","S345","S346","S347","S348","S349","S350","S351","S352","S353","S354","S355","S356","S357","S358","S359","S360","S361","S362","S363","S364","S365","S366","S367","S368","S369","S370","S371","S372","S373","S374","S375","S376","S377","S378","S379","S380","S381","S382","S383","S384","S385","S386","S387","S388","S389","S390","S391","S392","S393","S394"],["S001","S002","S003","S004","S005","S006","S007","S008","S009","S010","S011","S012","S013","S014","S015","S016","S017","S018","S019","S020","S021","S022","S023","S024","S025","S026","S027","S028","S029","S030","S031","S032","S033","S034","S035","S036","S037","S038","S039","S040","S041","S042","S043","S044","S045","S046","S047","S048","S049","S050","S051","S052","S053","S054","S055","S056","S057","S058","S059","S060","S061","S062","S063","S064","S065","S066","S067","S068","S069","S070","S071","S072","S073","S074","S075","S076","S077","S078","S079","S080","S081","S082","S083","S084","S085","S086","S087","S088","S089","S090","S091","S092","S093","S094","S095","S096","S097","S098","S099","S100","S101","S102","S103","S104","S105","S106","S107","S108","S109","S110","S111","S112","S113","S114","S115","S116","S117","S118","S119","S120","S121","S122","S123","S124","S125","S126","S127","S128","S129","S130","S131","S132","S133","S134","S135","S136","S137","S138","S139","S140","S141","S142","S143","S144","S145","S146","S147","S148","S149","S150","S151","S152","S153","S154","S155","S156","S157","S158","S159","S160","S161","S162","S163","S164","S165","S166","S167","S168","S169","S170","S171","S172","S173","S174","S175","S176","S177","S178","S179","S180","S181","S182","S183","S184","S185","S186","S187","S188","S189","S190","S191","S192","S193","S194","S195","S196","S197","S198","S199","S200","S201","S202","S203","S204","S205","S206","S207","S208","S209","S210","S211","S212","S213","S214","S215","S216","S217","S218","S219","S220","S221","S222","S223","S224","S225","S226","S227","S228","S229","S230","S231","S232","S233","S234","S235","S236","S237","S238","S239","S240","S241","S242","S243","S244","S245","S246","S247","S248","S249","S250","S251","S252","S253","S254","S255","S256","S257","S258","S259","S260","S261","S262","S263","S264","S265","S266","S267","S268","S269","S270","S271","S272","S273","S274","S275","S276","S277","S278","S279","S280","S281","S282","S283","S284","S285","S286","S287","S288","S289","S290","S291","S292","S293","S294","S295","S296","S297","S298","S299","S300","S301","S302","S303","S304","S305","S306","S307","S308","S309","S310","S311","S312","S313","S314","S315","S316","S317","S318","S319","S320","S321","S322","S323","S324","S325","S326","S327","S328","S329","S330","S331","S332","S333","S334","S335","S336","S337","S338","S339","S340","S341","S342","S343","S344","S345","S346","S347","S348","S349","S350","S351","S352","S353","S354","S355","S356","S357","S358","S359","S360","S361","S362","S363","S364","S365","S366","S367","S368","S369","S370","S371","S372","S373","S374","S375","S376","S377","S378","S379","S380","S381","S382","S383","S384","S385","S386","S387","S388","S389","S390","S391","S392","S393","S394"],["Asian","White","Black","Asian","Black","White","White","White","White","Black","White","White","White","Black","White","White","Asian","Black","Black","Hispanic","Black","White","Black","Black","Black","Black","Black","Black","White","Black","Black","White","White","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","White","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","White","Asian","White","White","Black","Black","Black","Asian","White","Asian","White","Asian","White","Black","White","Asian","White","White","Black","Black","White","White","White","White","White","Black","White","White","Black","Black","White","Black","White","White","Black","White","Black","Black","Black","Black","Black","White","Black","Black","Black","Black","White","White","White","Black","Black","White","Black","Black","White","Hispanic","Black","Black","White","White","Hispanic","White","Asian","Asian","Black","White","White","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Hispanic","Asian","Hispanic","White","Black","Hispanic","Asian","Black","White","White","White","Black","Black","Asian","Black","White","Black","White","White","Black","White","Black","White","White","Black","Asian","Black","White","White","Black","White","White","White","Black","White","Asian","White","White","White","Black","Black","Black","Black","Black","Asian","White","Black","Black","Asian","Black","Black","Black","White","Black","Black","Black","Black","White","White","White","Black","White","Asian","Black","Black","Black","Black","Black","White","Black","White","Black","Asian","Black","White","Black","White","Hispanic","Hispanic","White","Black","White","Black","White","Asian","Asian","White","Asian","White","White","White","Black","White","Black","Asian","Asian","White","White","Asian","Asian","Asian","Asian","Black","White","Black","White","White","Asian","Asian","White","Asian","White","Asian","Asian","Asian","Asian","Asian","Asian","Hispanic","Black","Black","Hispanic","Black","Black","Black","Black","Black","Black","Black","Black","Black","Black","Black","Black","Black","Black","Asian","White","White","Black","Black","Black","Black","Hispanic","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","White","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","White","White","White","White","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian","Asian"],[4,4,4,4.7,5,4,4.7,5.8,4.4,4.4,4,5,4.7,4.4,4.4,5.8,7,4,4,4,4.7,5,7,4,5,4.4,4,5.5,4,5.8,5,4,4.4,4,5,4.4,4,5.5,5.3,4.7,4.4,5.5,4,4.4,5.5,4,5.3,5,4.7,4,5.5,5.3,5,4.4,4,5,5.5,4,4,4,4,5.8,5.4,5.4,4,4,4,4,4,5,5,5.5,5.3,4.4,4,4.7,4,4,4,4,4,4,5,4,5.5,4.7,4.4,5.3,5.5,4,4,4,5,4,4,5,4.4,5,4.7,4,4.4,5,4,5,5.5,4.4,4,4,5.8,5.5,4,4,4.4,5.8,4,4,4,5,4,4,4.7,4,4.7,4,4,4,4.4,4.4,4,5,5,4,5,5.5,5,5,4.5,5.8,4.4,5.5,5.3,5,5.5,5.5,5,5,7,4.4,5.5,5,4.7,5,4.4,4.4,4.7,4.7,5.3,5.3,5,5,5.5,5,5,4.7,4.4,4.4,4.4,4.4,5,4.7,4.4,5.3,4.7,5.8,5.3,4.4,5,5.5,7,4.4,4,4,4.4,4,5,5.3,4,5.5,4,4,4.4,5.5,4,4.7,5,4,4,4,5,4,4.7,5.5,4,4,4,7,4,5,5.3,4,5,4,5,4,5,4.4,5,4,4,4,5.5,4,4,7,4,4,4,5,5.5,4,4,4,4,4.7,4.4,4.4,4,4,5.5,4,4,4.7,5.8,5.3,4.4,4.4,5,4.7,4,5.5,4.7,4.7,5,4,5.3,4,5,4,5.8,4,5.3,4,5.8,4,4,4.4,4.7,4.4,5.8,5,5.5,4.4,5,4.4,4,5,4,4.4,5.5,4.7,4,4,4,4,4.7,5.5,4,4.4,5,5,4,5.5,4,4.4,4.7,4,4,4,5,4,5.5,4,5.3,4,5.8,4,5.3,5.5,5.5,4.7,5.3,4,5.5,5,4.7,4.7,4,4,4,4,4.4,5,4,4.7,4,5.5,5.5,5,5,5.8,5,5,4.4,4,4,4,5.8,4,4.4,4,4.4,4,5.5,4.7,5.8,4.4,5.5,5,5.5,5,4.4,5,4.7,4.7,4,4,4,4,4,5.8,4,5,4,4,5,4,4.4,5.8,5.8,4.4,4,4.7,4.4,4,4.4,4.4,4.4,4.4,4.4,4.7,5.5,4.7,5.8,5.8,4,4,4,5,4.4,7,4.4,4.4,4.4,4.4],[0,0,1,0,6,0,1,9,0,1,0,10,0,2,0,1,5,0,0,0,1,1,8,0,10,0,0,4,0,9,8,0,0,0,1,2,0,7,8,0,1,9,1,0,7,1,10,9,7,1,8,4,8,0,0,0,3,0,0,0,4,8,7,8,0,0,0,6,3,10,0,10,9,0,1,4,3,0,0,0,0,0,2,0,10,3,0,2,0,2,1,1,4,0,0,4,1,0,2,0,0,9,0,5,9,0,0,0,8,10,0,1,0,8,2,0,1,1,1,0,0,0,9,0,0,0,2,0,8,10,0,0,0,8,1,1,4,10,0,9,8,1,8,8,3,4,7,0,5,4,8,4,0,5,8,1,1,7,8,0,4,2,0,0,1,0,1,0,5,1,0,10,1,8,7,6,7,5,8,1,0,0,5,4,8,8,8,10,1,0,0,8,1,0,5,0,1,0,10,1,0,7,1,1,4,6,1,7,10,0,3,1,1,0,7,1,8,1,1,6,0,0,0,7,3,0,3,5,10,1,3,0,0,0,0,0,0,0,10,0,0,1,9,10,0,1,0,4,0,7,0,0,10,1,8,0,0,0,8,0,8,0,8,0,1,0,3,0,8,8,8,1,8,0,1,1,0,5,9,4,3,3,2,0,4,4,1,4,1,9,0,8,0,2,0,4,0,2,0,0,7,1,1,0,3,2,6,10,6,10,4,0,8,9,6,7,0,4,1,0,9,7,0,0,0,3,10,8,8,10,8,5,0,2,0,0,5,2,0,0,0,0,1,7,1,0,8,6,0,4,6,4,1,0,1,0,0,0,0,4,0,8,0,1,1,7,0,8,4,7,2,0,0,0,5,0,0,3,0,8,8,1,7,1,2,1,3,3,0,6,0,0,0,2],["low","low","low","low","intermediate","low","low","high","low","low","low","high","low","low","low","low","intermediate","low","low","low","low","low","high","low","high","low","low","intermediate","low","high","high","low","low","low","low","low","low","high","high","low","low","high","low","low","high","low","high","high","high","low","high","intermediate","high","low","low","low","low","low","low","low","intermediate","high","high","high","low","low","low","intermediate","low","high","low","high","high","low","low","intermediate","low","low","low","low","low","low","low","low","high","low","low","low","low","low","low","low","intermediate","low","low","intermediate","low","low","low","low","low","high","low","intermediate","high","low","low","low","high","high","low","low","low","high","low","low","low","low","low","low","low","low","high","low","low","low","low","low","high","high","low","low","low","high","low","low","intermediate","high","low","high","high","low","high","high","low","intermediate","high","low","intermediate","intermediate","high","intermediate","low","intermediate","high","low","low","high","high","low","intermediate","low","low","low","low","low","low","low","intermediate","low","low","high","low","high","high","intermediate","high","intermediate","high","low","low","low","intermediate","intermediate","high","high","high","high","low","low","low","high","low","low","intermediate","low","low","low","high","low","low","high","low","low","intermediate","intermediate","low","high","high","low","low","low","low","low","high","low","high","low","low","intermediate","low","low","low","high","low","low","low","intermediate","high","low","low","low","low","low","low","low","low","low","high","low","low","low","high","high","low","low","low","intermediate","low","high","low","low","high","low","high","low","low","low","high","low","high","low","high","low","low","low","low","low","high","high","high","low","high","low","low","low","low","intermediate","high","intermediate","low","low","low","low","intermediate","intermediate","low","intermediate","low","high","low","high","low","low","low","intermediate","low","low","low","low","high","low","low","low","low","low","intermediate","high","intermediate","high","intermediate","low","high","high","intermediate","high","low","intermediate","low","low","high","high","low","low","low","low","high","high","high","high","high","intermediate","low","low","low","low","intermediate","low","low","low","low","low","low","high","low","low","high","intermediate","low","intermediate","intermediate","intermediate","low","low","low","low","low","low","low","intermediate","low","high","low","low","low","high","low","high","intermediate","high","low","low","low","low","intermediate","low","low","low","low","high","high","low","high","low","low","low","low","low","low","intermediate","low","low","low","low"],["I","II","III","I","IV","I","II","IV","III","I","III","IV","III","II","I","III","III","I","III","III","II","V","IV","III","IV","I","I","IV","I","IV","IV","I","III","I","IV","I","I","IV","IV","III","III","IV","V","IV","IV","III","III","IV","IV","III","IV","II","IV","III","I","I","IV","I","III","III","II","IV","II","IV","I","III","I","III","I","IV","III","III","IV","I","III","II","III","I","I","I","V","I","V","I","IV","V","I","III","I","IV","III","I","I","I","I","II","I","V","I","I","III","IV","I","IV","IV","I","I","I","IV","III","I","I","V","IV","I","I","I","II","III","I","V","I","III","I","I","I","V","I","IV","IV","III","III","III","IV","III","III","IV","IV","I","IV","IV","III","IV","IV","IV","II","IV","III","III","III","IV","IV","III","III","III","III","III","III","IV","IV","III","III","V","III","III","III","III","I","II","III","III","IV","V","IV","IV","IV","IV","IV","IV","III","I","I","III","II","IV","IV","III","IV","III","I","I","IV","I","I","V","I","I","I","IV","III","I","IV","III","III","III","II","I","III","IV","I","II","I","III","III","III","I","III","III","III","III","III","I","III","IV","I","I","III","III","IV","II","I","I","I","III","III","I","III","III","IV","I","III","III","IV","IV","I","V","I","III","III","IV","II","III","IV","III","IV","I","III","V","IV","III","IV","I","IV","I","III","III","III","I","IV","IV","IV","I","IV","III","III","II","I","III","IV","IV","I","III","III","IV","II","II","I","V","III","IV","I","IV","III","I","III","V","I","III","V","III","IV","III","III","I","IV","III","III","IV","II","IV","IV","I","IV","IV","IV","IV","III","III","III","III","IV","IV","III","III","I","I","IV","III","IV","IV","IV","II","I","III","I","I","IV","III","III","I","V","III","III","IV","II","I","IV","V","III","IV","III","I","III","V","III","I","III","I","III","IV","I","III","III","III","III","III","I","IV","IV","IV","III","III","III","III","II","I","I","V","II","IV","IV","I","IV","IV","III","I","I","IV","III","III","III","IV","III","III"],[2329,1400,1378,2273,1713,1822,1961,1872,2142,1823,2080,1598,5277,5262,1998,2008,2352,3765,2001,1799,1448,2147,3285,1785,2586,2658,2294,1407,2470,2116,1847,2142,2431,2337,1978,2456,1273,1797,1738,1660,1365,2475,2010,3069,1902,2263,1667,2033,1302,1425,2146,2228,1682,2202,1697,1845,1553,1465,2259,1767,774,1676,1045,2292,2262,1844,1585,2523,1209,1834,1575,1848,1524,1742,1905,1336,1825,1607,2221,2385,936,1519,1512,1681,1987,1262,1795,2662,2789,2390,2555,1255,1715,2309,2693,1911,2979,1017,2302,3741,2556,2001,1955,2799,2702,2931,2681,2402,2762,2103,3146,693,2514,2689,2617,3342,3490,1984,2073,2428,1046,2078,2576,3216,3060,3439,2820,2340,2103,3070,2568,2867,2975,2620,1935,3792,881,3075,2219,2460,2101,3726,3829,1624,2075,2352,2330,1877,2285,2964,5057,2353,2548,2095,2958,3408,2099,2456,2795,2308,2915,3003,3517,2699,2766,2972,3855,2573,1449,2801,2126,2515,2069,2464,5710,3276,2016,4338,3002,2619,2289,2290,1925,2804,2597,2634,3672,7361,2571,2101,1837,1822,2013,1858,1803,2026,1868,2229,2178,3387,3165,2306,2777,2410,2638,2062,2199,2297,2119,2218,2284,3633,3126,2475,2403,2874,2354,4343,2426,2448,2132,2481,2031,2979,1986,2028,2159,1891,1703,1830,1746,1673,2002,2139,2372,2334,2210,1892,1563,2177,2059,1862,1736,1829,1836,2267,2814,1771,2188,1830,1792,1489,1478,1589,1870,1774,1678,1806,1604,1700,1817,2695,2457,2163,1716,2092,1851,1882,2549,2600,3045,2239,2704,2143,2164,3888,2093,1968,2748,2627,2517,2320,2067,1724,1657,1006,2043,1772,2303,2194,2170,2067,2086,2067,2396,1915,2025,2297,2224,2209,2393,2203,2404,2353,1568,2281,2330,2239,2127,3109,1777,2108,2962,2470,2116,2358,1938,2345,2961,2766,2641,2247,2123,1976,1853,2479,1691,2223,2221,2019,2454,2742,2308,2056,2046,1664,1972,2157,2029,2284,2227,2525,1939,2198,1888,1833,1796,1571,1721,1468,1274,1814,1826,1963,1890,1674,1709,1863,1409,1655,1986,2145,2329,3437,2459,2564,2476,1949,2049,1244,1922,2026,2230,2257,3336,2790,2611,2229,2155,2181,2232,1919,2200,925,2356,2372,1983,1875,1820,1873,1733,1969,1685,1728],[2335,1403,1376,2286,1705,1817,1942,1863,2142,1821,2080,1586,5283,5262,1994,2002,2362,3761,1994,1797,1449,2139,3284,1780,2595,2658,2296,1405,2471,2116,1837,2143,2434,2340,1972,2474,1271,1791,1731,1660,1362,2489,2006,3064,1887,2262,1665,2017,1300,1425,2148,2237,1666,2201,1695,1841,1548,1468,2265,1762,774,1667,1045,2298,2262,1838,1583,2518,1207,1825,1566,1835,1515,1740,1900,1328,1822,1604,2224,2390,936,1511,1508,1676,1952,1261,1788,2668,2791,2401,2556,1254,1705,2310,2696,1906,2982,1016,2309,3742,2558,1986,1950,2807,2704,2930,2681,2404,2764,2098,3144,693,2517,2697,2625,3339,3495,1971,2070,2438,1046,2074,2583,3218,3064,3440,2830,2348,2101,3073,2571,2870,2983,2624,1917,3788,881,3073,2230,2478,2099,3725,3815,1619,2068,2356,2345,1875,2283,2965,5063,2366,2552,2091,2969,3412,2096,2468,2796,2326,2917,3003,3515,2705,2764,2975,3854,2571,1453,2806,2121,2511,2065,2463,5713,3290,2004,4336,2997,2622,2297,2297,1908,2810,2593,2636,3668,7392,2573,2100,1830,1813,2007,1849,1792,2021,1866,2233,2171,3391,3172,2314,2779,2411,2643,2051,2195,2295,2115,2215,2287,3631,3128,2480,2408,2882,2362,4339,2432,2457,2130,2482,2026,2990,1967,2024,2156,1884,1685,1820,1735,1663,1994,2131,2373,2339,2208,1883,1553,2169,2058,1848,1736,1812,1831,2278,2814,1760,2185,1823,1784,1494,1484,1578,1862,1761,1675,1795,1598,1695,1794,2695,2456,2163,1711,2088,1838,1877,2544,2607,3044,2242,2703,2144,2160,3892,2090,1961,2758,2631,2516,2322,2065,1714,1659,1006,2033,1769,2302,2180,2170,2064,2083,2060,2400,1915,2024,2300,2233,2209,2402,2203,2405,2354,1560,2280,2334,2257,2122,3115,1770,2105,2964,2483,2106,2368,1923,2344,2964,2763,2647,2252,2122,1974,1840,2485,1691,2221,2249,1998,2475,2750,2313,2053,2043,1661,1952,2156,2026,2287,2232,2527,1928,2189,1867,1830,1784,1561,1717,1474,1271,1799,1817,1959,1886,1665,1704,1858,1409,1648,1980,2149,2335,3429,2462,2565,2478,1934,2046,1245,1917,2021,2237,2259,3341,2792,2619,2237,2146,2174,2240,1913,2199,925,2356,2375,1960,1852,1810,1866,1731,1967,1682,1725]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Ethnic_Group<\/th>\n      <th>pH<\/th>\n      <th>Nugent_Score<\/th>\n      <th>Nugent_Cat<\/th>\n      <th>CST<\/th>\n      <th>Depth<\/th>\n      <th>RealDepth<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>Before moving on to elaborate statistics, we’ll look at the taxonomic composition of our samples</p>
+<h2 id="taxonomic-composition" class="tabset">Taxonomic Composition</h2>
+<p>To use the <code>plot_composition</code> function, we first need to source it:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+download.file(url = &quot;https://raw.githubusercontent.com/mahendra-mariadassou/phyloseq-extended/master/R/graphical_methods.R&quot;, 
+              destfile = &quot;graphical_methods.R&quot;)
+source(&quot;graphical_methods.R&quot;)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>We then look at the community composition at the phylum level. In order to highlight the structure of the data, we split the samples according to each covariates in turn. We show several figures, corresponding to different taxonomic levels, for the Nugent Categry but only a phylum-level one for other covariates.</p>
+<h3 id="nugent-category">Nugent Category</h3>
+<p>We can see right away that samples with low scores are dominated by Firmicutes and other phyla become more prevalent as the score increases.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, fill = &quot;Phylum&quot;) + 
+  facet_grid(~Nugent_Cat, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition-1.png" width="1008" /></p>
+</div>
+<p>We have access to the following taxonimic ranks:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+rank_names(ravel)</code></pre>
+<pre><code>
+[1] &quot;Kingdom&quot; &quot;Phylum&quot;  &quot;Class&quot;   &quot;Order&quot;   &quot;Family&quot;  &quot;Genus&quot;  
+[7] &quot;Species&quot;</code></pre>
+</div>
+<p>Given the importance of Firmicutes, we can zoom in within that phylum and investigate the composition at the genus level.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Phylum&quot;, &quot;Firmicutes&quot;, &quot;Genus&quot;, fill = &quot;Genus&quot;, numberOfTaxa = 5) + 
+  facet_grid(~Nugent_Cat, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_2-1.png" width="1008" /></p>
+</div>
+<p>We see that most samples are dominated by the sole lactobacillus genus. Unfortunately, we don’t have access to species level affiliation and can zoom no further.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Genus&quot;, &quot;Lactobacillus&quot;, &quot;Species&quot;, fill = &quot;Species&quot;, numberOfTaxa = 7) + 
+  facet_grid(~Nugent_Cat, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_3-1.png" width="1008" /></p>
+</div>
+<p>We can also organize, as suggested in the slides, the communities in terms of Nugent Category, CST and pH to examine their impact on community composition. For each of these covariates, we only examine the phylum-level composition:</p>
+<h3 id="nugent-score">Nugent Score</h3>
+<p>The communities become more diverse as the nugent score increases.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, fill = &quot;Phylum&quot;) + 
+  facet_grid(~Nugent_Score, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_score-1.png" width="1008" /></p>
+</div>
+<h3 id="cst">CST</h3>
+<p>Communities from CST I-III and V are dominated Firmicutes and have low diversity whereas communities from CST iV are more diverse.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, fill = &quot;Phylum&quot;) + 
+  facet_grid(~CST, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_cst-1.png" width="1008" /></p>
+</div>
+<h3 id="ethnic-group">Ethnic group</h3>
+<p>Ethnic group seems to be a structuring factor.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, fill = &quot;Phylum&quot;) + 
+  facet_grid(~Ethnic_Group, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_ethnic-1.png" width="1008" /></p>
+</div>
+<p>but only because ethnic groups have a very contrasted score distributions:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+ggplot(sample_data(ravel), aes(x = Ethnic_Group, group = Nugent_Cat, fill = Nugent_Cat)) + 
+  geom_bar(stat = &quot;count&quot;) + 
+  scale_fill_brewer(type = &quot;seq&quot;, palette = &quot;Reds&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/confounding-1.png" width="1008" /></p>
+</div>
+<p>We will seldom use the Ethnic Group in downstream analyses.</p>
+<h3 id="ph">pH</h3>
+<p>Splitting by pH is a bit more involved as pH is not discrete by nature. We could to order the sample by pH using the <code>x =</code> argument.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, x = &quot;pH&quot;, fill = &quot;Phylum&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_ph_1-1.png" width="1008" /></p>
+</div>
+<p>but we end up with an ugly graph as several samples have exactly the same pH. In this case, there are not that many pH values and we therefore treat it as discrete variable. We observe that the diversity increases with the pH.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_composition(ravel, &quot;Kingdom&quot;, &quot;Bacteria&quot;, &quot;Phylum&quot;, fill = &quot;Phylum&quot;) + 
+  facet_grid(~pH, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/plot_composition_ph-1.png" width="1008" /></p>
+</div>
+<h2 id="alpha-diversity">Alpha-diversity</h2>
+<p>The samples have very different sampling depths:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+sample_sums(ravel) %&gt;% range()</code></pre>
+<pre><code>
+[1]  693 7361</code></pre>
+</div>
+<p>We thus rarefy them before computing alpha-diversities:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+ravel_rare &lt;- rarefy_even_depth(ravel, rngseed = 20190124)</code></pre>
+</div>
+<h3 id="graphics" class="tabset">Graphics</h3>
+<p>We first explore the impact of each covariates on <span class="math inline">\(\alpha\)</span>-diversities.</p>
+<h4 id="nugent-score-1">Nugent Score</h4>
+<p>All measures confirm that diversity increases with Nugent Scores.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_richness(ravel_rare, x = &quot;Nugent_Score&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;, &quot;InvSimpson&quot;)) + 
+  geom_boxplot(aes(group = Nugent_Score)) ## add one boxplot per Nugent Score  values</code></pre>
+<p><img src="formation16sravel_files/figure-html5/alpha_diversity_score-1.png" width="1008" /></p>
+</div>
+<h4 id="ph-1">pH</h4>
+<p>Low ph correspond to low diversity, although the relationship between pH and diversity breaks down at high pH.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_richness(ravel_rare, x = &quot;pH&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;, &quot;InvSimpson&quot;)) + 
+  geom_boxplot(aes(group = pH)) ## add one boxplot per pH value</code></pre>
+<p><img src="formation16sravel_files/figure-html5/alpha_diversity_ph-1.png" width="1008" /></p>
+</div>
+<h4 id="cst-1">CST</h4>
+<p>All CST have extremely low effective diversity except for CST IV.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_richness(ravel_rare, x = &quot;CST&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;, &quot;InvSimpson&quot;)) + 
+  geom_boxplot(aes(group = CST)) ## add one boxplot per CST score</code></pre>
+<p><img src="formation16sravel_files/figure-html5/alpha_diversity_cst-1.png" width="1008" /></p>
+</div>
+<h3 id="anova" class="tabset">Anova</h3>
+<p>We can quantify the previous claims by performing an ANOVA of the diversity against the covariates of interest. For the sake of brevity, we focus here on the effective number of species as measured by the InvSimpson measures. We first build a data.frame with both covariates and diversity indices.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+div_data &lt;- cbind(estimate_richness(ravel_rare, measures = &quot;InvSimpson&quot;),  ## diversity indices
+                  sample_data(ravel_rare)                                  ## covariates
+                  )</code></pre>
+</div>
+<h4 id="nugent-category-1">Nugent Category</h4>
+<p>Nugent Category has a significant impact on diversity…</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+model &lt;- aov(InvSimpson ~ 0 + Nugent_Cat, data = div_data)
+anova(model)</code></pre>
+<pre><code>
+Analysis of Variance Table
+
+Response: InvSimpson
+            Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+Nugent_Cat   3 3149.21 1049.74  545.63 &lt; 2.2e-16 ***
+Residuals  391  752.25    1.92                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>with three times the number of effective species in high samples compared to low ones.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+coef(model)</code></pre>
+<pre><code>
+        Nugent_Cathigh Nugent_Catintermediate          Nugent_Catlow 
+              4.878522               2.355929               1.514241 </code></pre>
+</div>
+<p>A post-hoc test reveals that all categories have different diversities:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+TukeyHSD(model)</code></pre>
+<pre><code>
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = InvSimpson ~ 0 + Nugent_Cat, data = div_data)
+
+$Nugent_Cat
+                        diff       lwr        upr     p adj
+intermediate-high -2.5225936 -3.094529 -1.9506580 0.0000000
+low-high          -3.3642811 -3.755079 -2.9734830 0.0000000
+low-intermediate  -0.8416874 -1.351850 -0.3315244 0.0003577</code></pre>
+</div>
+<h4 id="ph-2">pH</h4>
+<p>pH has a significant impact on diversity…</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+model &lt;- lm(InvSimpson ~ pH, data = div_data)
+anova(model)</code></pre>
+<pre><code>
+Analysis of Variance Table
+
+Response: InvSimpson
+           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+pH          1  481.85  481.85  178.18 &lt; 2.2e-16 ***
+Residuals 392 1060.07    2.70                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>by increasing it</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+coef(model)</code></pre>
+<pre><code>
+(Intercept)          pH 
+  -5.279626    1.658691 </code></pre>
+</div>
+<h4 id="cst-2">CST</h4>
+<p>CST has a significant impact on diversity…</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+model &lt;- aov(InvSimpson ~ 0 + CST, data = div_data)
+anova(model)</code></pre>
+<pre><code>
+Analysis of Variance Table
+
+Response: InvSimpson
+           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+CST         5 3404.9  680.98  533.47 &lt; 2.2e-16 ***
+Residuals 389  496.6    1.28                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+with CST IV having much more diversity than other CST.
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+coef(model)</code></pre>
+<pre><code>
+    CSTI    CSTII   CSTIII    CSTIV     CSTV 
+1.488067 1.574007 1.363830 5.095042 1.629058 </code></pre>
+</div>
+<p>A post-hoc test reveals that all CST are comparable except for CST IV.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+TukeyHSD(model)</code></pre>
+<pre><code>
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = InvSimpson ~ 0 + CST, data = div_data)
+
+$CST
+              diff        lwr        upr     p adj
+II-I    0.08593971 -0.6031387  0.7750182 0.9970577
+III-I  -0.12423726 -0.5271451  0.2786706 0.9162924
+IV-I    3.60697485  3.1826046  4.0313451 0.0000000
+V-I     0.14099054 -0.5991985  0.8811795 0.9851071
+III-II -0.21017698 -0.8843708  0.4640168 0.9131592
+IV-II   3.52103513  2.8337996  4.2082706 0.0000000
+V-II    0.05505082 -0.8615092  0.9716109 0.9998349
+IV-III  3.73121211  3.3314644  4.1309599 0.0000000
+V-III   0.26522780 -0.4611247  0.9915803 0.8549592
+V-IV   -3.46598431 -4.2044579 -2.7275107 0.0000000</code></pre>
+</div>
+<h2 id="beta-diversities">Beta diversities</h2>
+<p>We don’t have access to a phylogenetic, we’ll thus stick to jaccard and bray-curtis distances. As explained during the workshop, those distances are only meaningful when computed on rarefied data:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+dist.jac &lt;- distance(ravel_rare, method = &quot;cc&quot;)
+dist.bc &lt;- distance(ravel_rare, method = &quot;bray&quot;)</code></pre>
+</div>
+<h3 id="unconstrained-ordination" class="tabset">Unconstrained ordination</h3>
+<p>We first perform unconstrained ordination on Jaccard and Bray-Curtis distances and color samples according to covariates to highlight the structure.</p>
+<h4 id="ph-3">pH</h4>
+<p>Jaccard distance induce a nice linear gradient of samples along the first axis which corresponds to the pH. The structure displayed in the first plance of the MDS is less easy to interpret when using the Bray distance but also capture a much higher fraction of the diversity.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+p.jac &lt;- plot_ordination(ravel_rare, 
+                         ordinate(ravel_rare, method = &quot;MDS&quot;, distance = dist.jac), 
+                         color = &quot;pH&quot;) + ggtitle(&quot;Jaccard&quot;)
+p.bc &lt;- plot_ordination(ravel_rare, 
+                         ordinate(ravel_rare, method = &quot;MDS&quot;, distance = dist.bc), 
+                         color = &quot;pH&quot;) + ggtitle(&quot;Bray-Curtis&quot;)
+gridExtra::grid.arrange(p.jac, p.bc, ncol = 2)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/ordination-pH-1.png" width="1008" /></p>
+</div>
+<h4 id="nugent-score-2">Nugent Score</h4>
+<p>Just like the pH, to which it is highly correlated, Nugent is a strong structuring factor of the communities.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+p.jac &lt;- plot_ordination(ravel_rare, 
+                         ordinate(ravel_rare, method = &quot;MDS&quot;, distance = dist.jac), 
+                         color = &quot;Nugent_Score&quot;) + ggtitle(&quot;Jaccard&quot;)
+p.bc &lt;- plot_ordination(ravel_rare, 
+                         ordinate(ravel_rare, method = &quot;MDS&quot;, distance = dist.bc), 
+                         color = &quot;Nugent_Score&quot;) + ggtitle(&quot;Bray-Curtis&quot;)
+gridExtra::grid.arrange(p.jac, p.bc, ncol = 2)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/ordination-score-1.png" width="1008" /></p>
+</div>
+<h4 id="cst-3">CST</h4>
+<p>CST are much better separated using the Bray distance than the Jaccard one. This means that although communities from different CST may have highly redudant microbial repertoire, they rarely have the same abundant taxa.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+p.jac &lt;- plot_ordination(ravel_rare, 
+                         ordinate(ravel_rare, method = &quot;MDS&quot;, distance = dist.jac), 
+                         color = &quot;CST&quot;) + ggtitle(&quot;Jaccard&quot;)
+p.bc &lt;- plot_ordination(ravel_rare, 
+                         ordinate(ravel_rare, method = &quot;MDS&quot;, distance = dist.bc), 
+                         color = &quot;CST&quot;) + ggtitle(&quot;Bray-Curtis&quot;)
+gridExtra::grid.arrange(p.jac, p.bc, ncol = 2)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/ordination-cst-1.png" width="1008" /></p>
+</div>
+<h3 id="constrained-ordination">Constrained Ordination</h3>
+<p>Constrained ordination (not covered during the workshop) is similar to unconstrained ordination with the following difference:</p>
+<ul>
+<li>unconstrained ordination tries to capture the whole diversity, no matter where it comes from</li>
+<li>constrained ordination tries to capture only the fraction of diversity that can be explained by some covariates (which can be much smaller that the whole)</li>
+</ul>
+<p>To perform constrained ordination, you should change the <code>method</code> argument to <code>CAP</code> (short for <em>Constrained Analysis of Proximities</em>) and specify a <code>formula</code> argument to tell the method what covariates can be used to explain the diversity. For instance, if we focus on the Ethnic Group</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+ord &lt;- ordinate(ravel_rare, method = &quot;CAP&quot;, distance = dist.bc, formula = ~ Ethnic_Group)
+p12 &lt;- plot_ordination(ravel_rare, ord, color = &quot;Ethnic_Group&quot;, axes = c(1:2))
+p23 &lt;- plot_ordination(ravel_rare, ord, color = &quot;Ethnic_Group&quot;, axes = c(2:3))
+gridExtra::grid.arrange(p12, p23, nrow = 1)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/cap-ethnic-1.png" width="1008" /></p>
+</div>
+<p>Note that the CAP analysis kind of separates the samples according to their ethnic group. This is expected as we considered only the fraction of variance explained by those group. Note also there are only 3 constrained axes as we started with 4 groups (and hence 3 degrees of freedom). Finally, have a look at the percentages of variability: they are all extremely low, revealing that Ethnic group does not explain much.</p>
+<p>We can add more covariates in the model to explain a larger fraction of the diversity (this is a bit counter-intuitive at first, but the more covariates you add to the model, the more degrees of freedom you have to explain the diversity and the less constrained is the analysis). Note that results of the full model are remarkably similar to results of the unconstrained analysis (but with smaller percentages of variance explained)</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+ord &lt;- ordinate(ravel_rare, method = &quot;CAP&quot;, distance = dist.bc, formula = ~ pH + Nugent_Cat + CST + Ethnic_Group)
+p12 &lt;- plot_ordination(ravel_rare, ord, color = &quot;CST&quot;, axes = c(1:2))
+p23 &lt;- plot_ordination(ravel_rare, ord, color = &quot;CST&quot;, axes = c(2:3))
+gridExtra::grid.arrange(p12, p23, nrow = 1)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/cap-all-1.png" width="1008" /></p>
+</div>
+<h3 id="hierarchical-clustering">Hierarchical clustering</h3>
+<p>The hierarchical clustering of Bray-Curtis distances using the Ward linkage function (to produce spherical clusters) show a perfect separation of samples along CST. The CST were indeed defined almost exactly that way. The original study considered Jensen-Shannon Divergences (JSD) instead of Bray-Curtis distances but the result is essentially the same.</p>
+<p>Careful readers could also argue that CST IV is quite diverse compared to other CST (the root node of CST-IV is quite high compared to the root node of other CSTs). They would be right as follow-up studies suggested to refine CST IV into subtypes IV-a and IV-b.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+par(mar = c(1, 0, 2, 0))
+plot_clust(ravel_rare, dist = &quot;bray&quot;, method = &quot;ward.D2&quot;, color = &quot;CST&quot;, 
+           title = &quot;Clustering of samples (Bray-Curtis + Ward)\nsamples colored by CST&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/hclust-1.png" width="1008" /></p>
+</div>
+<h3 id="permanova">PERMANOVA</h3>
+<p>We use the Bray-Curtis distance to assess which covariates have a structuring effect on the communities.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+metadata &lt;- sample_data(ravel_rare) %&gt;% as(&quot;data.frame&quot;)
+model &lt;- vegan::adonis(dist.bc ~ pH + Nugent_Cat + CST + Ethnic_Group, data = metadata, permutations = 999)
+model</code></pre>
+<pre><code>
+Call:
+vegan::adonis(formula = dist.bc ~ pH + Nugent_Cat + CST + Ethnic_Group,      data = metadata, permutations = 999) 
+
+Permutation: free
+Number of permutations: 999
+
+Terms added sequentially (first to last)
+
+              Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+pH             1    16.213 16.2134 178.039 0.12027  0.001 ***
+Nugent_Cat     2    11.939  5.9695  65.551 0.08856  0.001 ***
+CST            4    70.956 17.7389 194.791 0.52633  0.001 ***
+Ethnic_Group   3     0.825  0.2749   3.019 0.00612  0.001 ***
+Residuals    383    34.878  0.0911         0.25872           
+Total        393   134.811                 1.00000           
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>The results show that all covariates tested are significant but that some explain more variability than others. For example, CST is the highest structuring factor with 52.6% of variability explained (after controlling for pH and Nugent category) against 0.6% for Ethnic group (after controlling for all other covariates)</p>
+<h2 id="heatmap">Heatmap</h2>
+<p>We have shown that the samples cluster well by CST when considering the Bray-Curtis distances. We will now investigate the content of those CST by looking at the raw count table. To make counts comparables across samples and avoid being misled by differences in sample sizes, we work with the rarefied version of our dataset. We also group the samples by CST using the faceting mechanism.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_heatmap(ravel_rare, low = &quot;yellow&quot;, high = &quot;red&quot;, na.value = &quot;white&quot;) + 
+  facet_grid(~CST, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/heatmap-raw-1.png" width="1008" /></p>
+</div>
+<p>The whole figure hints as some results we already know:</p>
+<ul>
+<li>CST IV is very diverse (and other CST less so)</li>
+<li>samples are very similar within each CST (and hence cluster together)</li>
+<li>CST I-III and V appear to be dominated by a single OTU (and thus have low effective diversity)</li>
+<li>The dominant OTU of CST I-III and V is also frequently present in other samples (and thus the Jaccard distance may have a hard time distinguishing between samples from different CSTs)</li>
+</ul>
+<p>To make the figure easier to read, we can zoom in on the 50 (for example) most abundant taxa</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+top_50_taxa &lt;- taxa_sums(ravel_rare) %&gt;% sort(decreasing = TRUE) %&gt;% names() %&gt;% head(n = 50)
+p &lt;- plot_heatmap(prune_taxa(top_50_taxa, ravel_rare), 
+             low = &quot;yellow&quot;, high = &quot;red&quot;, na.value = &quot;white&quot;) + 
+  facet_grid(~CST, scales = &quot;free_x&quot;, space = &quot;free_x&quot;)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot(p)</code></pre>
+<p><img src="formation16sravel_files/figure-html5/small-heatmap-1.png" width="1008" /></p>
+</div>
+<p>This small help us identify the dominant OTU in each CST:</p>
+<ul>
+<li>CST I: <em>Lactobacillus crispatus</em></li>
+<li>CST II: <em>Lactobacillus gasseri</em></li>
+<li>CST III: <em>Lactobacillus iners</em></li>
+<li>CST V: <em>Lactobacillus jensenii</em></li>
+</ul>
+<h1 id="a-few-conclusions">A few conclusions</h1>
+<p>The different elements we’ve seen allow us to draw a few conclusions:</p>
+<ul>
+<li>Vaginosis (as diagnosed by high Nugent scores) correspond to a quite diverse microbiota;</li>
+<li>CST are <em>archetypes</em> of communities, 4 of which correspond to healthy communities. They can be defined by clustering the samples according to the Bray-Curtis distance;</li>
+<li>The four healthy CST have low diversity and are dominated by a different lactic acid bacteria, which explains their low pH (and as explained in the paper, the very acid pH ensures that non commensal taxa do not invade and that the ecosystem remains healthy);</li>
+<li>Jaccard distance is not very useful to characterize the CST as samples typically share many OTUs, although in very different abundances;</li>
+<li>After controlling for CST, pH and Nugent category, ethnic group explains almost no difference between samples.</li>
+</ul>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+  <h3 id="citation">Citation</h3>
+  <p>For attribution, please cite this work as</p>
+  <pre class="citation-appendix short">Migale (2019, March 21). Migale Blog: Formation Métagnénomique 16S March 2019 - Ravel dataset analysis. Retrieved from https://inra-migale.github.io/posts/2019-03-21-formation16sravel/</pre>
+  <p>BibTeX citation</p>
+  <pre class="citation-appendix long">@misc{migale2019formation,
+  author = {Migale, Équipe},
+  title = {Migale Blog: Formation Métagnénomique 16S March 2019 - Ravel dataset analysis},
+  url = {https://inra-migale.github.io/posts/2019-03-21-formation16sravel/},
+  year = {2019}
+}</pre>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
